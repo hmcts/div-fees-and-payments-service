@@ -90,6 +90,7 @@ def versions = [
         reformsJavaLoggingSpring        : '1.2.0',
         reformsJavaLoggingHttpComponents: '1.2.1',
         lombok                          : '1.16.16',
+        mapstruct                       : '1.2.0.CR2',
         powerMock                       : '1.7.3',
         puppyCrawl                      : '7.6',
         logstashLogBackEncoder          : '4.8',
@@ -103,23 +104,41 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version: versions.puppyCrawl
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
+    compile group: 'org.mapstruct', name: 'mapstruct-jdk8', version: versions.mapstruct
+    compile(group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger) {
+        exclude(module: 'mapstruct')
+    }
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
     compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
-    compile group: 'uk.gov.hmcts.auth.provider.service', name: 'service-token-generator-spring', version: versions.serviceTokenGeneratorSpring
+
+
+    compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
+        exclude group: 'io.reactivex', module: 'io.reactivex'
+        exclude group: 'io.reactivex', module: 'rxnetty'
+        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
+        exclude group: 'io.reactivex', module: 'rxnetty-servo'
+    }
+
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLoggingSpring
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLoggingHttpComponents
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springFoxSwagger
     compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: versions.logstashLogBackEncoder
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
-    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version: versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito', version: versions.powerMock
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.sprintBoot) {
+        exclude(module: 'commons-logging')
+    }
+
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
+        exclude(module: 'commons-logging')
+    }
+    testCompile group: 'commons-io', name: 'commons-io', version: versions.commonsIO
+    testCompile group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: versions.springCloudWiremock
     testCompile('org.springframework.security:spring-security-test')
-    runtime('org.springframework.boot:spring-boot-devtools')
+
+    compileOnly group: 'org.mapstruct', name: 'mapstruct-processor', version: versions.mapstruct
+
 }
 
 pmd {
