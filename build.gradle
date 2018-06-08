@@ -14,18 +14,19 @@ buildscript {
 plugins {
     id 'application'
     id 'checkstyle'
-    id 'org.springframework.boot' version '1.5.9.RELEASE'
+    id 'org.springframework.boot' version '1.5.12.RELEASE'
     id 'io.spring.dependency-management' version '1.0.3.RELEASE'
     id 'org.owasp.dependencycheck' version '3.1.2'
-    id 'org.sonarqube' version '2.5'
+    id 'org.sonarqube' version '2.6.2'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'jacoco'
     id 'pmd'
 }
 
-group = 'uk.gov.hmcts.reform.divorce'
-version = '0.0.2'
+group = 'uk.gov.hmcts.divorce'
+version = '0.0.3'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 jar {
     manifest {
@@ -50,9 +51,9 @@ repositories {
     mavenLocal()
     jcenter()
 
-    maven {
-        url 'https://artifactory.reform.hmcts.net/artifactory/libs-release'
-    }
+    maven { url 'https://artifactory.reform.hmcts.net/artifactory/libs-release' }
+    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
+    maven { url "http://repo.maven.apache.org/maven2" }
 }
 
 checkstyle {
@@ -82,19 +83,23 @@ dependencyCheck {
 }
 
 def versions = [
-        springfoxSwagger                : '2.7.0',
-        commonsLang3                    : '3.7',
-        commonsIo                       : '2.5',
-        serviceTokenGeneratorSpring     : '1.0.5',
-        reformsJavaLogging              : '1.2.0',
-        reformsJavaLoggingSpring        : '1.2.0',
-        reformsJavaLoggingHttpComponents: '1.2.1',
-        lombok                          : '1.16.16',
-        mapstruct                       : '1.2.0.CR2',
-        powerMock                       : '1.7.3',
-        puppyCrawl                      : '7.6',
-        logstashLogBackEncoder          : '4.8',
-        jacksonCore                     : '2.9.4'
+        commonsCollections4: '4.1',
+        commonsIO: '2.5',
+        commonsLang3: '3.0',
+        hmctsHttpProxy: '1.1.0',
+        hmctsJavaLogging: '2.1.1',
+        hmctsNotify: '3.8.0-RELEASE',
+        serviceTokenGenerator: '0.6.0',
+        jackson: '2.9.5',
+        jaxRS: '2.0.1',
+        lombok: '1.16.18',
+        mapstruct: '1.2.0.CR2',
+        nimbusJWT: '5.1',
+        restAssured: '3.0.3',
+        springfoxSwagger: '2.6.1',
+        springCloudWiremock: '1.2.4.RELEASE',
+        uniRest: '1.4.9',
+        puppyCrawl: '7.6'
 ]
 
 dependencies {
@@ -110,7 +115,6 @@ dependencies {
     }
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
     compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
-    compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
 
 
     compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
@@ -119,6 +123,11 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
     }
+    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.hmctsHttpProxy
+
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.hmctsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.hmctsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.hmctsJavaLogging
 
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLoggingSpring
