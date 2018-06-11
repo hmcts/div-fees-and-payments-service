@@ -162,7 +162,8 @@ def sonarExclusions = [
         '**uk/gov/hmcts/reform/divorce/feepayment/domain/**/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/**/config/**/*',
-        '**uk/gov/hmcts/reform/divorce/feepayment/FeesPaymentServiceApplication.java'
+        '**uk/gov/hmcts/reform/divorce/feepayment/FeesPaymentServiceApplication.java',
+        '**uk/gov/hmcts/reform/divorce/feepayment/health/*',
 ]
 
 sonarqube {
