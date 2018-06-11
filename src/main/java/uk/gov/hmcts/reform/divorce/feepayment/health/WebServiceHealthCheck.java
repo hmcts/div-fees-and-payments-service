@@ -1,7 +1,5 @@
 package uk.gov.hmcts.reform.divorce.feepayment.health;
 
-import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -13,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
 
 
 public abstract class WebServiceHealthCheck implements HealthIndicator {
