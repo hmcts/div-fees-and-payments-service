@@ -14,7 +14,7 @@ info:
 
 documentation:
   swagger:
-    enabled: true
+    enabled: false
 
 spring:
   application:
