@@ -183,6 +183,18 @@ pmd {
     ruleSetFiles = files("ruleset.xml")
 }
 
+task smoke(type:Test) {
+    group = 'Delivery pipeline'
+    description = 'Executes non-destructive smoke tests against a running Fee Payment Service instance'
+    include "uk/gov/hmcts/**/smoketest/**"
+}
+
+task functional(type:Test) {
+    group = 'Delivery pipeline'
+    //we need to separate out functional test.
+    include "uk/gov/hmcts/**/service/**"
+}
+
 def sonarExclusions = [
         '**uk/gov/hmcts/reform/divorce/feepayment/domain/**/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
