@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '1.5.12.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -17,7 +17,7 @@ plugins {
     id 'org.springframework.boot' version'1.5.12.RELEASE'
     id 'io.spring.dependency-management' version '1.0.3.RELEASE'
     id 'org.owasp.dependencycheck' version '3.1.2'
-    id 'org.sonarqube' version '2.6.2'
+    id 'org.sonarqube' version '2.5'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'jacoco'
     id 'pmd'
@@ -42,6 +42,17 @@ mainClassName = 'uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplic
 compileJava {
     options.compilerArgs << '-parameters' << '-Xlint:deprecation'
 }
+
+distributions {
+    main {
+        contents {
+            from(file("$projectDir/lib/AI-Agent.xml")) {
+                into "lib"
+            }
+        }
+    }
+}
+
 
 compileTestJava {
     options.compilerArgs << '-Xlint:deprecation'
@@ -90,22 +101,33 @@ def versions = [
         hmctsJavaLogging: '2.1.1',
         hmctsNotify: '3.8.0-RELEASE',
         serviceTokenGenerator: '0.6.0',
+        sprintBoot: '1.5.12.RELEASE',
+        springCloud: '1.2.5.RELEASE',
+        springRetry: '1.2.1.RELEASE',
+        springHateoas: '0.23.0.RELEASE',
+        springfoxSwagger: '2.7.0',
+        springCloudWiremock: '1.2.4.RELEASE',
+        springPluginCore: '1.2.0.RELEASE',
         jackson: '2.9.5',
         jaxRS: '2.0.1',
         lombok: '1.16.18',
         mapstruct: '1.2.0.CR2',
         nimbusJWT: '5.1',
         restAssured: '3.0.3',
-        springfoxSwagger: '2.6.1',
-        springCloudWiremock: '1.2.4.RELEASE',
+        wiremockVersion: '2.8.0',
         uniRest: '1.4.9',
         puppyCrawl: '7.6'
 ]
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.boot:spring-boot-actuator-docs')
-    compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.sprintBoot
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: versions.sprintBoot
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: versions.sprintBoot
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version: versions.springCloud
+    compile group: 'org.springframework.retry', name: 'spring-retry', version: versions.springRetry
+    compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.sprintBoot
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version: versions.puppyCrawl
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
@@ -144,7 +166,10 @@ dependencies {
     }
     testCompile group: 'commons-io', name: 'commons-io', version: versions.commonsIO
     testCompile group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: versions.springCloudWiremock
-    testCompile('org.springframework.security:spring-security-test')
+    testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.sprintBoot) {
+        exclude(module: 'commons-logging')
+    }
 
     compileOnly group: 'org.mapstruct', name: 'mapstruct-processor', version: versions.mapstruct
 
