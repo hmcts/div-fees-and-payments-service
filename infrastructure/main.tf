@@ -16,7 +16,7 @@ locals {
 
 module "div-fees-and-payment-service" {
   source = "git@github.com:hmcts/moj-module-webapp.git"
-  product = "${var.product}-${var.microservice}"
+  product = "${var.product}-${var.reform_service_name}"
   location = "${var.location}"
   env = "${var.env}"
   ilbIp = "${var.ilbIp}"
@@ -26,7 +26,7 @@ module "div-fees-and-payment-service" {
   app_settings = {
     //    logging vars
     REFORM_TEAM = "${var.product}"
-    REFORM_SERVICE_NAME = "${var.microservice}"
+    REFORM_SERVICE_NAME = "${var.reform_service_name}"
     REFORM_ENVIRONMENT = "${var.env}"
   }
 }
