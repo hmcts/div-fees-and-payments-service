@@ -13,7 +13,7 @@ import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 import javax.validation.Valid;
 
 @RestController
-@Api(value = "Divorce Validation Service", tags = {"Divorce Validation Service"})
+@Api(value = "Divorce Fee Payment Service", tags = {"Divorce Fee Payment Service"})
 @Slf4j
 public class FeePaymentServiceController {
 

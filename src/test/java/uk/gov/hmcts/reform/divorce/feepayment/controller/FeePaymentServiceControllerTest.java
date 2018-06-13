@@ -20,13 +20,13 @@ public class FeePaymentServiceControllerTest {
     private FeePaymentService feePaymentService;
 
     @InjectMocks
-    private FeePaymentServiceController validationServiceController;
+    private FeePaymentServiceController feePaymentServiceController;
 
     @Test
     public void givenCoreCaseData_whenValidateIsCalled_thenReturnValidationResult() {
 
         when(feePaymentService.getFee("id")).thenReturn("true");
-        validationServiceController.getFee("id");
+        feePaymentServiceController.getFee("id");
         verify(feePaymentService, times(1)).getFee(any(String.class));
     }
 
