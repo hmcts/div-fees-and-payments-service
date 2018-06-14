@@ -32,7 +32,7 @@ spring:
 # Enable default health indicators
 # Enable disk space health check
 management:
-  context-path: /status
+  context-path: /
   info:
     defaults:
       enabled: true
