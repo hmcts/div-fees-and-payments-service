@@ -25,6 +25,10 @@ withPipeline(type , product, component) {
       return;
     }
         
+        before('test') {
+         return;       
+        }
+        
     before('functionalTest:aat') {
         env.ITEST_ENVIRONMENT = "aat"
     }
