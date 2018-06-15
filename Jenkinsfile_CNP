@@ -22,11 +22,11 @@ def channel = '#div-dev'
 withPipeline(type , product, component) {
 
     before('build') {
-      return;
+      return true;
     }
         
         before('test') {
-         return;       
+         return true;       
         }
         
     before('functionalTest:aat') {
