@@ -11,22 +11,31 @@ buildscript {
     }
 }
 
+
 plugins {
     id 'application'
-    id 'checkstyle'
     id 'org.springframework.boot' version'1.5.12.RELEASE'
     id 'io.spring.dependency-management' version '1.0.3.RELEASE'
     id 'org.owasp.dependencycheck' version '3.1.2'
-    id 'org.sonarqube' version '2.5'
-    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'org.sonarqube' version '2.6.2'
     id 'jacoco'
     id 'pmd'
+    id 'info.solidsoft.pitest' version '1.3.0'
 }
 
-group = 'uk.gov.hmcts.divorce'
-version = '0.0.3'
+group = 'uk.gov.hmcts.reform.divorce'
+version = '3.0.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+jar.archiveName = 'div-fees-and-payment-service.jar'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+    }
+}
+
 
 sourceSets {
     integrationTest {
@@ -45,24 +54,27 @@ dependencies {
     integrationTestCompile(sourceSets.test.output)
 }
 
+mainClassName = 'uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication'
+
+compileJava {
+    options.compilerArgs << '-parameters' << '-Xlint:deprecation'
+}
+
+compileTestJava {
+    options.compilerArgs << '-Xlint:deprecation'
+}
+
 configurations {
     integrationTestCompile.extendsFrom testCompile
     integrationTestRuntime.extendsFrom testRuntime
 }
 
-jar {
-    manifest {
-        attributes 'Implementation-Title': project.name,
-                'Implementation-Version': project.version
-    }
+repositories {
+    mavenLocal()
+    jcenter()
 
-    archiveName 'div-fees-and-payment-service.jar'
-}
-
-mainClassName = 'uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication'
-
-compileJava {
-    options.compilerArgs << '-parameters' << '-Xlint:deprecation'
+    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
+    maven { url "http://repo.maven.apache.org/maven2" }
 }
 
 distributions {
@@ -75,36 +87,17 @@ distributions {
     }
 }
 
-
-compileTestJava {
-    options.compilerArgs << '-Xlint:deprecation'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
-repositories {
-    mavenLocal()
-    jcenter()
-
-    maven { url 'https://artifactory.reform.hmcts.net/artifactory/libs-release' }
-    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-}
-
-checkstyle {
-    toolVersion = '7.2'
-    configFile = project(':').file('checkstyle.xml')
-    configProperties = ["suppressionFile": project(':').file('suppressions.xml')]
-}
-
-// make build fail on Checkstyle issues (https://github.com/gradle/gradle/issues/881)
-tasks.withType(Checkstyle).each { checkstyleTask ->
-    checkstyleTask.doLast {
-        reports.all { report ->
-            def outputFile = report.destination
-            if (outputFile.exists() && outputFile.text.contains("<error ")) {
-                throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
-            }
-        }
-    }
+pitest {
+    targetClasses = ['uk.gov.hmcts.reform.divorce.feepayment.*']
+    excludedClasses = ['uk.gov.hmcts.reform.divorce.health.*', 'uk.gov.hmcts.reform.divorce.feepayment.management.config.*']
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    mutationThreshold = 50
 }
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
@@ -116,29 +109,24 @@ dependencyCheck {
 }
 
 def versions = [
-        commonsCollections4: '4.1',
-        commonsIO: '2.5',
+
+        commonsIo: '2.5',
         commonsLang3: '3.0',
-        hmctsHttpProxy: '1.1.0',
-        hmctsJavaLogging: '2.1.1',
-        hmctsNotify: '3.8.0-RELEASE',
+        hibernate: '6.0.5.Final',
+        jacksonCore: '2.9.5',
+        javaxValidation: '2.0.0.Final',
+        jaywayJsonPath: '2.2.0',
+        puppyCrawl: '7.6',
+        reformsJavaLogging: '2.1.1',
+        reformsHttpProxySpringBootAutoconfigure: '1.1.0',
         serviceTokenGenerator: '0.6.0',
         sprintBoot: '1.5.12.RELEASE',
         springCloud: '1.2.5.RELEASE',
         springRetry: '1.2.1.RELEASE',
         springHateoas: '0.23.0.RELEASE',
         springfoxSwagger: '2.7.0',
-        springCloudWiremock: '1.2.4.RELEASE',
         springPluginCore: '1.2.0.RELEASE',
-        jackson: '2.9.5',
-        jaxRS: '2.0.1',
-        lombok: '1.16.18',
-        mapstruct: '1.2.0.CR2',
-        nimbusJWT: '5.1',
-        restAssured: '3.0.3',
-        wiremockVersion: '2.8.0',
-        uniRest: '1.4.9',
-        puppyCrawl: '7.6'
+        wiremockVersion: '2.8.0'
 ]
 
 dependencies {
@@ -161,104 +149,101 @@ dependencies {
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: '1.2.3'
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '5.1'
 
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
+    compile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: versions.jaywayJsonPath
+    compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
+    compile group: 'javax.validation', name: 'validation-api', version: versions.javaxValidation
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
+
     compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
         exclude group: 'io.reactivex', module: 'rxnetty'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
         exclude group: 'io.reactivex', module: 'io.reactivex'
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
     }
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.sprintBoot
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+    compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '5.1'
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.sprintBoot
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: versions.sprintBoot
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: versions.sprintBoot
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version: versions.springCloud
     compile group: 'org.springframework.retry', name: 'spring-retry', version: versions.springRetry
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.sprintBoot
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
-    compile group: 'com.puppycrawl.tools', name: 'checkstyle', version: versions.puppyCrawl
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
-    compile group: 'org.mapstruct', name: 'mapstruct-jdk8', version: versions.mapstruct
-    compile(group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger) {
-        exclude(module: 'mapstruct')
-    }
+    compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: versions.springPluginCore
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
 
-    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.hmctsHttpProxy
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformsHttpProxySpringBootAutoconfigure
 
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.hmctsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.hmctsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.hmctsJavaLogging
-
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLoggingSpring
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLoggingHttpComponents
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springFoxSwagger
-    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: versions.logstashLogBackEncoder
-    compile group: 'org.projectlombok', name: 'lombok', version: versions.lombok
-    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.sprintBoot) {
-        exclude(module: 'commons-logging')
-    }
-
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
-        exclude(module: 'commons-logging')
-    }
-    testCompile group: 'commons-io', name: 'commons-io', version: versions.commonsIO
-    testCompile group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: versions.springCloudWiremock
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.sprintBoot) {
         exclude(module: 'commons-logging')
     }
-
-    compileOnly group: 'org.mapstruct', name: 'mapstruct-processor', version: versions.mapstruct
-
 }
 
-pmd {
-    toolVersion = "5.8.1"
-    ignoreFailures = true
-    sourceSets = [sourceSets.main, sourceSets.test]
-    reportsDir = file("$project.buildDir/reports/pmd")
-    ruleSetFiles = files("ruleset.xml")
+test {
+    exclude '**/HealthCheckFunctionalTest.class'
 }
 
-task smoke(type:Test) {
-    group = 'Delivery pipeline'
-    description = 'Executes non-destructive smoke tests against a running Fee Payment Service instance'
-    include "uk/gov/hmcts/**/smoketest/**"
-}
-
-task functional(type:Test) {
-    group = 'Delivery pipeline'
-    //we need to separate out functional test.
-    include "uk/gov/hmcts/**/service/**"
-}
-
-def sonarExclusions = [
-        '**uk/gov/hmcts/reform/divorce/feepayment/domain/**/*',
-        '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
-        '**uk/gov/hmcts/reform/divorce/feepayment/**/config/**/*',
-        '**uk/gov/hmcts/reform/divorce/feepayment/FeesPaymentServiceApplication.java',
-        '**uk/gov/hmcts/reform/divorce/feepayment/health/*',
-]
-
-sonarqube {
-    properties {
-        property "sonar.projectKey", "FeePaymentService"
-        property "sonar.projectName", "Divorce :: div-feepayment-service"
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-        property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/apiTest.exec"
-        property "sonar.exclusions", sonarExclusions.join(", ")
+task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
+    useJUnit {
+        includeCategories 'uk.gov.hmcts.reform.divorce.feepayment.category.SmokeTest'
     }
 }
 
 
-task developAddRelaseSuffix() {
+task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
+    println('functional tests');
+
+    /*
+    setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
+    setClasspath(sourceSets.integrationTest.runtimeClasspath)
+    */
+}
+
+task printVersion {
+    doLast {
+        print project.version
+    }
+}
+
+task developAddReleaseSuffix() {
+    version = "${version}-SNAPSHOT"
+}
+
+def sonarExclusions = [
+        '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
+        '**uk/gov/hmcts/reform/divorce/feepayment/configuration/*',
+        '**uk/gov/hmcts/reform/divorce/feepayment/response/*',
+        '**uk/gov/hmcts/reform/divorce/feepayment/service/UploadRequestBuilder.java',
+        '**uk/gov/hmcts/reform/divorce/feepayment/FeesPaymentServiceApplication.java'
+]
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "DivorceFeesAndPaymentsService"
+        property "sonar.projectName", "Divorce :: Fees and Payments Service"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/functional.exec"
+        property "sonar.exclusions", sonarExclusions.join(", ")
+    }
+}
+
+task addReleaseSuffixToDevelop() {
     version = "${version}-SNAPSHOT"
 }
 
 jacocoTestReport {
-    executionData(test)
+    executionData(test, functional)
 
     reports {
         xml {
@@ -267,6 +252,16 @@ jacocoTestReport {
 
         html {
             enabled true
+        }
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.9
+            }
         }
     }
 }

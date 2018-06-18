@@ -6,16 +6,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication;
 
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = FeesPaymentServiceApplication.class)
 public class FeePaymentServiceTest {
 
     @Autowired
     private FeePaymentService feePaymentService;
-
 
     @Before
     public void setup() {
@@ -27,7 +27,7 @@ public class FeePaymentServiceTest {
     }
 
     @Test
-    public void testGetFees() {
-        assertNotNull(feePaymentService.getFee("id"));
+    public void testGetFeeOnIssueEvent() {
+        assertNotNull(feePaymentService.getFee("issue"));
     }
 }
