@@ -27,7 +27,7 @@ public class FeePaymentServiceController {
     @ApiOperation(value = "Lookup fee for petition issue event", tags = {"Fee Lookup"})
     @GetMapping("/version/1/petition-issue-fee")
     public Fee lookupFeesForPetitionIssue() {
-        System.out.println("test");
+        log.info("Getting fee for issue");
         return feePaymentService.getFee(ISSUE);
     }
 
@@ -35,6 +35,7 @@ public class FeePaymentServiceController {
     @GetMapping("/version/1/fee")
     public Fee getFee(@RequestParam @Valid @ApiParam(value = "Fee Request", required = true)
                               String request) {
+        log.info("Getting fee for ", request);
         return feePaymentService.getFee(request);
     }
 

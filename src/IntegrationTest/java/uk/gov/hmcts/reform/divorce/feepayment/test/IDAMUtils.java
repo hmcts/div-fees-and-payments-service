@@ -32,7 +32,6 @@ class IDAMUtils {
     }
 
     private String idamCreateUrl() {
-        System.out.println(" ******************** " + idamUserBaseUrl );
         return idamUserBaseUrl + "/testing-support/accounts";
     }
 

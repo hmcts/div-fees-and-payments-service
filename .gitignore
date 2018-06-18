@@ -14,3 +14,8 @@ src/main/resources/version
 java-rpm-packaging/
 
 .gradletasknamecache
+
+.classpath
+.project
+bin/
+.settings/
