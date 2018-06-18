@@ -30,27 +30,15 @@ variable "idam_s2s_url_prefix" {
 }
 
 variable "auth_provider_service_client_microservice" {
-    default = "divorce_ccd_submission"
+    default = ""
 }
 
 variable "auth_provider_service_client_key" {
-    default = "{{ evidence_management_client_api.secret }}"
+    default = ""
 }
 
 variable "auth_provider_service_client_tokentimetoliveinseconds" {
     default = "900"
-}
-
-variable "ccd_jurisdictionid" {
-    default = "DIVORCE"
-}
-
-variable "ccd_casetypeid" {
-    default = "DIVORCE"
-}
-
-variable "ccd_eventid_create" {
-    default = "create"
 }
 
 variable "logging_level_org_springframework_web" {
@@ -61,15 +49,7 @@ variable "logging_level_uk_gov_hmcts_ccd" {
     type = "string"
 }
 
-variable "draft_store_api_baseurl" {
-    type = "string"
-}
-
-variable "uk_gov_notify_email_templates" {
-    type = "string"
-}
-
-variable "uk_gov_notify_email_template_vars" {
+variable "fee_api_url" {
     type = "string"
 }
 
