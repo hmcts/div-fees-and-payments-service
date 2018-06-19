@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
+import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -20,13 +21,14 @@ public class FeePaymentServiceControllerTest {
     private FeePaymentService feePaymentService;
 
     @InjectMocks
-    private FeePaymentServiceController feePaymentServiceController;
+    private FeePaymentServiceController validationServiceController;
 
     @Test
     public void givenCoreCaseData_whenValidateIsCalled_thenReturnValidationResult() {
 
-        when(feePaymentService.getFee("id")).thenReturn("true");
-        feePaymentServiceController.getFee("id");
+        Fee fee = Fee.builder().feeCode("XXX").amount(Double.valueOf("200")).build();
+        when(feePaymentService.getFee("issue")).thenReturn(fee);
+        validationServiceController.getFee("issue");
         verify(feePaymentService, times(1)).getFee(any(String.class));
     }
 

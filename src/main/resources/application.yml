@@ -1,5 +1,5 @@
 server:
-  port: ${VALIDATION_SERVICE_PORT:4009}
+  port: ${FEES_AND_PAYMENTS_PORT:4009}
 
 http:
   connect:
@@ -17,10 +17,10 @@ documentation:
     enabled: false
 
 spring:
-  application:
-    name: div-fees-and-payments
   resources:
     static-locations:
+  application:
+    name: Fees And Payments Service
 
 # GENERAL SPRING BOOT ACTUATOR CONFIG
 # Context path for Spring Boot Actuator endpoints
@@ -61,6 +61,10 @@ endpoints:
     enabled: true
     sensitive: false
 
+fee:
+  api:
+    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net/fees-register/fees}
+    health: ${baseUri}/health
 
 logging:
   level:

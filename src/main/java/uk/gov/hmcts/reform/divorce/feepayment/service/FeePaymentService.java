@@ -1,7 +1,9 @@
 package uk.gov.hmcts.reform.divorce.feepayment.service;
 
+import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
+
 public interface FeePaymentService {
 
-    String getFee(String request);
+    Fee getFee(String request);
 
 }

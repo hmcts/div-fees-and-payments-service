@@ -20,9 +20,14 @@ documentation:
   swagger:
     enabled: true
 
+fee:
+  api:
+    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net/fees-register/fees}
+    health: ${baseUri}/health
+
 spring:
   application:
-    name: div-fees-and-payments
+    name: "div-fees-and-payments"
   resources:
     static-locations:
 

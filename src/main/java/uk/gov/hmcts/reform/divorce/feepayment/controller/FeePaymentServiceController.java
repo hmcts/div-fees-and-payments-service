@@ -1,29 +1,42 @@
 package uk.gov.hmcts.reform.divorce.feepayment.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
+import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 
 import javax.validation.Valid;
 
 @RestController
-@Api(value = "Divorce Fee Payment Service", tags = {"Divorce Fee Payment Service"})
 @Slf4j
+@RequestMapping("/fees-and-payments")
 public class FeePaymentServiceController {
+
+    private static final String ISSUE = "issue";
 
     @Autowired
     private FeePaymentService feePaymentService;
 
-    @ApiOperation(value = "Get a valid getFee for a given service", tags = {"Divorce Fee Payment Service"})
-    @PostMapping("/version/1/fee")
-    public String getFee(@RequestBody @Valid @ApiParam(value = "Fee Request", required = true)
-                                               String request) {
+
+    @ApiOperation(value = "Lookup fee for petition issue event", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/petition-issue-fee")
+    public Fee lookupFeesForPetitionIssue() {
+        log.info("Getting fee for issue");
+        return feePaymentService.getFee(ISSUE);
+    }
+
+    @ApiOperation(value = "Lookup fee for any event", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/fee")
+    public Fee getFee(@RequestParam @Valid @ApiParam(value = "Fee Request", required = true)
+                              String request) {
+        log.info("Getting fee for ", request);
         return feePaymentService.getFee(request);
     }
+
 }
