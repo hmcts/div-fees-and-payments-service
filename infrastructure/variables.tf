@@ -53,6 +53,10 @@ variable "fee_api_url" {
     type = "string"
 }
 
+variable "fee_api_endpoint" {
+    default = "/fees-register/fees"
+}
+
 variable "subscription" {}
 
 variable "location" {

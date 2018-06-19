@@ -30,7 +30,7 @@ module "div-fees-and-payment-service" {
     REFORM_TEAM = "${var.product}"
     REFORM_SERVICE_NAME = "${var.reform_service_name}"
     REFORM_ENVIRONMENT = "${var.env}"
-    FEE_API_URL = "${local.fee_api_url}"
+    FEE_API_URL = "${local.fee_api_url}${var.fee_api_endpoint}"
   }
 }
 
