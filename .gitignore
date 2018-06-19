@@ -19,3 +19,5 @@ java-rpm-packaging/
 .project
 bin/
 .settings/
+
+target/
