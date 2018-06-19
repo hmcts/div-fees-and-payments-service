@@ -50,8 +50,9 @@ sourceSets {
     }
 }
 
-dependencies {
-    integrationTestCompile(sourceSets.test.output)
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
 }
 
 mainClassName = 'uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication'
@@ -62,11 +63,6 @@ compileJava {
 
 compileTestJava {
     options.compilerArgs << '-Xlint:deprecation'
-}
-
-configurations {
-    integrationTestCompile.extendsFrom testCompile
-    integrationTestRuntime.extendsFrom testRuntime
 }
 
 repositories {
@@ -109,7 +105,6 @@ dependencyCheck {
 }
 
 def versions = [
-
         commonsIo: '2.5',
         commonsLang3: '3.0',
         hibernate: '6.0.5.Final',
@@ -130,8 +125,8 @@ def versions = [
 ]
 
 dependencies {
-
     //integration test
+    integrationTestCompile(sourceSets.test.output)
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: '1.5.2'
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: '1.5.2'
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: '1.5.2'
@@ -204,16 +199,6 @@ task functional(type: Test, description: 'Runs the functional tests', group: 'Ve
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
 }
 
-task printVersion {
-    doLast {
-        print project.version
-    }
-}
-
-task developAddReleaseSuffix() {
-    version = "${version}-SNAPSHOT"
-}
-
 def sonarExclusions = [
         '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/configuration/*',
@@ -230,10 +215,6 @@ sonarqube {
         property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/functional.exec"
         property "sonar.exclusions", sonarExclusions.join(", ")
     }
-}
-
-task addReleaseSuffixToDevelop() {
-    version = "${version}-SNAPSHOT"
 }
 
 jacocoTestReport {
