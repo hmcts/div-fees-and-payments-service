@@ -200,12 +200,8 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
 
 
 task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
-    println('functional tests');
-
-    /*
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
-    */
 }
 
 task printVersion {
