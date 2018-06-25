@@ -27,6 +27,14 @@ spring:
 # Allow actuator endpoints to be accessed without requiring authentication
 # Enable default health indicators
 # Enable disk space health check
+# HEALTH ENDPOINT CONFIG
+# Enable the health endpoint
+# Enable sensitive health information
+# Defines the URL of the health check to ${management.context-path}/health
+# Caching period in milliseconds of health endpoint
+# METRICS ENDPOINT CONFIG
+# Enable the metrics endpoint
+# Enable sensitive metrics information
 management:
   server:
     servlet:
@@ -41,23 +49,19 @@ management:
       enabled: true
     diskspace:
       enabled: true
+  endpoint:
+    health:
+      enabled: true
+      cache:
+        time-to-live: 1000
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      base-path: /
 
 
-# HEALTH ENDPOINT CONFIG
-# Enable the health endpoint
-# Enable sensitive health information
-# Defines the URL of the health check to ${management.context-path}/health
-# Caching period in milliseconds of health endpoint
-# METRICS ENDPOINT CONFIG
-# Enable the metrics endpoint
-# Enable sensitive metrics information
-endpoint:
-  health:
-    enabled: true
-    cache:
-      time-to-live: 1000
-  metrics:
-    enabled: true
+
 
 fee:
   api:
