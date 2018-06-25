@@ -56,4 +56,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     }
 
 
+    public void setFeeApiUrl(String feeApiUrl) {
+        this.feeApiUrl = feeApiUrl;
+    }
 }
