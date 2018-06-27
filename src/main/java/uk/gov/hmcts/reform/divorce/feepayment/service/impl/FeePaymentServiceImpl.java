@@ -54,9 +54,4 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         String feeCode = objectNode.path("code").asText();
         return Fee.builder().amount(amount).version(version).feeCode(feeCode).build();
     }
-
-
-    public void setFeeApiUrl(String feeApiUrl) {
-        this.feeApiUrl = feeApiUrl;
-    }
 }

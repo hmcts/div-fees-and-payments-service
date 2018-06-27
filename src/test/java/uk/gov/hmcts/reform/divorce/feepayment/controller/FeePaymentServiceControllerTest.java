@@ -10,7 +10,9 @@ import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FeePaymentServiceControllerTest {

@@ -11,12 +11,23 @@ info:
   app:
     name: ${spring.application.name}
 
+evidence-management-api:
+  service:
+    stub:
+      enabled: false
 
 documentation:
   swagger:
-    enabled: false
+    enabled: true
+
+fee:
+  api:
+    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net/fees-register/fees}
+    health: ${baseUri}/health
 
 spring:
+  application:
+    name: "div-fees-and-payments"
   resources:
     static-locations:
   application:
@@ -53,7 +64,7 @@ management:
     health:
       enabled: true
       cache:
-        time-to-live: 1000
+        time-to-live: 5000
     metrics:
       enabled: true
   endpoints:
