@@ -51,6 +51,7 @@ variable "logging_level_uk_gov_hmcts_ccd" {
 
 variable "fee_api_url" {
     type = "string"
+    default = ""
 }
 
 variable "fee_api_endpoint" {
