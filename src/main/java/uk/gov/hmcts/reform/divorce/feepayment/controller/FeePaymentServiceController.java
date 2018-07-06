@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,10 +26,10 @@ public class FeePaymentServiceController {
 
 
     @ApiOperation(value = "Lookup fee for petition issue event", tags = {"Fee Lookup"})
-    @GetMapping("/version/1/petition-issue-fee")
-    public Fee lookupFeesForPetitionIssue() {
+    @GetMapping(value = "/version/1/petition-issue-fee", produces = "application/json")
+    public ResponseEntity<Fee> lookupFeesForPetitionIssue() {
         log.info("Getting fee for issue");
-        return feePaymentService.getFee(ISSUE);
+        return ResponseEntity.ok(feePaymentService.getFee(ISSUE));
     }
 
     @ApiOperation(value = "Lookup fee for any event", tags = {"Fee Lookup"})

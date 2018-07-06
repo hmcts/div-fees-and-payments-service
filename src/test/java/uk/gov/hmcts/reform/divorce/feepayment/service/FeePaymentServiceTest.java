@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.feepayment.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,16 +11,19 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication;
 import uk.gov.hmcts.reform.divorce.feepayment.service.impl.FeePaymentServiceImpl;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = FeesPaymentServiceApplication.class)
@@ -36,11 +40,13 @@ public class FeePaymentServiceTest {
     private URI uri = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family&jurisdiction2=family%20court&service=divorce");
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         assertNotNull(feePaymentService);
         ReflectionTestUtils.setField(feePaymentService, FEE_API_FIELD_NAME, FEE_API_URL);
-
-        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode[].class))).thenReturn(new ObjectNode[]{});
+        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
+        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
+        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode[].class)))
+                .thenReturn(new ObjectNode[]{objectNode});
     }
 
     public FeePaymentService getFeePaymentService() {
@@ -50,6 +56,7 @@ public class FeePaymentServiceTest {
     @Test
     public void testGetFeeOnIssueEvent() {
         assertNotNull(feePaymentService.getFee("issue"));
-        verify(restTemplate, times(1)).getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode[].class));
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(uri),
+                Mockito.eq(ObjectNode[].class));
     }
 }

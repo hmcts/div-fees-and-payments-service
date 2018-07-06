@@ -217,7 +217,9 @@ def sonarExclusions = [
         '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/configuration/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/response/*',
-        '**uk/gov/hmcts/reform/divorce/feepayment/service/UploadRequestBuilder.java',
+        '**uk/gov/hmcts/reform/divorce/feepayment/health/*',
+        '**uk/gov/hmcts/reform/divorce/feepayment/model/*',
+        '**uk/gov/hmcts/reform/divorce/feepayment/management/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/FeesPaymentServiceApplication.java'
 ]
 
