@@ -203,6 +203,7 @@ task functional(type: Test, description: 'Runs the functional tests', group: 'Ve
 }
 
 def sonarExclusions = [
+        '**uk/gov/hmcts/reform/divorce/feepayment/model/*'
         '**uk/gov/hmcts/reform/divorce/feepayment/exception/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/configuration/*',
         '**uk/gov/hmcts/reform/divorce/feepayment/response/*',
