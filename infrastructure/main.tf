@@ -12,7 +12,7 @@ locals {
   aseName = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
 
-  fee_api_url = "${var.fee_api_url == "" ? "http://fee-api-${local.local_env}.service.core-compute-${local.local_env}.internal" : var.fee_api_url}"
+  fee_api_url = "${var.fee_api_url == "" ? "http://fees-register-api-${local.local_env}.service.core-compute-${local.local_env}.internal" : var.fee_api_url}"
 }
 
 
