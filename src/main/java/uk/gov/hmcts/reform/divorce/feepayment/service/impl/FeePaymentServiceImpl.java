@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.feepayment.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,18 @@ import java.util.stream.Stream;
 @Service
 @Slf4j
 public class FeePaymentServiceImpl implements FeePaymentService {
+
+    private static final String CURRENT_VERSION = "current_version";
+
+    private static final String FLAT_AMOUNT = "flat_amount";
+
+    private static final String AMOUNT = "amount";
+
+    private static final String VERSION = "version";
+
+    private static final String CODE = "code";
+
+    private static final String DESCRIPTION = "description";
 
     @Value("${fee.api.baseUri}")
     private String feeApiUrl;
@@ -48,10 +61,12 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     }
 
     private Fee extractValue(ObjectNode objectNode) {
-        double amount = objectNode.path("current_version")
-                .path("flat_amount").get("amount").asDouble();
-        int version = objectNode.path("current_version").path("version").asInt();
-        String feeCode = objectNode.path("code").asText();
-        return Fee.builder().amount(amount).version(version).feeCode(feeCode).build();
+        JsonNode currentVersion = objectNode.path(CURRENT_VERSION);
+        double amount = currentVersion
+                .path(FLAT_AMOUNT).get(AMOUNT).asDouble();
+        int version = currentVersion.path(VERSION).asInt();
+        String feeCode = objectNode.path(CODE).asText();
+        String description = currentVersion.path(DESCRIPTION).asText();
+        return Fee.builder().amount(amount).version(version).description(description).feeCode(feeCode).build();
     }
 }
