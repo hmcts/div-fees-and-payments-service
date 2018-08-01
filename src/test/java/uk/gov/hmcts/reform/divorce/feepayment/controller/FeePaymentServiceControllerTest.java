@@ -26,7 +26,11 @@ public class FeePaymentServiceControllerTest {
     @Test
     public void givenCoreCaseData_whenValidateIsCalled_thenReturnValidationResult() {
 
-        Fee fee = Fee.builder().feeCode("XXX").amount(Double.valueOf("200")).build();
+        Fee fee = Fee.builder()
+                .feeCode("XXX")
+                .amount(Double.valueOf("200"))
+                .build();
+
         when(feePaymentService.getFee("issue")).thenReturn(fee);
         validationServiceController.getFee("issue");
         verify(feePaymentService, times(1)).getFee(any(String.class));
