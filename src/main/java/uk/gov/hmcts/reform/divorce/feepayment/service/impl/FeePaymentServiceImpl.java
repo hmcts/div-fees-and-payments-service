@@ -67,12 +67,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         int version = currentVersion.path(VERSION).asInt();
         String feeCode = objectNode.path(CODE).asText();
         String description = currentVersion.path(DESCRIPTION).asText();
-        Fee fee = Fee.builder()
+        return Fee.builder()
                 .amount(amount)
                 .version(version)
                 .description(description)
                 .feeCode(feeCode)
                 .build();
-        return fee;
     }
 }
