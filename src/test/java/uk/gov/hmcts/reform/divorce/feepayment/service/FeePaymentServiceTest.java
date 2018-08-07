@@ -14,12 +14,14 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication;
+import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 import uk.gov.hmcts.reform.divorce.feepayment.service.impl.FeePaymentServiceImpl;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -55,7 +57,17 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testGetFeeOnIssueEvent() {
-        assertNotNull(feePaymentService.getFee("issue"));
+        Fee expected = Fee.builder()
+                .amount(550.0)
+                .feeCode("FEE0002")
+                .version(4)
+                .description("Filing an application for a divorce, "
+                + "nullity or civil partnership dissolution – fees order 1.2.")
+                .build();
+
+        Fee actual = feePaymentService.getFee("issue");
+        assertNotNull(actual);
+        assertEquals(expected, actual);
         verify(restTemplate, times(1)).getForObject(Mockito.eq(uri),
                 Mockito.eq(ObjectNode[].class));
     }
