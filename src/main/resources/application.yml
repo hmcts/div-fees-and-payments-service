@@ -22,7 +22,7 @@ documentation:
 
 fee:
   api:
-    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net/fees-register/fees}
+    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net/fees-register/fees/lookup}
     health: ${baseUri}/health
 
 spring:
