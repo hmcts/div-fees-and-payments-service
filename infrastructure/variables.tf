@@ -55,7 +55,7 @@ variable "fee_api_url" {
 }
 
 variable "fee_api_endpoint" {
-    default = "/fees-register/fees"
+    default = "/fees-register/fees/lookup"
 }
 
 variable "subscription" {}

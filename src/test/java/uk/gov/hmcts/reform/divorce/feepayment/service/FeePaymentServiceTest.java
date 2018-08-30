@@ -47,8 +47,8 @@ public class FeePaymentServiceTest {
         ReflectionTestUtils.setField(feePaymentService, FEE_API_FIELD_NAME, FEE_API_URL);
         File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
         ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
-        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode[].class)))
-                .thenReturn(new ObjectNode[]{objectNode});
+        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode.class)))
+                .thenReturn(objectNode);
     }
 
     public FeePaymentService getFeePaymentService() {
@@ -69,6 +69,6 @@ public class FeePaymentServiceTest {
         assertNotNull(actual);
         assertEquals(expected, actual);
         verify(restTemplate, times(1)).getForObject(Mockito.eq(uri),
-                Mockito.eq(ObjectNode[].class));
+                Mockito.eq(ObjectNode.class));
     }
 }

@@ -36,13 +36,10 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     @Autowired
     private RestTemplate restTemplate;
 
-
     @Override
     public Fee getFee(String event) {
 
-        Fee defaultFee = Fee.builder().build();
-
-        log.debug("Getting fee from: ", feeApiUrl);
+        log.debug("Getting fee from: " + feeApiUrl);
 
         URI uri = UriComponentsBuilder.fromHttpUrl(feeApiUrl)
                 .queryParam("channel", "default")
@@ -52,12 +49,9 @@ public class FeePaymentServiceImpl implements FeePaymentService {
                 .queryParam("service", "divorce")
                 .build().toUri();
 
-        ObjectNode[] listOfObjects = restTemplate.getForObject(uri, ObjectNode[].class);
+        ObjectNode feeResponse = restTemplate.getForObject(uri, ObjectNode.class);
 
-        return Stream.of(listOfObjects).findFirst()
-                .map(this::extractValue)
-                .orElse(defaultFee);
-
+        return extractValue(feeResponse);
     }
 
     private Fee extractValue(ObjectNode objectNode) {
