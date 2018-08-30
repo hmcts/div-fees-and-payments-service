@@ -18,11 +18,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class FeePaymentServiceImpl implements FeePaymentService {
 
-    private static final String CURRENT_VERSION = "current_version";
-
-    private static final String FLAT_AMOUNT = "flat_amount";
-
-    private static final String AMOUNT = "amount";
+    private static final String AMOUNT = "fee_amount";
 
     private static final String VERSION = "version";
 
@@ -55,12 +51,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     }
 
     private Fee extractValue(ObjectNode objectNode) {
-        JsonNode currentVersion = objectNode.path(CURRENT_VERSION);
-        double amount = currentVersion
-                .path(FLAT_AMOUNT).get(AMOUNT).asDouble();
-        int version = currentVersion.path(VERSION).asInt();
+        double amount = objectNode.path(AMOUNT).asDouble();
+        int version = objectNode.path(VERSION).asInt();
         String feeCode = objectNode.path(CODE).asText();
-        String description = currentVersion.path(DESCRIPTION).asText();
+        String description = objectNode.path(DESCRIPTION).asText();
+        
         return Fee.builder()
                 .amount(amount)
                 .version(version)
