@@ -14,6 +14,10 @@ variable "product" {
     type    = "string"
 }
 
+variable "raw_product" {
+  default = "div"
+}
+
 variable "tenant_id" {}
 
 variable "client_id" {
