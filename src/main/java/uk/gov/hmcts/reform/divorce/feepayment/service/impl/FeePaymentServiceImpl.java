@@ -32,6 +32,8 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     public static final String FINANCIAL_ORDER = "financial-order";
 
     public static final String HIJ = "HIJ";
+    public static final String ISSUE = "issue";
+    public static final String GENERAL_APPLICATION = "general application";
 
     @Value("${fee.api.baseUri}")
     private String feeApiUrl;
@@ -48,22 +50,22 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getIssueFee() {
-        return getFee("issue", DIVORCE, null );
+        return getFee(ISSUE, DIVORCE, null );
     }
 
     @Override
     public Fee getAmendPetitionFee() {
-        return getFee("issue", OTHER, "ABC" );
+        return getFee(ISSUE, OTHER, "ABC" );
     }
 
     @Override
     public Fee getDefendPetitionFee() {
-        return getFee("issue", OTHER, "PQR" );
+        return getFee(ISSUE, OTHER, "PQR" );
     }
 
     @Override
     public Fee getGeneralApplicationFee() {
-        return getFee("general application", OTHER, "");
+        return getFee(GENERAL_APPLICATION, OTHER, "");
     }
 
     @Override
@@ -78,7 +80,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee("general application", OTHER, "without-notice" );
+        return getFee(GENERAL_APPLICATION, OTHER, "without-notice" );
     }
 
 
