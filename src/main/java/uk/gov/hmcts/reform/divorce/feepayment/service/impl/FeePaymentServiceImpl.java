@@ -11,7 +11,10 @@ import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -124,6 +127,22 @@ public class FeePaymentServiceImpl implements FeePaymentService {
                 .description(description)
                 .feeCode(feeCode)
                 .build();
+    }
+
+    @Override
+    public List<Fee> getAllFees() {
+
+        String[][] strings = {
+            {ISSUE, DIVORCE, null},
+            {ISSUE, OTHER, "ABC"},
+            {GENERAL_APPLICATION, OTHER, ""},
+            {"enforcement", OTHER, HIJ},
+            {"miscellaneous", OTHER, FINANCIAL_ORDER},
+            {GENERAL_APPLICATION, OTHER, "without-notice"},
+            {ISSUE, OTHER, "PQR"}
+        };
+
+        return Stream.of(strings).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
     }
 
 

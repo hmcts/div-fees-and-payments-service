@@ -147,5 +147,16 @@ public class FeePaymentServiceTest {
             Mockito.eq(ObjectNode.class));
     }
 
+    @Test
+    public void testAllFees() throws IOException {
+        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
+        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
+        Mockito.when(restTemplate.getForObject(Mockito.any(), Mockito.eq(ObjectNode.class)))
+            .thenReturn(objectNode);
+        feePaymentService.getAllFees();
+        verify(restTemplate, times(7)).getForObject(Mockito.any(),
+            Mockito.eq(ObjectNode.class));
+    }
+
 
 }

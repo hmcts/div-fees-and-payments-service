@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -96,6 +99,12 @@ public class FeePaymentServiceControllerTest {
         assertEquals(expected, actual);
     }
 
-
+    @Test
+    public void whenGetAllFeesIsCalled_thenReturnFeeResult() {
+        when(feePaymentService.getAllFees()).thenReturn(Arrays.asList(expected));
+        List<Fee> actual = feePaymentServiceController.getAllFees().getBody();
+        verify(feePaymentService, times(1)).getAllFees();
+        assertEquals(Arrays.asList(expected), actual);
+    }
 
 }

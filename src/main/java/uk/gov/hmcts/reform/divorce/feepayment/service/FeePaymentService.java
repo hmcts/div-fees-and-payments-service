@@ -2,6 +2,8 @@ package uk.gov.hmcts.reform.divorce.feepayment.service;
 
 import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 
+import java.util.List;
+
 public interface FeePaymentService {
 
     Fee getFee(String request, String service, String keyword);
@@ -19,5 +21,7 @@ public interface FeePaymentService {
     Fee getApplicationFinancialOrderFee();
 
     Fee getApplicationWithoutNoticeFee();
+
+    List<Fee> getAllFees();
 
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/fees-and-payments")
@@ -61,5 +63,11 @@ public class FeePaymentServiceController {
     @GetMapping("/version/1/application-without-notice-fee")
     public ResponseEntity<Fee>  getApplicationWithoutNoticeFee()  {
         return ResponseEntity.ok(feePaymentService.getApplicationWithoutNoticeFee());
+    }
+
+    @ApiOperation(value = "Get all fees", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/get-all-fees")
+    public ResponseEntity<List<Fee>> getAllFees() {
+        return ResponseEntity.ok(feePaymentService.getAllFees());
     }
 }
