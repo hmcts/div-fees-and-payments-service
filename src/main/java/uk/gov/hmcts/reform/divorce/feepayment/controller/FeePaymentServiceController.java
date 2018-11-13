@@ -13,31 +13,58 @@ import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @Slf4j
 @RequestMapping("/fees-and-payments")
 public class FeePaymentServiceController {
 
-    private static final String ISSUE = "issue";
-
     @Autowired
     private FeePaymentService feePaymentService;
 
 
-    @ApiOperation(value = "Lookup fee for petition issue event", tags = {"Fee Lookup"})
+    @ApiOperation(value = "Get Issue fee", tags = {"Fee Lookup"})
     @GetMapping(value = "/version/1/petition-issue-fee", produces = "application/json")
     public ResponseEntity<Fee> lookupFeesForPetitionIssue() {
         log.info("Getting fee for issue");
-        return ResponseEntity.ok(feePaymentService.getFee(ISSUE));
+        return ResponseEntity.ok(feePaymentService.getIssueFee());
     }
 
-    @ApiOperation(value = "Lookup fee for any event", tags = {"Fee Lookup"})
-    @GetMapping("/version/1/fee")
-    public Fee getFee(@RequestParam @Valid @ApiParam(value = "Fee Request", required = true)
-                              String request) {
-        log.info("Getting fee for ", request);
-        return feePaymentService.getFee(request);
+    @ApiOperation(value = "Get amend fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/amend-fee")
+    public ResponseEntity<Fee> getAmendFee()  {
+        return ResponseEntity.ok(feePaymentService.getAmendPetitionFee());
     }
 
+    @ApiOperation(value = "Get Defended petition fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/defended-petition-fee")
+    public ResponseEntity<Fee>  getDefendedPetitionFee()  {
+        return ResponseEntity.ok(feePaymentService.getDefendPetitionFee());
+    }
+
+    @ApiOperation(value = "Get General Application fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/general-application-fee")
+    public ResponseEntity<Fee>  getGeneralApplicationFee()  {
+        return ResponseEntity.ok(feePaymentService.getGeneralApplicationFee());
+    }
+
+
+    @ApiOperation(value = "Get Enforcement fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/enforcement-fee")
+    public ResponseEntity<Fee>  getEnforcementFee()  {
+        return ResponseEntity.ok(feePaymentService.getEnforcementFee());
+    }
+
+    @ApiOperation(value = "Get Application Financial Order fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/application-financial-order-fee")
+    public ResponseEntity<Fee>  getFinancialOrderFee()  {
+        return ResponseEntity.ok(feePaymentService.getApplicationFinancialOrderFee());
+    }
+
+    @ApiOperation(value = "Get Enforcement fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/application-without-notice-fee")
+    public ResponseEntity<Fee>  getApplicationWithoutNoticeFee()  {
+        return ResponseEntity.ok(feePaymentService.getApplicationWithoutNoticeFee());
+    }
 }
