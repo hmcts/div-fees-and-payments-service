@@ -33,18 +33,43 @@ public class FeePaymentServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
+
     private String FEE_API_URL = "http://feeApiUrl";
+
     private String FEE_API_FIELD_NAME = "feeApiUrl";
 
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
 
-    private URI uri = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family&jurisdiction2=family%20court&service=divorce");
+    private URI issueUrl = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family" +
+        "&jurisdiction2=family%20court&service=divorce");
+
+    private URI amendUrl = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family" +
+        "&jurisdiction2=family%20court&service=other&keyword=ABC");
+
+    private URI defendUrl = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family" +
+        "&jurisdiction2=family%20court&service=other&keyword=PQR");
+
+    private URI generalApplicationUrl = URI.create("http://feeApiUrl?channel=default&event=general%20application" +
+        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=");
+
+    private URI enforcementUrl = URI.create("http://feeApiUrl?channel=default&event=enforcement" +
+        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=HIJ");
+
+    private URI applicationFinOrderUrl = URI.create("http://feeApiUrl?channel=default&event=miscellaneous" +
+        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
+
+    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl?channel=default&event=general%20application" +
+        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=without-notice");
+
 
     @Before
     public void setup() throws IOException {
         assertNotNull(feePaymentService);
         ReflectionTestUtils.setField(feePaymentService, FEE_API_FIELD_NAME, FEE_API_URL);
+    }
+
+    private void mockRestTemplate(URI uri) throws IOException {
         File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
         ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
         Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode.class)))
@@ -56,7 +81,8 @@ public class FeePaymentServiceTest {
     }
 
     @Test
-    public void testGetFeeOnIssueEvent() {
+    public void testGetFeeOnIssueEvent() throws IOException {
+        mockRestTemplate( issueUrl);
         Fee expected = Fee.builder()
                 .amount(550.0)
                 .feeCode("FEE0002")
@@ -65,10 +91,72 @@ public class FeePaymentServiceTest {
                 + "nullity or civil partnership dissolution – fees order 1.2.")
                 .build();
 
-        Fee actual = feePaymentService.getFee("issue");
+        Fee actual = feePaymentService.getIssueFee();
         assertNotNull(actual);
         assertEquals(expected, actual);
-        verify(restTemplate, times(1)).getForObject(Mockito.eq(uri),
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(issueUrl),
                 Mockito.eq(ObjectNode.class));
     }
+
+    @Test
+    public void testAmendFeeEvent() throws IOException {
+        mockRestTemplate(amendUrl);
+        feePaymentService.getAmendPetitionFee();
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(amendUrl),
+            Mockito.eq(ObjectNode.class));
+    }
+
+
+    @Test
+    public void testDefendFeeEvent() throws IOException {
+        mockRestTemplate(defendUrl);
+        feePaymentService.getDefendPetitionFee();
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(defendUrl),
+            Mockito.eq(ObjectNode.class));
+    }
+
+    @Test
+    public void testGeneralApplicationFeeEvent() throws IOException {
+        mockRestTemplate(generalApplicationUrl);
+        feePaymentService.getGeneralApplicationFee();
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(generalApplicationUrl),
+            Mockito.eq(ObjectNode.class));
+    }
+
+    @Test
+    public void testEnforcementFeeEvent() throws IOException {
+        mockRestTemplate(enforcementUrl);
+        feePaymentService.getEnforcementFee();
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(enforcementUrl),
+            Mockito.eq(ObjectNode.class));
+    }
+
+    @Test
+    public void testApplicationFinOrderFeeEvent() throws IOException {
+        mockRestTemplate(applicationFinOrderUrl);
+        feePaymentService.getApplicationFinancialOrderFee();
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationFinOrderUrl),
+            Mockito.eq(ObjectNode.class));
+    }
+
+    @Test
+    public void testApplicationWithoutNoticeFeeEvent() throws IOException {
+        mockRestTemplate(applicationWithoutNoticeUrl);
+        feePaymentService.getApplicationWithoutNoticeFee();
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithoutNoticeUrl),
+            Mockito.eq(ObjectNode.class));
+    }
+
+    @Test
+    public void testAllFees() throws IOException {
+        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
+        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
+        Mockito.when(restTemplate.getForObject(Mockito.any(), Mockito.eq(ObjectNode.class)))
+            .thenReturn(objectNode);
+        feePaymentService.getAllFees();
+        verify(restTemplate, times(7)).getForObject(Mockito.any(),
+            Mockito.eq(ObjectNode.class));
+    }
+
+
 }

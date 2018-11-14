@@ -1,11 +1,11 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.core.Is.isA;
 
 @Lazy
-@RunWith(SerenityRunner.class)
+@RunWith(Parameterized.class)
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.feepayment.test", "uk.gov.hmcts.auth.provider.service"})
 @ImportAutoConfiguration({RibbonAutoConfiguration.class,HttpMessageConvertersAutoConfiguration.class,
         FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
@@ -38,6 +38,8 @@ public class FeePaymentIntegrationTest {
     @Value("${fees-and-payments.baseUrl}")
     private String feesPaymentsServiceUrl;
 
+    private String feeEndpoint;
+
     @Rule
     public SpringIntegrationMethodRule springMethodIntegration = new SpringIntegrationMethodRule();
 
@@ -46,35 +48,27 @@ public class FeePaymentIntegrationTest {
        baseURI = feesPaymentsServiceUrl;
     }
 
+
+    public FeePaymentIntegrationTest(String feeEndpoint) {
+        this.feeEndpoint =feeEndpoint;
+    }
+
+    @Parameterized.Parameters
+    public static String[]data() {
+        return  new String[]{"/petition-issue-fee", "/general-application-fee",
+                        "/enforcement-fee", "/application-financial-order-fee"
+                        ,"application-without-notice-fee","/amend-fee",
+                        "/defended-petition-fee"};
+    }
+
     @Test
-    public void getFeeCodeFeesLookupForIssue() {
+    public void feeTest() {
         when()
-                .get("/petition-issue-fee")
+                .get(feeEndpoint)
                 .then()
                 .assertThat().statusCode(200)
                 .and().body("feeCode", isA(String.class));
     }
 
-    @Test
-    public void getFeeAmtFeesLookupForIssue() {
-        when()
-                .get("/petition-issue-fee")
-                .then().assertThat().statusCode(200)
-                .and().body("amount", hasToString("550.0"));
-    }
 
-    @Test
-    public void getFeeLookupForInvalidEvent() {
-        when()
-                .get("/fee?request=not_available")
-                .then().assertThat().statusCode(204);
-    }
-
-    @Test
-    public void getFeeLookupValidEvent() {
-        when()
-                .get("/fee?request=issue")
-                .then().assertThat().statusCode(200)
-                .and().body("amount", hasToString("550.0"));
-    }
 }
