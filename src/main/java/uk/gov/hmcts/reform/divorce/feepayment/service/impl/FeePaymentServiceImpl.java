@@ -28,15 +28,27 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     private static final String DESCRIPTION = "description";
 
-    public static final String OTHER = "other";
+    private static final String OTHER = "other";
 
-    public static final String DIVORCE = "divorce";
+    private static final String DIVORCE = "divorce";
 
-    public static final String FINANCIAL_ORDER = "financial-order";
+    private static final String FINANCIAL_ORDER = "financial-order";
 
-    public static final String HIJ = "HIJ";
-    public static final String ISSUE = "issue";
-    public static final String GENERAL_APPLICATION = "general application";
+    private  static final String HIJ = "HIJ";
+
+    private  static final String ISSUE = "issue";
+
+    private static final String GENERAL_APPLICATION = "general application";
+
+    private String[][] feesItems = {
+        {ISSUE, DIVORCE, null},
+        {ISSUE, OTHER, "ABC"},
+        {GENERAL_APPLICATION, OTHER, ""},
+        {"enforcement", OTHER, HIJ},
+        {"miscellaneous", OTHER, FINANCIAL_ORDER},
+        {GENERAL_APPLICATION, OTHER, "without-notice"},
+        {ISSUE, OTHER, "PQR"}
+    };
 
     @Value("${fee.api.baseUri}")
     private String feeApiUrl;
@@ -132,17 +144,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     @Override
     public List<Fee> getAllFees() {
 
-        String[][] strings = {
-            {ISSUE, DIVORCE, null},
-            {ISSUE, OTHER, "ABC"},
-            {GENERAL_APPLICATION, OTHER, ""},
-            {"enforcement", OTHER, HIJ},
-            {"miscellaneous", OTHER, FINANCIAL_ORDER},
-            {GENERAL_APPLICATION, OTHER, "without-notice"},
-            {ISSUE, OTHER, "PQR"}
-        };
-
-        return Stream.of(strings).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
+        return Stream.of(feesItems).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
     }
 
 
