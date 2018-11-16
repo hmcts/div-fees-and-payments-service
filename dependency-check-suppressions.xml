@@ -13,4 +13,11 @@
         <cve>CVE-2015-2156</cve>
         <cve>CVE-2014-3488</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: guava-.*
+   ]]></notes>
+        <gav regex="true">^com\.google\.guava:guava:.*$</gav>
+        <cpe>cpe:/a:google:guava</cpe>
+    </suppress>
 </suppressions>
