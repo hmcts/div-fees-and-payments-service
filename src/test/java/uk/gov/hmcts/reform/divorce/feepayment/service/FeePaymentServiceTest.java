@@ -51,7 +51,7 @@ public class FeePaymentServiceTest {
         "&jurisdiction2=family%20court&service=other&keyword=PQR");
 
     private URI generalApplicationUrl = URI.create("http://feeApiUrl?channel=default&event=general%20application" +
-        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=");
+        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other");
 
     private URI enforcementUrl = URI.create("http://feeApiUrl?channel=default&event=enforcement" +
         "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=HIJ");
