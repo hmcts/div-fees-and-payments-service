@@ -43,7 +43,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private String[][] feesItems = {
         {ISSUE, DIVORCE, null},
         {ISSUE, OTHER, "ABC"},
-        {GENERAL_APPLICATION, OTHER, ""},
+        {GENERAL_APPLICATION, OTHER, null},
         {"enforcement", OTHER, HIJ},
         {"miscellaneous", OTHER, FINANCIAL_ORDER},
         {GENERAL_APPLICATION, OTHER, "without-notice"},
@@ -80,7 +80,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getGeneralApplicationFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, "");
+        return getFee(GENERAL_APPLICATION, OTHER, null);
     }
 
     @Override
