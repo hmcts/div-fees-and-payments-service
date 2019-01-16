@@ -1,0 +1,5 @@
+
+endpoint:
+  health:
+    cache:
+      time-to-live: 1000
