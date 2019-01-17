@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions
     xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
-    <suppress>
-        <notes><![CDATA[
-   file name: tomcat-annotations-api-8.5.23.jar
-   ]]></notes>
-        <gav regex="true">^org\.apache\.tomcat:tomcat-annotations-api:.*$</gav>
-        <cpe>cpe:/a:apache:tomcat</cpe>
-    </suppress>
-    <suppress>
-        <gav regex="true">.*</gav>
-        <cve>CVE-2015-2156</cve>
-        <cve>CVE-2014-3488</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: guava-.*
-   ]]></notes>
-        <gav regex="true">^com\.google\.guava:guava:.*$</gav>
-        <cpe>cpe:/a:google:guava</cpe>
-    </suppress>
+
 </suppressions>
