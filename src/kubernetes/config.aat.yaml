@@ -5,7 +5,7 @@ metadata:
   namespace: ${NAMESPACE}
 data:
   REFORM_ENVIRONMENT : "aat"
-  FEE_API_URL : "http://fees-register-api-aat.service.core-compute-aat.internal/fees-register/fees/lookup"
+  FEE_API_URL : "http://fees-register-api-aat.service.core-compute-aat.internal"
   APPLICATION_INSIGHTS_IKEY : "79656785-5397-4573-93be-ddd7062d5ac3"
   SLOT : "PRODUCTION"
   REFORM_SERVICE_NAME : "fps"

@@ -50,12 +50,21 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         {ISSUE, OTHER, "PQR"}
     };
 
-    @Value("${fee.api.baseUri}")
-    private String feeApiUrl;
+    private String feeApiBaseUri;
 
-    @Autowired
+    private String feesLookupEndpoint;
+
     private RestTemplate restTemplate;
 
+    @Autowired
+    public FeePaymentServiceImpl(RestTemplate restTemplate,
+                                 @Value("${fee.api.baseUri}") String feeApiBaseUri,
+                                 @Value("${fee.api.feesLookup}") String feesLookupEndpoint
+    ) {
+        this.restTemplate = restTemplate;
+        this.feeApiBaseUri = feeApiBaseUri;
+        this.feesLookupEndpoint = feesLookupEndpoint;
+    }
 
     @Override
     public Fee getFee(String event, String service, String keyword) {
@@ -107,7 +116,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         URI uri;
 
         if (keyword == null) {
-            uri = UriComponentsBuilder.fromHttpUrl(feeApiUrl)
+            uri = UriComponentsBuilder.fromHttpUrl(feeApiBaseUri + feesLookupEndpoint)
                 .queryParam("channel", "default")
                 .queryParam("event", event)
                 .queryParam("jurisdiction1", "family")
@@ -115,7 +124,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
                 .queryParam("service", divorce)
                 .build().toUri();
         } else {
-            uri = UriComponentsBuilder.fromHttpUrl(feeApiUrl)
+            uri = UriComponentsBuilder.fromHttpUrl(feeApiBaseUri + feesLookupEndpoint)
                 .queryParam("channel", "default")
                 .queryParam("event", event)
                 .queryParam("jurisdiction1", "family")

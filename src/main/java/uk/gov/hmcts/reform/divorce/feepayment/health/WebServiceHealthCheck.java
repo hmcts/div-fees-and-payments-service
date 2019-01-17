@@ -17,9 +17,9 @@ import org.springframework.web.client.RestTemplate;
 public abstract class WebServiceHealthCheck implements HealthIndicator {
     private static final Logger log = LoggerFactory.getLogger(WebServiceHealthCheck.class);
 
-    protected final HttpEntityFactory httpEntityFactory;
-    protected final RestTemplate restTemplate;
-    protected final String uri;
+    private final HttpEntityFactory httpEntityFactory;
+    private final RestTemplate restTemplate;
+    private final String uri;
 
     public WebServiceHealthCheck(HttpEntityFactory httpEntityFactory, RestTemplate restTemplate, String uri) {
         this.httpEntityFactory = httpEntityFactory;
@@ -29,7 +29,7 @@ public abstract class WebServiceHealthCheck implements HealthIndicator {
 
     public Health health() {
         HttpEntity<Object> httpEntity = httpEntityFactory.createRequestEntityForHealthCheck();
-        ResponseEntity<Object> responseEntity = null;
+        ResponseEntity<Object> responseEntity;
 
         try {
             responseEntity = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Object.class, new HashMap<>());

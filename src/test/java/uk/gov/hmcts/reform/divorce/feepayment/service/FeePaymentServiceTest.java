@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication;
@@ -34,39 +33,35 @@ public class FeePaymentServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    private String FEE_API_URL = "http://feeApiUrl";
-
-    private String FEE_API_FIELD_NAME = "feeApiUrl";
-
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
 
-    private URI issueUrl = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family" +
+    private URI issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family" +
         "&jurisdiction2=family%20court&service=divorce");
 
-    private URI amendUrl = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family" +
+    private URI amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family" +
         "&jurisdiction2=family%20court&service=other&keyword=ABC");
 
-    private URI defendUrl = URI.create("http://feeApiUrl?channel=default&event=issue&jurisdiction1=family" +
+    private URI defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family" +
         "&jurisdiction2=family%20court&service=other&keyword=PQR");
 
-    private URI generalApplicationUrl = URI.create("http://feeApiUrl?channel=default&event=general%20application" +
+    private URI generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application" +
         "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other");
 
-    private URI enforcementUrl = URI.create("http://feeApiUrl?channel=default&event=enforcement" +
+    private URI enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement" +
         "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=HIJ");
 
-    private URI applicationFinOrderUrl = URI.create("http://feeApiUrl?channel=default&event=miscellaneous" +
+    private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous" +
         "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
-    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl?channel=default&event=general%20application" +
+    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application" +
         "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=without-notice");
 
 
     @Before
-    public void setup() throws IOException {
+    public void setup() {
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees");
         assertNotNull(feePaymentService);
-        ReflectionTestUtils.setField(feePaymentService, FEE_API_FIELD_NAME, FEE_API_URL);
     }
 
     private void mockRestTemplate(URI uri) throws IOException {
