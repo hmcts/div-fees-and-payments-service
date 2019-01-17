@@ -50,7 +50,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         {ISSUE, OTHER, "PQR"}
     };
 
-    @Value("${fee.api.baseUri}")
+    @Value("${fee.api.baseUri}${fee.api.feesLookup}")
     private String feeApiUrl;
 
     @Autowired

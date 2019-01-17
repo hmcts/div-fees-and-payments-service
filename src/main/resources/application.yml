@@ -30,7 +30,8 @@ documentation:
 
 fee:
   api:
-    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net/fees-register/fees/lookup}
+    baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net}
+    feesLookup: /fees-register/fees/lookup
     health: /health
 
 spring:
