@@ -160,6 +160,9 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.8') {
+        force = true
+    }
 
     compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
         exclude group: 'io.reactivex', module: 'rxnetty'
