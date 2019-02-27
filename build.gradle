@@ -96,10 +96,10 @@ pitest {
                        'uk.gov.hmcts.reform.divorce.feepayment.management.config.*',
                        'uk.gov.hmcts.reform.divorce.feepayment.config.*',
                        'uk.gov.hmcts.reform.divorce.feepayment.model.*']
-    threads = 4
+    threads = 10
     outputFormats = ['XML', 'HTML']
-    timestampedReports = true
-    mutationThreshold = 50
+    timestampedReports = false
+    mutationThreshold = 80
 }
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
@@ -219,6 +219,16 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
 task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
+}
+
+pmd {
+    toolVersion = "6.11.0"
+    ignoreFailures = true
+    sourceSets = [sourceSets.main, sourceSets.test]
+    reportsDir = file("$project.buildDir/reports/pmd")
+    // remove gradle default rulesets
+    ruleSets = []
+    ruleSetFiles = files("ruleset.xml")
 }
 
 def sonarExclusions = [
