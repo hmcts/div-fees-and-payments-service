@@ -96,10 +96,10 @@ pitest {
                        'uk.gov.hmcts.reform.divorce.feepayment.management.config.*',
                        'uk.gov.hmcts.reform.divorce.feepayment.config.*',
                        'uk.gov.hmcts.reform.divorce.feepayment.model.*']
-    threads = 4
+    threads = 10
     outputFormats = ['XML', 'HTML']
-    timestampedReports = true
-    mutationThreshold = 50
+    timestampedReports = false
+    mutationThreshold = 80
 }
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
