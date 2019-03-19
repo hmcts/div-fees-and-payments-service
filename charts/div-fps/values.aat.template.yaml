@@ -1,0 +1,7 @@
+java:
+    environment:
+        APPLICATION_INSIGHTS_IKEY : "79656785-5397-4573-93be-ddd7062d5ac3"
+        REFORM_ENVIRONMENT : "aat"
+        ENVIRONMENT_NAME : "aat"
+        FEE_API_URL : "http://fees-register-api-aat.service.core-compute-aat.internal"
+        APPINSIGHTS_INSTRUMENTATIONKEY : "79656785-5397-4573-93be-ddd7062d5ac3"

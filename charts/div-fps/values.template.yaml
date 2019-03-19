@@ -1,0 +1,12 @@
+java:
+    applicationPort: 4009
+    # Don't modify below here
+    image: ${IMAGE_NAME}
+    ingressHost: ${SERVICE_FQDN}
+    environment:
+        REFORM_SERVICE_NAME: "fps"
+        REFORM_TEAM: "div"
+        SLOT: "PRODUCTION"
+
+
+
