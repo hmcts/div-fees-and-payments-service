@@ -8,11 +8,11 @@ properties([
                 string(name: 'TYPE', defaultValue: 'java', description: ''),
                 string(name: 'ENVIRONMENT', defaultValue: 'saat', description: 'Environment where code should be built and deployed'),
                 choice(name: 'SUBSCRIPTION', choices: 'sandbox\nnonprod\nprod', description: 'Azure subscriptions available to build in')
-        ]),
-        [$class: 'GithubProjectProperty', projectUrlStr: 'github.com/hmcts/div-fees-and-payments-service'],
-        pipelineTriggers([[$class: 'GitHubPushTrigger']])
         ])
+])
 
 withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.ENVIRONMENT, params.SUBSCRIPTION) {
-
+    after('functionalTest:saat') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
 }

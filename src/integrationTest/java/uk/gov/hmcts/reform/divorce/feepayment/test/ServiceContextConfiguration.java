@@ -1,36 +1,12 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
-import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.cloud.openfeign.FeignAutoConfiguration;
-import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
-import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGeneratorFactory;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Lazy
-@ImportAutoConfiguration({RibbonAutoConfiguration.class,HttpMessageConvertersAutoConfiguration.class, FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
-@EnableFeignClients(basePackageClasses = ServiceAuthorisationApi.class)
+@PropertySource("classpath:application.properties")
 public class ServiceContextConfiguration {
 
-    @Bean
-    public AuthTokenGenerator serviceAuthTokenGenerator(
-            @Value("${idam.auth.secret}") final String secret,
-            @Value("${idam.auth.microservice}") final String microService,
-            final ServiceAuthorisationApi serviceAuthorisationApi
-    ) {
-        return AuthTokenGeneratorFactory.createDefaultGenerator(secret, microService, serviceAuthorisationApi);
-    }
-
-    @Bean
-    public IDAMUtils getIDAMUtil() {
-       return new IDAMUtils();
-    }
 }
