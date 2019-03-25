@@ -123,6 +123,7 @@ def versions = [
         jaywayJsonPath: '2.2.0',
         pitest: '1.3.2',
         puppyCrawl: '7.6',
+        reformHealth: '0.0.3',
         reformsHttpProxySpringBootAutoconfigure: '2.0.0',
         reformsJavaLogging: '4.0.1',
         serviceTokenGenerator: '2.0.0',
@@ -193,11 +194,11 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
 
+    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: versions.reformHealth
+    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformsHttpProxySpringBootAutoconfigure
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformsHttpProxySpringBootAutoconfigure
-
 
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
