@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.3.RELEASE'
+        springBootVersion = '2.1.2.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -14,8 +14,8 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'org.springframework.boot' version '2.0.3.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+    id 'org.springframework.boot' version '2.1.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
     id 'org.owasp.dependencycheck' version '4.0.2'
     id 'org.sonarqube' version '2.6.2'
     id 'jacoco'
@@ -129,12 +129,12 @@ def versions = [
         serviceTokenGenerator: '2.0.0',
         sonarPitest: '0.5',
         spring_security_rsa: '1.0.8.RELEASE',
-        springBoot: '2.0.3.RELEASE',
+        springBoot: '2.1.2.RELEASE',
         springfoxSwagger: '2.9.0',
-        springHateoas: '0.24.0.RELEASE',
-        springOpenFeign: '2.0.0.RELEASE',
+        springHateoas: '0.25.1.RELEASE',
+        springOpenFeign: '2.1.1.RELEASE',
         springPluginCore: '1.2.0.RELEASE',
-        springRetry: '1.2.2.RELEASE',
+        springRetry: '1.2.4.RELEASE',
         wiremockVersion: '2.8.0'
 ]
 

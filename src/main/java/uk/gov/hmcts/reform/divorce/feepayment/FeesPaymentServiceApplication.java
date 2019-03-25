@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.divorce.feepayment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import uk.gov.hmcts.reform.authorisation.healthcheck.ServiceAuthHealthIndicator;
 
 @SpringBootApplication(scanBasePackages = {"uk.gov.hmcts.reform.divorce",
