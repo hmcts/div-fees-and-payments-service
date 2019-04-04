@@ -1,0 +1,5 @@
+java:
+    applicationPort: 4009
+    environment:
+        REFORM_SERVICE_NAME: "fps"
+        REFORM_TEAM: "div"
