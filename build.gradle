@@ -134,7 +134,8 @@ def versions = [
         springOpenFeign: '2.0.0.RELEASE',
         springPluginCore: '1.2.0.RELEASE',
         springRetry: '1.2.2.RELEASE',
-        wiremockVersion: '2.8.0'
+        wiremockVersion: '2.8.0',
+        springSecurityCrypto: '5.1.5.RELEASE'
 ]
 
 dependencies {
@@ -172,7 +173,11 @@ dependencies {
         force = true
     }
 
-        compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
+    compile (group:  'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto) {
+        force = true
+    }
+
+    compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
         exclude group: 'io.reactivex', module: 'rxnetty'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
         exclude group: 'io.reactivex', module: 'io.reactivex'
