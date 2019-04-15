@@ -17,6 +17,7 @@ module "div-fees-and-payment-service" {
   ilbIp                           = "${var.ilbIp}"
   is_frontend                     = false
   subscription                    = "${var.subscription}"
+  appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   common_tags                     = "${var.common_tags}"
   asp_name                        = "${local.asp_name}"
   asp_rg                          = "${local.asp_rg}"
