@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.3.RELEASE'
+        springBootVersion = '2.1.2.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -14,8 +14,8 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'org.springframework.boot' version '2.0.3.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+    id 'org.springframework.boot' version '2.1.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
     id 'org.owasp.dependencycheck' version '4.0.2'
     id 'org.sonarqube' version '2.6.2'
     id 'jacoco'
@@ -123,17 +123,18 @@ def versions = [
         jaywayJsonPath: '2.2.0',
         pitest: '1.3.2',
         puppyCrawl: '7.6',
+        reformHealth: '0.0.3',
         reformsHttpProxySpringBootAutoconfigure: '2.0.0',
         reformsJavaLogging: '4.0.1',
         serviceTokenGenerator: '2.0.0',
         sonarPitest: '0.5',
         spring_security_rsa: '1.0.8.RELEASE',
-        springBoot: '2.0.3.RELEASE',
+        springBoot: '2.1.2.RELEASE',
         springfoxSwagger: '2.9.0',
-        springHateoas: '0.24.0.RELEASE',
-        springOpenFeign: '2.0.0.RELEASE',
+        springHateoas: '0.25.1.RELEASE',
+        springOpenFeign: '2.1.1.RELEASE',
         springPluginCore: '1.2.0.RELEASE',
-        springRetry: '1.2.2.RELEASE',
+        springRetry: '1.2.4.RELEASE',
         wiremockVersion: '2.8.0'
 ]
 
@@ -193,11 +194,11 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
 
+    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: versions.reformHealth
+    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformsHttpProxySpringBootAutoconfigure
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformsHttpProxySpringBootAutoconfigure
-
 
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {

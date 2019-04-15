@@ -1,0 +1,10 @@
+java:
+    environment:
+        REFORM_ENVIRONMENT : "aat"
+        ENVIRONMENT_NAME : "aat"
+        FEE_API_URL : "http://fees-register-api-aat.service.core-compute-aat.internal"
+        APPINSIGHTS_INSTRUMENTATIONKEY : "dummykey"
+
+    # Don't modify below here
+    image: ${IMAGE_NAME}
+    ingressHost: ${SERVICE_FQDN}
