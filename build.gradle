@@ -136,7 +136,8 @@ def versions = [
         springPluginCore: '1.2.0.RELEASE',
         springRetry: '1.2.4.RELEASE',
         wiremockVersion: '2.8.0',
-        springSecurityCrypto: '5.1.5.RELEASE'
+        springSecurityCrypto: '5.1.5.RELEASE',
+        tomcat: '9.0.19'
 ]
 
 dependencies {
@@ -183,6 +184,16 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
         exclude group: 'io.reactivex', module: 'io.reactivex'
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
+    }
+
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcat) {
+        force = true
+    }
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcat) {
+        force = true
+    }
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcat) {
+        force = true
     }
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
