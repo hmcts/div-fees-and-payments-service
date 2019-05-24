@@ -4,6 +4,7 @@ java:
         ENVIRONMENT_NAME : "aat"
         FEE_API_URL : "http://fees-register-api-aat.service.core-compute-aat.internal"
         APPINSIGHTS_INSTRUMENTATIONKEY : "dummykey"
+        MANAGEMENT_ENDPOINT_CACHE_TIME-TO-LIVE: "30000"
 
     # Don't modify below here
     image: ${IMAGE_NAME}
