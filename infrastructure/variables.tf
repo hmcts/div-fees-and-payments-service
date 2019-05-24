@@ -80,5 +80,5 @@ variable "appinsights_instrumentation_key" {
 
 variable "health_check_ttl" {
     type = "string"
-    value = "4000"
+    value = "5000"
 }

@@ -28,7 +28,7 @@ module "div-fees-and-payment-service" {
     REFORM_SERVICE_NAME = "${var.reform_service_name}"
     REFORM_ENVIRONMENT = "${var.env}"
     FEE_API_URL = "${local.fee_api_url}"
-    MANAGEMENT_ENDPOINT_CACHE_TIME-TO-LIVE = "${var.health_check_ttl}"
+    MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE = "${var.health_check_ttl}"
   }
 }
 
