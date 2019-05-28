@@ -118,7 +118,7 @@ def versions = [
         guava: '27.0.1-jre',
         gradlePitest: '1.3.0',
         hibernate: '6.0.5.Final',
-        jacksonCore: '2.9.5',
+        jacksonCore: '2.9.9',
         javaxValidation: '2.0.0.Final',
         jaywayJsonPath: '2.2.0',
         pitest: '1.3.2',
@@ -167,7 +167,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
-    compile('com.fasterxml.jackson.core:jackson-databind:2.9.8') {
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.9') {
         force = true
     }
     compile group: 'com.google.guava', name: 'guava', version: versions.guava
