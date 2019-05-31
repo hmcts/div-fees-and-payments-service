@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:1.5.2")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.49")
     }
 }
 
@@ -137,7 +137,8 @@ def versions = [
         springRetry: '1.2.4.RELEASE',
         wiremockVersion: '2.8.0',
         springSecurityCrypto: '5.1.5.RELEASE',
-        tomcat: '9.0.19'
+        tomcat: '9.0.19',
+        lombok: '1.16.16'
 ]
 
 dependencies {
@@ -197,7 +198,9 @@ dependencies {
     }
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+    annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
+    implementation("org.projectlombok:lombok:$versions.lombok")
+    testImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '5.1'
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
