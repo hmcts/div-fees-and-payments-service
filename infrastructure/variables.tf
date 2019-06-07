@@ -82,3 +82,7 @@ variable "health_check_ttl" {
     type = "string"
     default = "5000"
 }
+
+variable "instance_size" {
+    default = "I2"
+}
