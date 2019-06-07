@@ -21,6 +21,7 @@ module "div-fees-and-payment-service" {
   common_tags                     = "${var.common_tags}"
   asp_name                        = "${local.asp_name}"
   asp_rg                          = "${local.asp_rg}"
+  instance_size                   = "I3"
 
   app_settings = {
     //    logging vars
