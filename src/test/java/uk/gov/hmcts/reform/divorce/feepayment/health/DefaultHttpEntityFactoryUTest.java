@@ -9,13 +9,12 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-
 public class DefaultHttpEntityFactoryUTest {
 
     DefaultHttpEntityFactory classUndertest = new DefaultHttpEntityFactory();
 
     @Test
-    public void shouldCreateRequestEntityForHealthCheck(){
+    public void shouldCreateRequestEntityForHealthCheck() {
 
         HttpEntity<Object> actual = classUndertest.createRequestEntityForHealthCheck();
 

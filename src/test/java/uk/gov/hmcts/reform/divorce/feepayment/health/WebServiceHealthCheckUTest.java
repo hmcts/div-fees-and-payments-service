@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.feepayment.health;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -39,13 +38,16 @@ public class WebServiceHealthCheckUTest {
 
         when(httpEntityFactory.createRequestEntityForHealthCheck()).thenReturn(httpEntity);
 
-        when(restTemplate.exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class), ArgumentMatchers.eq(new HashMap<>())))
+        when(restTemplate.exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+                ArgumentMatchers.eq(new HashMap<>())))
                 .thenReturn(responseEntity);
 
         assertThat(healthCheck.health()).isEqualTo(Health.up().build());
 
         verify(httpEntityFactory).createRequestEntityForHealthCheck();
-        verify(restTemplate).exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+        verify(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
                 ArgumentMatchers.eq(new HashMap<>()));
 
         verifyNoMoreInteractions(httpEntityFactory, restTemplate);
@@ -59,13 +61,15 @@ public class WebServiceHealthCheckUTest {
 
         HttpServerErrorException exception = mock(HttpServerErrorException.class);
 
-        doThrow(exception).when(restTemplate)
-                .exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class), ArgumentMatchers.eq(new HashMap<>()));
+        doThrow(exception).when(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+                ArgumentMatchers.eq(new HashMap<>()));
 
         assertThat(healthCheck.health()).isEqualTo(Health.down().build());
 
         verify(httpEntityFactory).createRequestEntityForHealthCheck();
-        verify(restTemplate).exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+        verify(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
                 ArgumentMatchers.eq(new HashMap<>()));
 
         verifyNoMoreInteractions(httpEntityFactory, restTemplate);
@@ -79,13 +83,15 @@ public class WebServiceHealthCheckUTest {
 
         ResourceAccessException exception = mock(ResourceAccessException.class);
 
-        doThrow(exception).when(restTemplate)
-                .exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class), ArgumentMatchers.eq(new HashMap<>()));
+        doThrow(exception).when(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+                ArgumentMatchers.eq(new HashMap<>()));
 
         assertThat(healthCheck.health()).isEqualTo(Health.down().build());
 
         verify(httpEntityFactory).createRequestEntityForHealthCheck();
-        verify(restTemplate).exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+        verify(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
                 ArgumentMatchers.eq(new HashMap<>()));
 
         verifyNoMoreInteractions(httpEntityFactory, restTemplate);
@@ -99,13 +105,15 @@ public class WebServiceHealthCheckUTest {
 
         RuntimeException exception = mock(RuntimeException.class);
 
-        doThrow(exception).when(restTemplate)
-                .exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class), ArgumentMatchers.eq(new HashMap<>()));
+        doThrow(exception).when(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+                ArgumentMatchers.eq(new HashMap<>()));
 
         assertThat(healthCheck.health()).isEqualTo(Health.unknown().build());
 
         verify(httpEntityFactory).createRequestEntityForHealthCheck();
-        verify(restTemplate).exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+        verify(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
                 ArgumentMatchers.eq(new HashMap<>()));
 
         verifyNoMoreInteractions(httpEntityFactory, restTemplate);
@@ -118,13 +126,16 @@ public class WebServiceHealthCheckUTest {
 
         when(httpEntityFactory.createRequestEntityForHealthCheck()).thenReturn(httpEntity);
 
-        when(restTemplate.exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class), ArgumentMatchers.eq(new HashMap<>())))
+        when(restTemplate.exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+                ArgumentMatchers.eq(new HashMap<>())))
                 .thenReturn(responseEntity);
 
         assertThat(healthCheck.health()).isEqualTo(Health.unknown().build());
 
         verify(httpEntityFactory).createRequestEntityForHealthCheck();
-        verify(restTemplate).exchange(ArgumentMatchers.eq(URI), ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
+        verify(restTemplate).exchange(ArgumentMatchers.eq(URI),
+                ArgumentMatchers.eq(HttpMethod.GET), ArgumentMatchers.eq(httpEntity), ArgumentMatchers.eq(Object.class),
                 ArgumentMatchers.eq(new HashMap<>()));
 
         verifyNoMoreInteractions(httpEntityFactory, restTemplate);
