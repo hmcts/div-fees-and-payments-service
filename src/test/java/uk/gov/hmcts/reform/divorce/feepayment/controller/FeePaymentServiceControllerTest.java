@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.feepayment.controller;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

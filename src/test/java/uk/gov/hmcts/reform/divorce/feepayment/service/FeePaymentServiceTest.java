@@ -36,26 +36,26 @@ public class FeePaymentServiceTest {
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
 
-    private URI issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family" +
-        "&jurisdiction2=family%20court&service=divorce");
+    private URI issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=divorce");
 
-    private URI amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family" +
-        "&jurisdiction2=family%20court&service=other&keyword=ABC");
+    private URI amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+        + "&jurisdiction2=family%20court&service=other&keyword=ABC");
 
-    private URI defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family" +
-        "&jurisdiction2=family%20court&service=other&keyword=PQR");
+    private URI defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+        + "&jurisdiction2=family%20court&service=other&keyword=PQR");
 
-    private URI generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application" +
-        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other");
+    private URI generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other");
 
-    private URI enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement" +
-        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=HIJ");
+    private URI enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=HIJ");
 
-    private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous" +
-        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
+    private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
-    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application" +
-        "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=without-notice");
+    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=without-notice");
 
 
     @Before

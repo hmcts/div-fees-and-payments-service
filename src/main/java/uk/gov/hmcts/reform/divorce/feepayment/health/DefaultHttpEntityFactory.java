@@ -1,11 +1,11 @@
 package uk.gov.hmcts.reform.divorce.feepayment.health;
 
-import java.util.Collections;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 @Component
 public class DefaultHttpEntityFactory implements HttpEntityFactory {
