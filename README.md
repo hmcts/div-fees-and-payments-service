@@ -1,15 +1,15 @@
-# Divorce Fees and Payments Service
+# Divorce Fees and Payments Service [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This application validates the case data based on the validation rules supplied.
+This application is used for managing the fees for the divorce application.
 
-## Getting started
+## Setup
 
-### Prerequisites
+**Prerequisites**
 
 - [JDK 8](https://www.oracle.com/java)
 - [Docker](https://www.docker.com)
 
-### Building
+**Building**
 
 The project uses [Gradle](https://gradle.org) as a build tool but you don't have to install it locally since there is a
 `./gradlew` wrapper script.
@@ -20,7 +20,7 @@ To build project please execute the following command:
     ./gradlew build
 ```
 
-### Running
+**Running**
 
 First you need to create distribution by executing following command:
 
@@ -28,24 +28,15 @@ First you need to create distribution by executing following command:
     ./gradlew installDist
 ```
 
-When the distribution has been created in `build/install/div-document-generator` directory,
-you can run the application by executing following command:
-
 ```bash
-    docker-compose up
+    ./gradlew bootRun
 ```
 
-As a result the following container(s) will get created and started:
- - long living container for API application exposing port `4009`
+Now the API application will be exposing port `4009`
 
-### API documentation
+## Testing
 
-API documentation is provided with Swagger:
- - `http://localhost:4008/swagger-ui.html` - UI to interact with the API resources
-
-## Developing
-
-### Unit tests
+**Unit tests**
 
 To run all unit tests please execute following command:
 
@@ -53,7 +44,7 @@ To run all unit tests please execute following command:
     ./gradlew test
 ```
 
-### Coding style tests
+**Coding style tests**
 
 To run all checks (including unit tests) please execute following command:
 
@@ -61,7 +52,7 @@ To run all checks (including unit tests) please execute following command:
     ./gradlew check
 ```
 
-### Mutation tests
+**Mutation tests**
 
 To run all mutation tests execute the following command:
 
@@ -70,12 +61,19 @@ To run all mutation tests execute the following command:
 
 ```
 
-## Versioning
+## Developing
+**API documentation**
+
+API documentation is provided with Swagger:
+ - `http://localhost:4008/swagger-ui.html` - UI to interact with the API resources
+
+
+**Versioning**
 
 We use [SemVer](http://semver.org/) for versioning.
 For the versions available, see the tags on this repository.
 
-## Standard API
+**Standard API**
 
 We follow [RESTful API standards](https://hmcts.github.io/restful-api-standards/).
 
