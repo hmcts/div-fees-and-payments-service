@@ -65,7 +65,7 @@ To run all mutation tests execute the following command:
 **API documentation**
 
 API documentation is provided with Swagger:
- - `http://localhost:4008/swagger-ui.html` - UI to interact with the API resources
+ - `http://localhost:4009/swagger-ui.html` - UI to interact with the API resources
 
 
 **Versioning**
