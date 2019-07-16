@@ -188,7 +188,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
-    compile('com.fasterxml.jackson.core:jackson-databind:2.9.9') {
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.9.1') {
         force = true
     }
     compile group: 'com.google.guava', name: 'guava', version: versions.guava
