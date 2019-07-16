@@ -180,7 +180,9 @@ dependencies {
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
+    compile(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore) {
+        force = true
+    }
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
     compile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: versions.jaywayJsonPath
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
@@ -188,9 +190,6 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
-    compile('com.fasterxml.jackson.core:jackson-databind:2.9.9') {
-        force = true
-    }
     compile group: 'com.google.guava', name: 'guava', version: versions.guava
     compile (group:  'org.springframework.security', name: 'spring-security-rsa', version: versions.spring_security_rsa) {
         force = true
