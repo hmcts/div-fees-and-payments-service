@@ -157,7 +157,7 @@ def versions = [
         springRetry:                                    '1.2.4.RELEASE',
         wiremockVersion:                                '2.8.0',
         springSecurityCrypto:                           '5.1.5.RELEASE',
-        tomcat:                                         '9.0..22',
+        tomcat:                                         '9.0.22',
         lombok:                                         '1.16.16'
 ]
 
