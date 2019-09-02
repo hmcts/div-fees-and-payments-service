@@ -21,9 +21,10 @@ def channel = '#div-dev'
 
 withPipeline(type , product, component) {
 
-    enableDockerBuild()
-    installCharts()
-    enableAksStagingDeployment()
+    if (env.CHANGE_TITLE && !env.CHANGE_TITLE.startsWith('[PREVIEW]')) {
+        enableDockerBuild()
+        installCharts()
+    }
 
     before('functionalTest:aat') {
         env.ITEST_ENVIRONMENT = "aat"
