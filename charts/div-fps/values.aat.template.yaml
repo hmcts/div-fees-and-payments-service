@@ -1,11 +1,9 @@
 java:
     environment:
-        REFORM_ENVIRONMENT : "aat"
-        ENVIRONMENT_NAME : "aat"
         FEE_API_URL : "http://fees-register-api-aat.service.core-compute-aat.internal"
-        APPINSIGHTS_INSTRUMENTATIONKEY : "dummykey"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
 
     # Don't modify below here
     image: ${IMAGE_NAME}
     ingressHost: ${SERVICE_FQDN}
+    aadIdentityName: divorce
