@@ -47,6 +47,11 @@ bootJar {
     archiveName 'div-fees-and-payment-service.jar'
 }
 
+dependencyManagement {
+    dependencies {
+        dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+    }
+}
 
 sourceSets {
     integrationTest {
@@ -133,6 +138,7 @@ tasks.withType(Checkstyle).each { checkstyleTask ->
 }
 
 def versions = [
+        commonsBeanUtils:                               '1.9.4',
         commonsIo:                                      '2.5',
         commonsLang3:                                   '3.0',
         guava:                                          '27.0.1-jre',
@@ -180,6 +186,10 @@ dependencies {
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: '1.2.3'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+
+    compile (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils) {
+        force = true
+    }
 
     compile(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonDatabind) {
         force = true
