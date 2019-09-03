@@ -146,7 +146,7 @@ def versions = [
         puppyCrawl:                                     '8.21',
         reformHealth:                                   '0.0.3',
         reformsHttpProxySpringBootAutoconfigure:        '2.0.0',
-        reformsJavaLogging:                             '4.0.1',
+        reformsJavaLogging:                             '5.0.1',
         serviceTokenGenerator:                          '2.0.0',
         sonarPitest:                                    '0.5',
         spring_security_rsa:                            '1.0.8.RELEASE',
@@ -245,7 +245,7 @@ dependencies {
     }
 
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version: versions.puppyCrawl
-    
+
     compile group: 'org.pitest', name: 'pitest', version: versions.pitest
     compile group:'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
     compile group:'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
