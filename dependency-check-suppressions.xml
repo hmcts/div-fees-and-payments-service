@@ -43,4 +43,17 @@
         <cpe>cpe:/a:oracle:oracle_client:1.19.1</cpe>
         <cve>CVE-2006-0550</cve>
     </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+            file name: gradle-pitest-plugin-1.4.0.jar
+             Gradle versions from 1.4 to 5.3.1 use an insecure HTTP URL to download dependencies
+             when the built-in JavaScript or CoffeeScript Gradle plugins are used.
+            ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cpe>cpe:2.3:a:gradle:gradle:1.4.0:*:*:*:*:*:*:*</cpe>
+        <cve>CVE-2019-11065</cve>
+        <cve>CVE-2019-15052</cve>
+    </suppress>
 </suppressions>
