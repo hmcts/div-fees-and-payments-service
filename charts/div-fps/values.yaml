@@ -1,4 +1,5 @@
 java:
     applicationPort: 4009
+    ingressHost: "div-fps-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     environment:
         FEE_API_URL: "http://fees-register-api-{{ .Values.global.environment }}.service.core-compute-aat.internal"
