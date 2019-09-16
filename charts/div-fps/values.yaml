@@ -3,3 +3,4 @@ java:
     ingressHost: "div-fps-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     environment:
         FEE_API_URL: "http://fees-register-api-{{ .Values.global.environment }}.service.core-compute-aat.internal"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
