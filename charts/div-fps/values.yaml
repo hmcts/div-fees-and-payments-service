@@ -1,5 +1,4 @@
 java:
     applicationPort: 4009
     environment:
-        REFORM_SERVICE_NAME: "fps"
-        REFORM_TEAM: "div"
+        FEE_API_URL: "http://fees-register-api-{{ .Values.global.environment }}.service.core-compute-aat.internal"
