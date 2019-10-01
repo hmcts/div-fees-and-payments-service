@@ -65,4 +65,13 @@
         <cve>CVE-2019-14540</cve>
         <cve>CVE-2019-16335</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+            Ignoring app insights netty errors as it's not used ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2014-3488</cve>
+        <cve>CVE-2015-2156</cve>
+        <cve>CVE-2019-16869</cve>
+    </suppress>
 </suppressions>
