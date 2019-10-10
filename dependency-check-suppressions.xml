@@ -43,4 +43,42 @@
         <cpe>cpe:/a:oracle:oracle_client:1.19.1</cpe>
         <cve>CVE-2006-0550</cve>
     </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+            file name: gradle-pitest-plugin-1.4.0.jar
+             Gradle versions from 1.4 to 5.3.1 use an insecure HTTP URL to download dependencies
+             when the built-in JavaScript or CoffeeScript Gradle plugins are used.
+            ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cpe>cpe:2.3:a:gradle:gradle:1.4.0:*:*:*:*:*:*:*</cpe>
+        <cve>CVE-2019-11065</cve>
+        <cve>CVE-2019-15052</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+            This is exploitable in com.zaxxer.hikari.HikariConfig and com.zaxxer.hikari.HikariDataSource
+            which we do not use. Pending the release of a stable jackson databind version (>2.9.9.3) ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2019-14540</cve>
+        <cve>CVE-2019-16335</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+            Ignoring app insights netty errors as it's not used ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2014-3488</cve>
+        <cve>CVE-2015-2156</cve>
+        <cve>CVE-2019-16869</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+            A low severity security issue was reported in the Gradle signing plugin. ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2019-16370</cve>
+    </suppress>
 </suppressions>

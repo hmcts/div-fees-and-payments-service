@@ -1,12 +1,11 @@
-FROM hmcts/cnp-java-base:openjdk-8u181-jre-alpine3.8-1.0
+ARG APP_INSIGHTS_AGENT_VERSION=2.3.1
+FROM hmctspublic.azurecr.io/base/java:openjdk-8-distroless-1.2
 
 ENV APP div-fees-and-payment-service.jar
-ENV APPLICATION_TOTAL_MEMORY 1024M
-ENV APPLICATION_SIZE_ON_DISK_IN_MB 61
 
+COPY lib/AI-Agent.xml /opt/app/
 COPY build/libs/$APP /opt/app/
 
-WORKDIR /opt/app
+EXPOSE 4009
 
-HEALTHCHECK --interval=100s --timeout=100s --retries=10 CMD http_proxy="" wget -q http://localhost:4009/health || exit 1
-
+CMD ["div-fees-and-payment-service.jar"]

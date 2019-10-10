@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationInsightsAgent>
+    <AgentLogger>INFO</AgentLogger>
+    <Instrumentation>
+        <BuiltIn enabled="true">
+            <HTTP enabled="true"/>
+        </BuiltIn>
+        <Class name="uk.gov.hmcts.reform.divorce.feepayment.service.impl.FeePaymentServiceImpl">
+            <Method name="getFee" reportCaughtExceptions="true" reportExecutionTime="true"/>
+        </Class>
+    </Instrumentation>
+</ApplicationInsightsAgent>
