@@ -151,7 +151,7 @@ def versions = [
         guava:                                          '27.0.1-jre',
         gradlePitest:                                   '1.4.0',
         hibernate:                                      '6.0.5.Final',
-        jacksonDatabind:                                '2.9.9.3',
+        jacksonDatabind:                                '2.10.0',
         jacksonAnnotations:                             '2.9.9',
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.2.0',
