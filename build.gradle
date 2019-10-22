@@ -140,7 +140,7 @@ def versions = [
         commonsBeanUtils:                               '1.9.4',
         commonsIo:                                      '2.5',
         commonsLang3:                                   '3.0',
-        guava:                                          '27.0.1-jre',
+        guava:                                          '28.1-jre',
         gradlePitest:                                   '1.4.5',
         hibernate:                                      '6.0.5.Final',
         jacksonAnnotations:                             '2.10.0',
