@@ -11,7 +11,6 @@
         <cpe>cpe:/a:google:guava:20.0</cpe>
         <cve>CVE-2018-10237</cve>
     </suppress>
-
     <suppress>
         <notes><![CDATA[
             file name: spring-security-rsa-1.0.8.RELEASE.jar
@@ -31,7 +30,6 @@
         <cve>CVE-2018-1260</cve>
         <cve>CVE-2018-1258</cve>
     </suppress>
-
     <suppress>
         <notes>
             <![CDATA[
@@ -44,19 +42,6 @@
         <cve>CVE-2006-0550</cve>
     </suppress>
     <suppress>
-        <notes>
-            <![CDATA[
-            file name: gradle-pitest-plugin-1.4.0.jar
-             Gradle versions from 1.4 to 5.3.1 use an insecure HTTP URL to download dependencies
-             when the built-in JavaScript or CoffeeScript Gradle plugins are used.
-            ]]>
-        </notes>
-        <gav regex="true">.*</gav>
-        <cpe>cpe:2.3:a:gradle:gradle:1.4.0:*:*:*:*:*:*:*</cpe>
-        <cve>CVE-2019-11065</cve>
-        <cve>CVE-2019-15052</cve>
-    </suppress>
-    <suppress>
         <notes><![CDATA[
             This is exploitable in com.zaxxer.hikari.HikariConfig and com.zaxxer.hikari.HikariDataSource
             which we do not use. Pending the release of a stable jackson databind version (>2.9.9.3) ]]>
@@ -67,18 +52,19 @@
     </suppress>
     <suppress>
         <notes><![CDATA[
+            file name: gradle-pitest-plugin-1.4.5.jar. We are suppressing this as this plugin uses a
+            version of Gradle that is vulnerable to CVE-2019-15052 & CVE-2019-11065
+   ]]></notes>
+        <gav regex="true">^info\.solidsoft\.gradle\.pitest:gradle-pitest-plugin:.*$</gav>
+        <cpe>cpe:/a:gradle:gradle</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
             Ignoring app insights netty errors as it's not used ]]>
         </notes>
         <gav regex="true">.*</gav>
         <cve>CVE-2014-3488</cve>
         <cve>CVE-2015-2156</cve>
         <cve>CVE-2019-16869</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-            A low severity security issue was reported in the Gradle signing plugin. ]]>
-        </notes>
-        <gav regex="true">.*</gav>
-        <cve>CVE-2019-16370</cve>
     </suppress>
 </suppressions>
