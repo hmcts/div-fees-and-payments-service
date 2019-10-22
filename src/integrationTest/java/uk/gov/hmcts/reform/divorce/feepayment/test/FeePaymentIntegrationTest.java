@@ -68,6 +68,4 @@ public class FeePaymentIntegrationTest {
                 .assertThat().statusCode(200)
                 .and().body("feeCode", isA(String.class));
     }
-
-
 }

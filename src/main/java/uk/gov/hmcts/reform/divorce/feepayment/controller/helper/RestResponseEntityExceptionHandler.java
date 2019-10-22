@@ -15,17 +15,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
+    protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest request) {
         String bodyOfResponse = "This should be application specific";
-        log.warn(ex.getMessage(), ex);
-        return handleExceptionInternal(ex, bodyOfResponse,
+        log.warn(exception.getMessage(), exception);
+        return handleExceptionInternal(exception, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(value = { HttpClientErrorException.class })
-    protected ResponseEntity<Object> feeNotFound(RuntimeException ex, WebRequest request) {
-        log.warn(ex.getMessage(), ex);
-        return handleExceptionInternal(ex, null,
+    protected ResponseEntity<Object> feeNotFound(RuntimeException exception, WebRequest request) {
+        log.warn(exception.getMessage(), exception);
+        return handleExceptionInternal(exception, null,
                 new HttpHeaders(), HttpStatus.NO_CONTENT, request);
     }
 }

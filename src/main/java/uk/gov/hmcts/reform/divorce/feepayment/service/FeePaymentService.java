@@ -23,5 +23,4 @@ public interface FeePaymentService {
     Fee getApplicationWithoutNoticeFee();
 
     List<Fee> getAllFees();
-
 }

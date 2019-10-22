@@ -152,6 +152,4 @@ public class FeePaymentServiceTest {
         verify(restTemplate, times(7)).getForObject(Mockito.any(),
             Mockito.eq(ObjectNode.class));
     }
-
-
 }
