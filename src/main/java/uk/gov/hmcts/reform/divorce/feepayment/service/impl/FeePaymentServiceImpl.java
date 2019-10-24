@@ -21,26 +21,21 @@ import java.util.stream.Stream;
 public class FeePaymentServiceImpl implements FeePaymentService {
 
     private static final String AMOUNT = "fee_amount";
-
     private static final String VERSION = "version";
-
     private static final String CODE = "code";
-
     private static final String DESCRIPTION = "description";
-
     private static final String OTHER = "other";
-
     private static final String DIVORCE = "divorce";
-
     private static final String FINANCIAL_ORDER = "financial-order";
-
-    private  static final String HIJ = "HIJ";
-
-    private  static final String ISSUE = "issue";
-
+    private static final String HIJ = "HIJ";
+    private static final String ISSUE = "issue";
     private static final String GENERAL_APPLICATION = "general application";
 
-    private String[][] feesItems = {
+    private final String feesLookupEndpoint;
+    private final RestTemplate restTemplate;
+    private String feeApiBaseUri;
+
+    private final String[][] feesItems = {
         {ISSUE, DIVORCE, null},
         {ISSUE, OTHER, "ABC"},
         {GENERAL_APPLICATION, OTHER, null},
@@ -50,17 +45,10 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         {ISSUE, OTHER, "PQR"}
     };
 
-    private String feeApiBaseUri;
-
-    private String feesLookupEndpoint;
-
-    private RestTemplate restTemplate;
-
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
                                  @Value("${fee.api.baseUri}") String feeApiBaseUri,
-                                 @Value("${fee.api.feesLookup}") String feesLookupEndpoint
-    ) {
+                                 @Value("${fee.api.feesLookup}") String feesLookupEndpoint) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
@@ -106,7 +94,6 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     public Fee getApplicationWithoutNoticeFee() {
         return getFee(GENERAL_APPLICATION, OTHER, "without-notice" );
     }
-
 
     private Fee getFromRegister(URI uri) {
         return extractValue(Objects.requireNonNull(restTemplate.getForObject(uri, ObjectNode.class)));
@@ -155,6 +142,4 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
         return Stream.of(feesItems).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
     }
-
-
 }

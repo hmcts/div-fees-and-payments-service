@@ -24,13 +24,10 @@ public class RootControllerTest {
     @Test
     public void getShouldReturn200() throws Exception {
 
-        // given
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/");
 
-        // when
         ResultActions performedGet = mvc.perform(getRequest);
 
-        // then
         performedGet.andExpect(status().isOk()).andReturn();
     }
 }

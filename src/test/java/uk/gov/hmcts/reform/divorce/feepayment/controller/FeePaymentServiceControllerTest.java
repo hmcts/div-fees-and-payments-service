@@ -27,7 +27,7 @@ public class FeePaymentServiceControllerTest {
     @InjectMocks
     private FeePaymentServiceController feePaymentServiceController;
 
-    private static Fee expected = null;
+    private static Fee expected;
 
     @Before
     public void setup() {
@@ -42,7 +42,9 @@ public class FeePaymentServiceControllerTest {
     public void whenGetIssueFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getIssueFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.lookupFeesForPetitionIssue().getBody();
+
         verify(feePaymentService, times(1)).getIssueFee();
+
         assertEquals(expected, actual);
     }
 
@@ -50,7 +52,9 @@ public class FeePaymentServiceControllerTest {
     public void whenGetAmendFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getAmendPetitionFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getAmendFee().getBody();
+
         verify(feePaymentService, times(1)).getAmendPetitionFee();
+
         assertEquals(expected, actual);
     }
 
@@ -58,16 +62,19 @@ public class FeePaymentServiceControllerTest {
     public void whenGetGeneralApplicationFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getGeneralApplicationFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getGeneralApplicationFee().getBody();
+
         verify(feePaymentService, times(1)).getGeneralApplicationFee();
+
         assertEquals(expected, actual);
     }
-
 
     @Test
     public void whenGetDefendFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getDefendPetitionFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getDefendedPetitionFee().getBody();
+
         verify(feePaymentService, times(1)).getDefendPetitionFee();
+
         assertEquals(expected, actual);
     }
 
@@ -75,7 +82,9 @@ public class FeePaymentServiceControllerTest {
     public void whenGetEnforcementFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getEnforcementFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getEnforcementFee().getBody();
+
         verify(feePaymentService, times(1)).getEnforcementFee();
+
         assertEquals(expected, actual);
     }
 
@@ -83,7 +92,9 @@ public class FeePaymentServiceControllerTest {
     public void whenGetApplicationFinOrderFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getApplicationFinancialOrderFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getFinancialOrderFee().getBody();
+
         verify(feePaymentService, times(1)).getApplicationFinancialOrderFee();
+
         assertEquals(expected, actual);
     }
 
@@ -91,7 +102,9 @@ public class FeePaymentServiceControllerTest {
     public void whenGetApplicationWithNoticeFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getApplicationWithoutNoticeFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getApplicationWithoutNoticeFee().getBody();
+
         verify(feePaymentService, times(1)).getApplicationWithoutNoticeFee();
+
         assertEquals(expected, actual);
     }
 
@@ -99,8 +112,9 @@ public class FeePaymentServiceControllerTest {
     public void whenGetAllFeesIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getAllFees()).thenReturn(Arrays.asList(expected));
         List<Fee> actual = feePaymentServiceController.getAllFees().getBody();
+
         verify(feePaymentService, times(1)).getAllFees();
+
         assertEquals(Arrays.asList(expected), actual);
     }
-
 }

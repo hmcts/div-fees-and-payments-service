@@ -20,7 +20,6 @@ public class FeePaymentServiceController {
     @Autowired
     private FeePaymentService feePaymentService;
 
-
     @ApiOperation(value = "Get Issue fee", tags = {"Fee Lookup"})
     @GetMapping(value = "/version/1/petition-issue-fee", produces = "application/json")
     public ResponseEntity<Fee> lookupFeesForPetitionIssue() {
@@ -45,7 +44,6 @@ public class FeePaymentServiceController {
     public ResponseEntity<Fee>  getGeneralApplicationFee()  {
         return ResponseEntity.ok(feePaymentService.getGeneralApplicationFee());
     }
-
 
     @ApiOperation(value = "Get Enforcement fee", tags = {"Fee Lookup"})
     @GetMapping("/version/1/enforcement-fee")
