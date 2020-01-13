@@ -165,7 +165,7 @@ def versions = [
         springPluginCore:                               '1.2.0.RELEASE',
         springRetry:                                    '1.2.4.RELEASE',
         springSecurityCrypto:                           '5.1.5.RELEASE',
-        tomcat:                                         '9.0.22',
+        tomcat:                                         '9.0.30',
         wiremockVersion:                                '2.8.0'
 ]
 
