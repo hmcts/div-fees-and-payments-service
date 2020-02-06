@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class DefaultHttpEntityFactoryUTest {
 
-    DefaultHttpEntityFactory classUndertest = new DefaultHttpEntityFactory();
+    private DefaultHttpEntityFactory classUndertest = new DefaultHttpEntityFactory();
 
     @Test
     public void shouldCreateRequestEntityForHealthCheck() {
@@ -20,6 +20,6 @@ public class DefaultHttpEntityFactoryUTest {
 
         assertNotNull(actual);
         assertNotNull(actual.getHeaders());
-        assertEquals(actual.getHeaders().getAccept(), Collections.singletonList(MediaType.APPLICATION_JSON_UTF8));
+        assertEquals(actual.getHeaders().getAccept(), Collections.singletonList(MediaType.APPLICATION_JSON));
     }
 }

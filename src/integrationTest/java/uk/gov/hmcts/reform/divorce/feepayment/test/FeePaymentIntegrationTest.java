@@ -42,7 +42,6 @@ public class FeePaymentIntegrationTest {
         baseURI = feesPaymentsServiceUrl;
     }
 
-
     public FeePaymentIntegrationTest(String feeEndpoint) {
         this.feeEndpoint = feeEndpoint;
     }
@@ -63,9 +62,9 @@ public class FeePaymentIntegrationTest {
     @Test
     public void feeTest() {
         when()
-                .get(feeEndpoint)
-                .then()
-                .assertThat().statusCode(200)
-                .and().body("feeCode", isA(String.class));
+            .get(feeEndpoint)
+            .then()
+            .assertThat().statusCode(200)
+            .and().body("feeCode", isA(String.class));
     }
 }
