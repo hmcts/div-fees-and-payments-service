@@ -18,7 +18,7 @@ public class SmokeTest {
     private FeePaymentServiceController controller;
 
     @Test
-    public void contexLoads() {
+    public void contextLoads() {
         assertThat(controller).isNotNull();
     }
 }

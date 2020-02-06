@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 import uk.gov.hmcts.reform.divorce.feepayment.service.FeePaymentService;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +34,7 @@ public class FeePaymentServiceControllerTest {
         assertNotNull(feePaymentService);
         expected = Fee.builder()
                 .feeCode("XXX")
-                .amount(Double.valueOf("200"))
+                .amount(Double.parseDouble("200"))
                 .build();
     }
 
@@ -110,11 +110,11 @@ public class FeePaymentServiceControllerTest {
 
     @Test
     public void whenGetAllFeesIsCalled_thenReturnFeeResult() {
-        when(feePaymentService.getAllFees()).thenReturn(Arrays.asList(expected));
+        when(feePaymentService.getAllFees()).thenReturn(Collections.singletonList(expected));
         List<Fee> actual = feePaymentServiceController.getAllFees().getBody();
 
         verify(feePaymentService, times(1)).getAllFees();
 
-        assertEquals(Arrays.asList(expected), actual);
+        assertEquals(Collections.singletonList(expected), actual);
     }
 }

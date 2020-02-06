@@ -1,6 +1,6 @@
 # Divorce Fees and Payments Service [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This application is used for managing the fees for the divorce application.
+This application is used for managing the fees for the Divorce application.
 
 ## Setup
 
