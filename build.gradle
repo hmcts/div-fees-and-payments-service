@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.1.2")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.1.6")
     }
 }
 
@@ -33,7 +33,7 @@ targetCompatibility = 1.8
 
 checkstyle {
     maxWarnings = 0
-    toolVersion = '8.21'
+    toolVersion = '8.29'
     // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
     configDir = new File(rootDir, './')
 }
