@@ -33,6 +33,9 @@ public class FeePaymentServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
+    @Value("${fee.api.keyword}")
+    private String feeKeyword;
+
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
 
@@ -54,13 +57,12 @@ public class FeePaymentServiceTest {
     private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
-    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=without-notice");
-
+    private URI applicationWithFeeKeywordUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword" + feeKeyword);
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees");
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", feeKeyword);
         assertNotNull(feePaymentService);
     }
 
@@ -135,9 +137,9 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
-        mockRestTemplate(applicationWithoutNoticeUrl);
+        mockRestTemplate(applicationWithFeeKeywordUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
-        verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithoutNoticeUrl),
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithFeeKeywordUrl),
             Mockito.eq(ObjectNode.class));
     }
 

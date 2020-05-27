@@ -50,7 +50,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     public FeePaymentServiceImpl(RestTemplate restTemplate,
                                  @Value("${fee.api.baseUri}") String feeApiBaseUri,
                                  @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
-                                 @Value("${application.without.notice.fee.keyword") String withoutNoticeFeeKeyword) {
+                                 @Value("${fee.api.keyword") String withoutNoticeFeeKeyword) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
@@ -95,7 +95,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, withoutNoticeFeeKeyword );
+        return getFee(GENERAL_APPLICATION, OTHER, withoutNoticeFeeKeyword);
     }
 
     private Fee getFromRegister(URI uri) {
@@ -131,7 +131,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         int version = objectNode.path(VERSION).asInt();
         String feeCode = objectNode.path(CODE).asText();
         String description = objectNode.path(DESCRIPTION).asText();
-        
+
         return Fee.builder()
                 .amount(amount)
                 .version(version)
