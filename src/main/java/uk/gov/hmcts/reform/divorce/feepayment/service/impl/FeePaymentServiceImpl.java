@@ -31,7 +31,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String ISSUE = "issue";
     private static final String GENERAL_APPLICATION = "general application";
 
-    @Value("${fee.api.keyword}")
+    @Value("${fee.api.feeKeyword}")
     private String feeKeyword;
     private final String feesLookupEndpoint;
     private final RestTemplate restTemplate;
