@@ -31,7 +31,6 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String ISSUE = "issue";
     private static final String GENERAL_APPLICATION = "general application";
 
-    @Value("${fee.api.feeKeyword}")
     private String feeKeyword;
     private final String feesLookupEndpoint;
     private final RestTemplate restTemplate;
@@ -49,10 +48,12 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
         @Value("${fee.api.baseUri}") String feeApiBaseUri,
-        @Value("${fee.api.feesLookup}") String feesLookupEndpoint) {
+        @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
+        @Value("${fee.api.feeKeyword}") String feeKeyword) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
+        this.feeKeyword = feeKeyword;
     }
 
     @Override

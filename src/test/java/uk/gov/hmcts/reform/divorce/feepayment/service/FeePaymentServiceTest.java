@@ -58,12 +58,12 @@ public class FeePaymentServiceTest {
     private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
-    private URI applicationWithFeeKeywordUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=" + feeKeyword);
+    private String applicationWithFeeKeywordPartialUrl = "http://feeApiUrl/fees?channel=default&event=general%20application"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=";
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees");
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", feeKeyword);
         assertNotNull(feePaymentService);
     }
 
@@ -138,6 +138,7 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
+        URI applicationWithFeeKeywordUrl = URI.create(applicationWithFeeKeywordPartialUrl + feeKeyword);
         mockRestTemplate(applicationWithFeeKeywordUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
         verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithFeeKeywordUrl),
