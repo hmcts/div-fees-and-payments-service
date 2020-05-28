@@ -58,11 +58,11 @@ public class FeePaymentServiceTest {
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
     private URI applicationWithFeeKeywordUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword" + feeKeyword);
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=" + feeKeyword);
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", feeKeyword);
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees");
         assertNotNull(feePaymentService);
     }
 

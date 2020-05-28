@@ -33,6 +33,7 @@ fee:
     baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net}
     feesLookup: /fees-register/fees/lookup
     health: /health
+    feeKeyword: ${FEE_KEYWORD:without-notice}
 
 spring:
   resources:
