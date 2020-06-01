@@ -34,8 +34,8 @@ public class FeePaymentServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    @Value("${fee.api.genAppWithoutNoticefeeKeyword}")
-    private String genAppWithoutNoticefeeKeyword;
+    @Value("${fee.api.genAppWithoutNoticeFeeKeyword}")
+    private String genAppWithoutNoticeFeeKeyword;
 
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
@@ -58,12 +58,12 @@ public class FeePaymentServiceTest {
     private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
-    private String applicationWithFeeKeywordPartialUrl = "http://feeApiUrl/fees?channel=default&event=general%20application"
+    private String applicationWithoutNoticePartialUrl = "http://feeApiUrl/fees?channel=default&event=general%20application"
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=";
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", genAppWithoutNoticefeeKeyword);
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", genAppWithoutNoticeFeeKeyword);
         assertNotNull(feePaymentService);
     }
 
@@ -138,10 +138,10 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
-        URI applicationWithFeeKeywordUrl = URI.create(applicationWithFeeKeywordPartialUrl + genAppWithoutNoticefeeKeyword);
-        mockRestTemplate(applicationWithFeeKeywordUrl);
+        URI applicationWithoutNoticeUrl = URI.create(applicationWithoutNoticePartialUrl + genAppWithoutNoticeFeeKeyword);
+        mockRestTemplate(applicationWithoutNoticeUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
-        verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithFeeKeywordUrl),
+        verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithoutNoticeUrl),
             Mockito.eq(ObjectNode.class));
     }
 

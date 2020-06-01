@@ -31,7 +31,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String ISSUE = "issue";
     private static final String GENERAL_APPLICATION = "general application";
 
-    private String genAppWithoutNoticefeeKeyword;
+    private String genAppWithoutNoticeFeeKeyword;
     private final String feesLookupEndpoint;
     private final RestTemplate restTemplate;
     private String feeApiBaseUri;
@@ -41,7 +41,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         {GENERAL_APPLICATION, OTHER, null},
         {"enforcement", OTHER, HIJ},
         {"miscellaneous", OTHER, FINANCIAL_ORDER},
-        {GENERAL_APPLICATION, OTHER, genAppWithoutNoticefeeKeyword},
+        {GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword},
         {ISSUE, OTHER, "PQR"}
     };
 
@@ -49,11 +49,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     public FeePaymentServiceImpl(RestTemplate restTemplate,
         @Value("${fee.api.baseUri}") String feeApiBaseUri,
         @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
-        @Value("${fee.api.genAppWithoutNoticefeeKeyword}") String genAppWithoutNoticefeeKeyword) {
+        @Value("${fee.api.genAppWithoutNoticeFeeKeyword}") String genAppWithoutNoticeFeeKeyword) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
-        this.genAppWithoutNoticefeeKeyword = genAppWithoutNoticefeeKeyword;
+        this.genAppWithoutNoticeFeeKeyword = genAppWithoutNoticeFeeKeyword;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, genAppWithoutNoticefeeKeyword);
+        return getFee(GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword);
     }
 
     private Fee getFromRegister(URI uri) {
