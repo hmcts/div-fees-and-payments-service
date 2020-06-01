@@ -34,8 +34,8 @@ public class FeePaymentServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    @Value("${fee.api.feeKeyword}")
-    private String feeKeyword;
+    @Value("${fee.api.genAppWithoutNoticefeeKeyword}")
+    private String genAppWithoutNoticefeeKeyword;
 
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
@@ -63,7 +63,7 @@ public class FeePaymentServiceTest {
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", feeKeyword);
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", genAppWithoutNoticefeeKeyword);
         assertNotNull(feePaymentService);
     }
 
@@ -138,7 +138,7 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
-        URI applicationWithFeeKeywordUrl = URI.create(applicationWithFeeKeywordPartialUrl + feeKeyword);
+        URI applicationWithFeeKeywordUrl = URI.create(applicationWithFeeKeywordPartialUrl + genAppWithoutNoticefeeKeyword);
         mockRestTemplate(applicationWithFeeKeywordUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
         verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithFeeKeywordUrl),
