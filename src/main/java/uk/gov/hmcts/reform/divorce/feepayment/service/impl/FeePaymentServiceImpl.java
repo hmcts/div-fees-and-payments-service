@@ -31,27 +31,29 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String ISSUE = "issue";
     private static final String GENERAL_APPLICATION = "general application";
 
+    private String genAppWithoutNoticeFeeKeyword;
     private final String feesLookupEndpoint;
     private final RestTemplate restTemplate;
     private String feeApiBaseUri;
-
     private final String[][] feesItems = {
         {ISSUE, DIVORCE, null},
         {ISSUE, OTHER, "ABC"},
         {GENERAL_APPLICATION, OTHER, null},
         {"enforcement", OTHER, HIJ},
         {"miscellaneous", OTHER, FINANCIAL_ORDER},
-        {GENERAL_APPLICATION, OTHER, "without-notice"},
+        {GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword},
         {ISSUE, OTHER, "PQR"}
     };
 
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
-                                 @Value("${fee.api.baseUri}") String feeApiBaseUri,
-                                 @Value("${fee.api.feesLookup}") String feesLookupEndpoint) {
+        @Value("${fee.api.baseUri}") String feeApiBaseUri,
+        @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
+        @Value("${fee.api.genAppWithoutNoticeFeeKeyword}") String genAppWithoutNoticeFeeKeyword) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
+        this.genAppWithoutNoticeFeeKeyword = genAppWithoutNoticeFeeKeyword;
     }
 
     @Override
@@ -92,7 +94,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, "without-notice" );
+        return getFee(GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword);
     }
 
     private Fee getFromRegister(URI uri) {
@@ -128,7 +130,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         int version = objectNode.path(VERSION).asInt();
         String feeCode = objectNode.path(CODE).asText();
         String description = objectNode.path(DESCRIPTION).asText();
-        
+
         return Fee.builder()
                 .amount(amount)
                 .version(version)

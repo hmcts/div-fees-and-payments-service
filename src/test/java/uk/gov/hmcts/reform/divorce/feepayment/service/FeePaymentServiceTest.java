@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.ResourceUtils;
@@ -33,6 +34,9 @@ public class FeePaymentServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
+    @Value("${fee.api.genAppWithoutNoticeFeeKeyword}")
+    private String genAppWithoutNoticeFeeKeyword;
+
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
 
@@ -54,13 +58,12 @@ public class FeePaymentServiceTest {
     private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
 
-    private URI applicationWithoutNoticeUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=without-notice");
-
+    private String applicationWithoutNoticePartialUrl = "http://feeApiUrl/fees?channel=default&event=general%20application"
+        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=";
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees");
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", genAppWithoutNoticeFeeKeyword);
         assertNotNull(feePaymentService);
     }
 
@@ -135,6 +138,7 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
+        URI applicationWithoutNoticeUrl = URI.create(applicationWithoutNoticePartialUrl + genAppWithoutNoticeFeeKeyword);
         mockRestTemplate(applicationWithoutNoticeUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
         verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithoutNoticeUrl),
