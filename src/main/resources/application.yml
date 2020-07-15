@@ -33,7 +33,7 @@ fee:
     baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net}
     feesLookup: /fees-register/fees/lookup
     health: /health
-    genAppWithoutNoticeFeeKeyword: ${GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD:without-notice}
+    genAppWithoutNoticeFeeKeyword: ${GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD:GeneralAppWithoutNotice}
 
 spring:
   resources:
