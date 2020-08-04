@@ -154,7 +154,6 @@ def versions = [
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.29',
         reformHealth:                                   '0.0.5',
-        reformSpringBootAutoConfigure:                  '2.0.0',
         reformsJavaLogging:                             '5.1.1',
         restAssured:                                    '3.0.3',
         serviceTokenGenerator:                          '2.0.0',
@@ -257,7 +256,6 @@ dependencies {
     compile group: 'org.springframework.retry', name: 'spring-retry', version: versions.springRetry
 
     compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: versions.reformHealth
-    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformSpringBootAutoConfigure
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
