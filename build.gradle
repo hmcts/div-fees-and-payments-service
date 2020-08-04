@@ -149,7 +149,7 @@ def versions = [
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
         junit:                                          '4.13',
-        lombok:                                         '1.16.16',
+        lombok:                                         '1.18.12',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.29',
