@@ -33,9 +33,10 @@ targetCompatibility = 11
 
 checkstyle {
     maxWarnings = 0
-    toolVersion = '8.29'
+    toolVersion = '8.35'
     // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
     configDir = new File(rootDir, './')
+    checkstyle.configFile = new File(rootDir, "checkstyle.xml")
 }
 
 bootJar {
@@ -152,7 +153,7 @@ def versions = [
         lombok:                                         '1.18.12',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
-        puppyCrawl:                                     '8.29',
+        puppyCrawl:                                     '8.35',
         reformHealth:                                   '0.0.5',
         reformsJavaLogging:                             '5.1.1',
         restAssured:                                    '3.0.3',
