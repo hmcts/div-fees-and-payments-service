@@ -45,6 +45,12 @@ public class FeePaymentServiceController {
         return ResponseEntity.ok(feePaymentService.getGeneralApplicationFee());
     }
 
+    @ApiOperation(value = "Get General Application fee", tags = {"Fee Lookup"})
+    @GetMapping("/version/1/general-application-without-notice-fee")
+    public ResponseEntity<Fee>  getGeneralApplicationWithoutNoticeFee()  {
+        return ResponseEntity.ok(feePaymentService.getGeneralApplicationWithoutNoticeFee());
+    }
+
     @ApiOperation(value = "Get Enforcement fee", tags = {"Fee Lookup"})
     @GetMapping("/version/1/enforcement-fee")
     public ResponseEntity<Fee>  getEnforcementFee()  {

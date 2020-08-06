@@ -30,6 +30,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String HIJ = "HIJ";
     private static final String ISSUE = "issue";
     private static final String GENERAL_APPLICATION = "general application";
+    private static final String GENERAL_APPLICATION_WITHOUT_NOTICE = "GeneralAppWithoutNotice";
 
     private String genAppWithoutNoticeFeeKeyword;
     private final String feesLookupEndpoint;
@@ -80,6 +81,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     @Override
     public Fee getGeneralApplicationFee() {
         return getFee(GENERAL_APPLICATION, OTHER, null);
+    }
+
+    @Override
+    public Fee getGeneralApplicationWithoutNoticeFee() {
+        return getFee(GENERAL_APPLICATION, OTHER, GENERAL_APPLICATION_WITHOUT_NOTICE);
     }
 
     @Override
