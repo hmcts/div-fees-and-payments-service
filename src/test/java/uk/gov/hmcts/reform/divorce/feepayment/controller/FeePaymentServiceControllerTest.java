@@ -69,6 +69,16 @@ public class FeePaymentServiceControllerTest {
     }
 
     @Test
+    public void whenGetGeneralApplicationWithoutNoticeFeeIsCalled_thenReturnFeeResult() {
+        when(feePaymentService.getGeneralApplicationWithoutNoticeFee()).thenReturn(expected);
+        Fee actual = feePaymentServiceController.getGeneralApplicationWithoutNoticeFee().getBody();
+
+        verify(feePaymentService, times(1)).getGeneralApplicationWithoutNoticeFee();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void whenGetDefendFeeIsCalled_thenReturnFeeResult() {
         when(feePaymentService.getDefendPetitionFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getDefendedPetitionFee().getBody();

@@ -131,7 +131,6 @@ public class FeePaymentServiceTest {
             Mockito.eq(ObjectNode.class));
     }
 
-
     @Test
     public void testEnforcementFeeEvent() throws IOException {
         mockRestTemplate(enforcementUrl);
