@@ -1,4 +1,4 @@
-ARG APP_INSIGHTS_AGENT_VERSION=2.3.1
+ARG APP_INSIGHTS_AGENT_VERSION=2.6.1
 FROM hmctspublic.azurecr.io/base/java:openjdk-11-distroless-1.4
 
 ENV APP div-fees-and-payment-service.jar

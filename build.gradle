@@ -155,7 +155,7 @@ def versions = [
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
         reformHealth:                                   '0.0.5',
-        reformsJavaLogging:                             '5.1.1',
+        reformsJavaLogging:                             '5.1.7',
         restAssured:                                    '3.0.3',
         serviceTokenGenerator:                          '2.0.0',
         serenity:                                       '2.1.2',
