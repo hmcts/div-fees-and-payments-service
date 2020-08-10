@@ -73,7 +73,7 @@ public class FeePaymentServiceControllerTest {
         when(feePaymentService.getGeneralApplicationWithoutNoticeFee()).thenReturn(expected);
         Fee actual = feePaymentServiceController.getGeneralApplicationWithoutNoticeFee().getBody();
 
-        verify(feePaymentService, times(1)).getGeneralApplicationWithoutNoticeFee();
+        verify(feePaymentService).getGeneralApplicationWithoutNoticeFee();
 
         assertEquals(expected, actual);
     }
