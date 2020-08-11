@@ -16,8 +16,6 @@ public interface FeePaymentService {
 
     Fee getGeneralApplicationFee();
 
-    Fee getGeneralApplicationWithoutNoticeFee();
-
     Fee getEnforcementFee();
 
     Fee getApplicationFinancialOrderFee();

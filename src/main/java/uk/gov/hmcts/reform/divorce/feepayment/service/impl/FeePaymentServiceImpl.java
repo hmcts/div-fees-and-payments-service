@@ -83,11 +83,6 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     }
 
     @Override
-    public Fee getGeneralApplicationWithoutNoticeFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword);
-    }
-
-    @Override
     public Fee getEnforcementFee() {
         return getFee("enforcement", OTHER, HIJ);
     }

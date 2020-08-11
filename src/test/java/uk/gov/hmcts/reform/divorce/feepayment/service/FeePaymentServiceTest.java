@@ -126,7 +126,7 @@ public class FeePaymentServiceTest {
     @Test
     public void testGeneralApplicationWithoutNoticeFeeEvent() throws IOException {
         mockRestTemplate(generalApplicationWithoutNoticeFeeUrl);
-        feePaymentService.getGeneralApplicationWithoutNoticeFee();
+        feePaymentService.getApplicationWithoutNoticeFee();
         verify(restTemplate, times(1)).getForObject(Mockito.eq(generalApplicationWithoutNoticeFeeUrl),
             Mockito.eq(ObjectNode.class));
     }
