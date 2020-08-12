@@ -35,15 +35,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private final String feesLookupEndpoint;
     private final RestTemplate restTemplate;
     private String feeApiBaseUri;
-    private final String[][] feesItems = {
-        {ISSUE, DIVORCE, null},
-        {ISSUE, OTHER, "ABC"},
-        {GENERAL_APPLICATION, OTHER, null},
-        {"enforcement", OTHER, HIJ},
-        {"miscellaneous", OTHER, FINANCIAL_ORDER},
-        {GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword},
-        {ISSUE, OTHER, "PQR"}
-    };
+    private final String[][] feesItems;
 
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
@@ -54,6 +46,18 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
         this.genAppWithoutNoticeFeeKeyword = genAppWithoutNoticeFeeKeyword;
+
+        String[][] feesItems = {
+            {ISSUE, DIVORCE, null},
+            {ISSUE, OTHER, "ABC"},
+            {GENERAL_APPLICATION, OTHER, null},
+            {"enforcement", OTHER, HIJ},
+            {"miscellaneous", OTHER, FINANCIAL_ORDER},
+            {GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword},
+            {ISSUE, OTHER, "PQR"}
+        };
+
+        this.feesItems = feesItems;
     }
 
     @Override
