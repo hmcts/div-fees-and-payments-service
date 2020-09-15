@@ -50,6 +50,9 @@ bootJar {
 dependencyManagement {
     dependencies {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+
+        //CVE-2017-18640
+        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.26'
     }
 }
 
