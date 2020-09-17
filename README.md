@@ -6,7 +6,7 @@ This application is used for managing the fees for the Divorce application.
 
 **Prerequisites**
 
-- [JDK 8](https://www.oracle.com/java)
+- [JDK 11](https://openjdk.java.net/)
 - [Docker](https://www.docker.com)
 
 **Building**

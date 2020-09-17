@@ -28,14 +28,15 @@ apply plugin: 'net.serenity-bdd.aggregator'
 
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 checkstyle {
     maxWarnings = 0
-    toolVersion = '8.29'
+    toolVersion = '8.35'
     // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
     configDir = new File(rootDir, './')
+    checkstyle.configFile = new File(rootDir, "checkstyle.xml")
 }
 
 bootJar {
@@ -49,6 +50,9 @@ bootJar {
 dependencyManagement {
     dependencies {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+
+        //CVE-2017-18640
+        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.26'
     }
 }
 
@@ -149,13 +153,12 @@ def versions = [
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
         junit:                                          '4.13',
-        lombok:                                         '1.16.16',
+        lombok:                                         '1.18.12',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
-        puppyCrawl:                                     '8.29',
+        puppyCrawl:                                     '8.35',
         reformHealth:                                   '0.0.5',
-        reformSpringBootAutoConfigure:                  '2.0.0',
-        reformsJavaLogging:                             '5.1.1',
+        reformsJavaLogging:                             '5.1.7',
         restAssured:                                    '3.0.3',
         serviceTokenGenerator:                          '2.0.0',
         serenity:                                       '2.1.2',
@@ -257,7 +260,6 @@ dependencies {
     compile group: 'org.springframework.retry', name: 'spring-retry', version: versions.springRetry
 
     compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: versions.reformHealth
-    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformSpringBootAutoConfigure
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
