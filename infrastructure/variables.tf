@@ -6,13 +6,9 @@ variable "reform_team" {
     default = "div"
 }
 
-variable "env" {
-    type = "string"
-}
+variable "env" {}
 
-variable "product" {
-    type    = "string"
-}
+variable "product" {}
 
 variable "raw_product" {
   default = "div"
@@ -21,7 +17,6 @@ variable "raw_product" {
 variable "tenant_id" {}
 
 variable "jenkins_AAD_objectId" {
-    type        = "string"
     description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
 }
 
@@ -41,23 +36,17 @@ variable "auth_provider_service_client_tokentimetoliveinseconds" {
     default = "900"
 }
 
-variable "logging_level_org_springframework_web" {
-    type = "string"
-}
+variable "logging_level_org_springframework_web" {}
 
-variable "logging_level_uk_gov_hmcts_ccd" {
-    type = "string"
-}
+variable "logging_level_uk_gov_hmcts_ccd" {}
 
 variable "fee_api_url" {
-    type = "string"
     default = ""
 }
 
 variable "subscription" {}
 
 variable "location" {
-    type = "string"
     default = "UK South"
 }
 
@@ -66,7 +55,7 @@ variable "ilbIp" {}
 variable "vault_env" {}
 
 variable "common_tags" {
-    type = "map"
+    type = map(string)
 }
 
 variable "appinsights_instrumentation_key" {
@@ -75,7 +64,6 @@ variable "appinsights_instrumentation_key" {
 }
 
 variable "health_check_ttl" {
-    type = "string"
     default = "5000"
 }
 
