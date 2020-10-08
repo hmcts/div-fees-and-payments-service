@@ -22,7 +22,6 @@ import java.util.List;
 import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.Is.isA;
 
 @Lazy
@@ -53,19 +52,18 @@ public class GetAllFeePaymentIntegrationTest {
     }
 
     @Test
-    public void checkFeesAndFeeCode() {
+    public void shouldReturnCorrectFeeCodeType() {
+
         Response response = when()
                 .get(feesPaymentsServiceUrl + "/get-all-fees")
                 .then()
                 .extract().response();
 
         List<String> feeCodes = response.getBody().path("feeCode");
-        //.extract().jsonPath().getList("", Fee.class);
 
         assertThat(feeCodes.get(0), isA(String.class));
-        assertThat(feeCodes.size(), is(3));
-
-        //assertThat(feeList.get(0).getFeeCode() , isA(String.class));
+        assertThat(feeCodes.get(1), isA(String.class));
+        assertThat(feeCodes.get(2), isA(String.class));
     }
 
 }
