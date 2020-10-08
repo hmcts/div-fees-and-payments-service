@@ -35,12 +35,12 @@ public class GetAllFeePaymentIntegrationTest {
 
     @Test
     public void checkThatResponseHasAListOfFees() {
-        // Option 2
         final List<Fee> feeList =
             when()
               .get(feesPaymentsServiceUrl + "/get-all-fees")
               .then()
-              .extract().jsonPath().getList("Fee", Fee.class);
+              .assertThat().statusCode(200)
+              .extract().jsonPath().getList("", Fee.class);
 
         assertThat(feeList.size() , greaterThan(1) ) ;
         assertThat(feeList.get(0).getFeeCode() , isA(String.class));
