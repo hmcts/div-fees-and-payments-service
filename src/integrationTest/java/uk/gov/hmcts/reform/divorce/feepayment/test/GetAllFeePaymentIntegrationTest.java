@@ -38,17 +38,17 @@ public class GetAllFeePaymentIntegrationTest {
     @Test
     public void checkThatResponseHasAListOfFees() {
         // Option 1
-        final String  responseStr =
-            when()
-              .get(feesPaymentsServiceUrl + "/get-all-fees")
-              .then()
-              .extract().body().asString();
-
-        final Gson gson = new Gson();
-        final List<Fee> fee = gson.fromJson(responseStr, new TypeToken<List<Fee>>(){}.getType());
-
-        assertThat(fee.size() ,  greaterThan(1) ) ;
-        assertThat(fee.get(0).getFeeCode() ,  isA(String.class)) ;
+//        final String  responseStr =
+//            when()
+//              .get(feesPaymentsServiceUrl + "/get-all-fees")
+//              .then()
+//              .extract().body().asString();
+//
+//        final Gson gson = new Gson();
+//        final List<Fee> fee = gson.fromJson(responseStr, new TypeToken<List<Fee>>(){}.getType());
+//
+//        assertThat(fee.size() ,  greaterThan(1) ) ;
+//        assertThat(fee.get(0).getFeeCode() ,  isA(String.class)) ;
 
         // Option 2
         final List<Fee> feeList =
