@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 
 import java.util.List;
 
+import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -32,6 +34,11 @@ public class GetAllFeePaymentIntegrationTest {
 
     @Value("${fees-and-payments.baseUrl}")
     private String feesPaymentsServiceUrl;
+
+    @Before
+    public void setup() {
+        baseURI = feesPaymentsServiceUrl;
+    }
 
     @Test
     public void checkThatResponseHasAListOfFees() {
