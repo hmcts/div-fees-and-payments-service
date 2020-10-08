@@ -37,6 +37,7 @@ public class GetAllFeePaymentIntegrationTest {
 
     @Test
     public void checkThatResponseHasAListOfFees() {
+        // Option 1
         final String  responseStr =
             when()
               .get(feesPaymentsServiceUrl + "/get-all-fees")
@@ -44,9 +45,22 @@ public class GetAllFeePaymentIntegrationTest {
               .extract().body().asString();
 
         final Gson gson = new Gson();
-        final List<Fee> returnedArtworks = gson.fromJson(responseStr, new TypeToken<List<Fee>>(){}.getType());
+        final List<Fee> fee = gson.fromJson(responseStr, new TypeToken<List<Fee>>(){}.getType());
 
-        assertThat(returnedArtworks.size() ,  greaterThan(1) ) ;
-        assertThat(returnedArtworks.get(0).getFeeCode() ,  isA(String.class)) ;
+        assertThat(fee.size() ,  greaterThan(1) ) ;
+        assertThat(fee.get(0).getFeeCode() ,  isA(String.class)) ;
+
+        // Option 2
+        final List<Fee> feeList =
+            when()
+              .get(feesPaymentsServiceUrl + "/get-all-fees")
+              .then()
+              .extract().jsonPath().getList("Fee", Fee.class);
+
+        assertThat(feeList.size() , greaterThan(1) ) ;
+        assertThat(feeList.get(0).getFeeCode() , isA(String.class));
+
+
+
     }
 }
