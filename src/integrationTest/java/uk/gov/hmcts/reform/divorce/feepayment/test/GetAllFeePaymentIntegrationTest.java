@@ -1,7 +1,10 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
+//import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +18,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
 //import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
 
-//import java.util.List;
 import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
+
 //import static org.hamcrest.MatcherAssert.assertThat;
 //import static org.hamcrest.Matchers.greaterThan;
 //import static org.hamcrest.core.Is.isA;
@@ -33,6 +36,9 @@ public class GetAllFeePaymentIntegrationTest {
 
     @Value("${fees-and-payments.baseUrl}")
     private String feesPaymentsServiceUrl;
+
+    @Rule
+    public SpringIntegrationMethodRule springMethodIntegration = new SpringIntegrationMethodRule();
 
     @Before
     public void setup() {
@@ -51,4 +57,5 @@ public class GetAllFeePaymentIntegrationTest {
         //assertThat(feeList.size() , greaterThan(1) ) ;
         //assertThat(feeList.get(0).getFeeCode() , isA(String.class));
     }
+
 }
