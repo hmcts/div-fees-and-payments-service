@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-//import io.restassured.response.Response;
+import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
@@ -16,15 +16,14 @@ import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfigura
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
-//import uk.gov.hmcts.reform.divorce.feepayment.model.Fee;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
-
-//import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.Matchers.greaterThan;
-//import static org.hamcrest.core.Is.isA;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.Is.isA;
 
 @Lazy
 @RunWith(SerenityRunner.class)
@@ -46,15 +45,26 @@ public class GetAllFeePaymentIntegrationTest {
     }
 
     @Test
-    public void checkThatResponseHasAListOfFees() {
-        //final List<Fee> feeList =
+    public void shouldReturnSucessOnServiceCall() {
         when()
             .get(feesPaymentsServiceUrl + "/get-all-fees")
             .then()
             .assertThat().statusCode(200);
+    }
+
+    @Test
+    public void checkFeesAndFeeCode() {
+        Response response = when()
+                .get(feesPaymentsServiceUrl + "/get-all-fees")
+                .then()
+                .extract().response();
+
+        List<String> feeCodes = response.getBody().path("feeCode");
         //.extract().jsonPath().getList("", Fee.class);
 
-        //assertThat(feeList.size() , greaterThan(1) ) ;
+        assertThat(feeCodes.get(0), isA(String.class));
+        assertThat(feeCodes.size(), is(3));
+
         //assertThat(feeList.get(0).getFeeCode() , isA(String.class));
     }
 
