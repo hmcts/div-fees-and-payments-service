@@ -1,7 +1,5 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,19 +35,6 @@ public class GetAllFeePaymentIntegrationTest {
 
     @Test
     public void checkThatResponseHasAListOfFees() {
-        // Option 1
-//        final String  responseStr =
-//            when()
-//              .get(feesPaymentsServiceUrl + "/get-all-fees")
-//              .then()
-//              .extract().body().asString();
-//
-//        final Gson gson = new Gson();
-//        final List<Fee> fee = gson.fromJson(responseStr, new TypeToken<List<Fee>>(){}.getType());
-//
-//        assertThat(fee.size() ,  greaterThan(1) ) ;
-//        assertThat(fee.get(0).getFeeCode() ,  isA(String.class)) ;
-
         // Option 2
         final List<Fee> feeList =
             when()
@@ -59,8 +44,5 @@ public class GetAllFeePaymentIntegrationTest {
 
         assertThat(feeList.size() , greaterThan(1) ) ;
         assertThat(feeList.get(0).getFeeCode() , isA(String.class));
-
-
-
     }
 }
