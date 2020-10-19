@@ -200,9 +200,9 @@ public class FeePaymentConsumerTest {
                 .execute().returnResponse();
     }
 
-    private PactDslJsonBody getFeeResponseBody(String Code, double amount, int version, String description) {
+    private PactDslJsonBody getFeeResponseBody(String code, double amount, int version, String description) {
         return new PactDslJsonBody()
-                .stringType("code", Code)
+                .stringType("code", code)
                 .decimalType("fee_amount", amount)
                 .numberValue("version", version)
                 .stringType("description", description);
