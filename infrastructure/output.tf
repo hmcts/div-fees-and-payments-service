@@ -1,3 +1,3 @@
 output "test_environment" {
-  value = "${local.local_env}"
+  value = local.local_env
 }
