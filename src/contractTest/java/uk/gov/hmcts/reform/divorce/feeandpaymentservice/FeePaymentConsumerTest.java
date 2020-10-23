@@ -62,7 +62,7 @@ public class FeePaymentConsumerTest {
 
     @Test
     @PactTestFor(pactMethod = "pettitionIssueFee")
-    public void verifypetitionIssueFeePact(MockServer mockServer) throws IOException, JSONException {
+    public void verifyPetitionIssueFeePact(MockServer mockServer) throws IOException, JSONException {
         HttpResponse httpResponse = Request.Get(mockServer.getUrl() + BASEURI + "?" + PETITION_ISSUE_FEE)
                 .execute().returnResponse();
     }
