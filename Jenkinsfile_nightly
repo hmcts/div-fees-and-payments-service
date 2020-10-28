@@ -26,7 +26,7 @@ withNightlyPipeline(type, product, component) {
 
     env.Rules = params.SecurityRules
     enableFullFunctionalTest()
-    enableMutationTest()
-    enableSecurityScan()
+    //enableMutationTest()
+    //enableSecurityScan()
 
 }
