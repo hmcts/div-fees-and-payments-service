@@ -42,7 +42,7 @@ public class FeePaymentIntegrationTest {
         baseURI = feesPaymentsServiceUrl;
     }
 
-    public FeePaymentIntegrationTest(String feeEndpoint) {
+    FeePaymentIntegrationTest(String feeEndpoint) {
         this.feeEndpoint = feeEndpoint;
     }
 
