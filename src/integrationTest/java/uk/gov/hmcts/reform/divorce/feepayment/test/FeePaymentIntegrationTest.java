@@ -49,7 +49,6 @@ public class FeePaymentIntegrationTest {
     @Parameterized.Parameters
     public static String[]data() {
         return new String[] {
-            "/get-all-fees",
             "/petition-issue-fee",
             "/general-application-fee",
             "/enforcement-fee",
