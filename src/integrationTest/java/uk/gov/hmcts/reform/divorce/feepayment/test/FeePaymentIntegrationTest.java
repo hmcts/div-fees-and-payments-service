@@ -1,10 +1,11 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +23,7 @@ import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.core.Is.isA;
 
 @Lazy
-@RunWith(SerenityRunner.class)
+@RunWith(SerenityParameterizedRunner.class)
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.feepayment.test", "uk.gov.hmcts.auth.provider.service"})
 @ImportAutoConfiguration({RibbonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class,
         FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
@@ -42,7 +43,7 @@ public class FeePaymentIntegrationTest {
         baseURI = feesPaymentsServiceUrl;
     }
 
-    FeePaymentIntegrationTest(String feeEndpoint) {
+    public FeePaymentIntegrationTest(String feeEndpoint) {
         this.feeEndpoint = feeEndpoint;
     }
 
