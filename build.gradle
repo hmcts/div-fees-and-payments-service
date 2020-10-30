@@ -152,7 +152,7 @@ def versions = [
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
-//        junit:                                          '4.13',
+        junit:                                          '4.13',
         lombok:                                         '1.18.12',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
