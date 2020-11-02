@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,7 +23,7 @@ import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.core.Is.isA;
 
 @Lazy
-@RunWith(SerenityParameterizedRunner.class)
+@RunWith(SerenityRunner.class)
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.feepayment.test", "uk.gov.hmcts.auth.provider.service"})
 @ImportAutoConfiguration({RibbonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class,
         FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
@@ -54,7 +54,7 @@ public class FeePaymentIntegrationTest {
             "/general-application-fee",
             "/enforcement-fee",
             "/application-financial-order-fee",
-            "application-without-notice-fee",
+            "/application-without-notice-fee",
             "/amend-fee",
             "/defended-petition-fee"
         };
