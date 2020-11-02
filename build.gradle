@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.1.6")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.1.13")
     }
 }
 
@@ -71,6 +71,7 @@ sourceSets {
 
 configurations {
     integrationTestCompile.extendsFrom testCompile
+    integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntime.extendsFrom testRuntime
 }
 
@@ -161,8 +162,8 @@ def versions = [
         reformsJavaLogging:                             '5.1.7',
         restAssured:                                    '3.0.3',
         serviceTokenGenerator:                          '2.0.0',
-        serenity:                                       '2.1.2',
-        serenityCucumber:                               '1.9.51',
+        serenity:                                       '2.1.13',
+        serenityCucumber:                               '1.9.50',
         serviceAuthProviderClient:                      '0.6.0',
         sonarPitest:                                    '0.5',
         springBoot:                                     '2.2.4.RELEASE',
@@ -190,11 +191,11 @@ dependencies {
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonassert
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
     integrationTestCompile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceAuthProviderClient
 
     compile (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils) {
@@ -271,6 +272,10 @@ dependencies {
     }
 }
 
+dependencies {
+    integrationTestImplementation(sourceSets.test.output)
+}
+
 test {
     exclude '**/HealthCheckFunctionalTest.class'
 }
@@ -283,6 +288,8 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
 task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
+
+    exclude "uk/gov/hmcts/reform/divorce/feepayment/test/ServiceContextConfiguration.java"
 
     finalizedBy aggregate
 }
