@@ -19,6 +19,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.core.Is.isA;
@@ -50,8 +53,8 @@ public class FeePaymentIntegrationTest {
 
     //@Parameterized.Parameters
     @TestData
-    public static String[]data() {
-        return new String[] {
+    public static Collection<String> data() {
+        return Arrays.asList(new String[] {
             "/petition-issue-fee",
             "/general-application-fee",
             "/enforcement-fee",
@@ -59,7 +62,7 @@ public class FeePaymentIntegrationTest {
             "application-without-notice-fee",
             "/amend-fee",
             "/defended-petition-fee"
-        };
+        });
     }
 
     @Test
