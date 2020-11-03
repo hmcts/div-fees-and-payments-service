@@ -54,7 +54,7 @@ public class FeePaymentIntegrationTest {
     //@Parameterized.Parameters
     @TestData
     public static Collection<String> data() {
-        return Arrays.asList(new String[] {
+        return Arrays.asList(
             "/petition-issue-fee",
             "/general-application-fee",
             "/enforcement-fee",
@@ -62,7 +62,7 @@ public class FeePaymentIntegrationTest {
             "application-without-notice-fee",
             "/amend-fee",
             "/defended-petition-fee"
-        });
+        );
     }
 
     @Test
