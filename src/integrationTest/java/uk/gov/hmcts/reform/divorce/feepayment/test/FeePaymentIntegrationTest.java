@@ -1,15 +1,14 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-//import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
+import net.thucydides.junit.annotations.TestData;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-//import org.junit.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-//import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -25,7 +24,7 @@ import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.core.Is.isA;
 
 @Lazy
-@RunWith(SerenityRunner.class)
+@RunWith(SerenityParameterizedRunner.class)
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.feepayment.test", "uk.gov.hmcts.auth.provider.service"})
 @ImportAutoConfiguration({RibbonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class,
         FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
@@ -45,28 +44,28 @@ public class FeePaymentIntegrationTest {
         baseURI = feesPaymentsServiceUrl;
     }
 
-    /*public FeePaymentIntegrationTest(String feeEndpoint) {
+    public FeePaymentIntegrationTest(String feeEndpoint) {
         this.feeEndpoint = feeEndpoint;
-    }*/
+    }
 
-    /* @Parameterized.Parameters
+    //@Parameterized.Parameters
+    @TestData
     public static String[]data() {
         return new String[] {
             "/petition-issue-fee",
             "/general-application-fee",
             "/enforcement-fee",
             "/application-financial-order-fee",
-            "/application-without-notice-fee",
+            "application-without-notice-fee",
             "/amend-fee",
             "/defended-petition-fee"
         };
-     }*/
+    }
 
     @Test
-    @DisplayName("Running All fee based operations ")
     public void feeTest() {
         when()
-            .get("/petition-issue-fee")
+            .get(feeEndpoint)
             .then()
             .assertThat().statusCode(200)
             .and().body("feeCode", isA(String.class));
