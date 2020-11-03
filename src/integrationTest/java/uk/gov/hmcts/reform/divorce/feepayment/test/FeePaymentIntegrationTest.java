@@ -5,8 +5,9 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
 import org.junit.Rule;
-//import org.junit.jupiter.api.Test;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 import org.junit.runner.RunWith;
 //import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,13 +56,14 @@ public class FeePaymentIntegrationTest {
             "/general-application-fee",
             "/enforcement-fee",
             "/application-financial-order-fee",
-            "application-without-notice-fee",
+            "/application-without-notice-fee",
             "/amend-fee",
             "/defended-petition-fee"
         };
     }*/
 
     @Test
+    @DisplayName("Running All fee based operations ")
     public void feeTest() {
         when()
             .get("/petition-issue-fee")
