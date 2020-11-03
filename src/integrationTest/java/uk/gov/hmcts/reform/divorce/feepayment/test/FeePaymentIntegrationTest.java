@@ -5,10 +5,8 @@ import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import net.thucydides.junit.annotations.TestData;
 import org.junit.Before;
 import org.junit.Rule;
-//import org.junit.jupiter.api.Test;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-//import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -51,18 +49,16 @@ public class FeePaymentIntegrationTest {
         this.feeEndpoint = feeEndpoint;
     }
 
-    //@Parameterized.Parameters
     @TestData
-    public static Collection<String> data() {
-        return Arrays.asList(
-            "/petition-issue-fee",
-            "/general-application-fee",
-            "/enforcement-fee",
-            "/application-financial-order-fee",
-            "application-without-notice-fee",
-            "/amend-fee",
-            "/defended-petition-fee"
-        );
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {"/petition-issue-fee"},
+                {"/enforcement-fee"},
+                {"/application-financial-order-fee"},
+                {"application-without-notice-fee"},
+                {"/amend-fee"},
+                {"/defended-petition-fee"}
+        });
     }
 
     @Test
