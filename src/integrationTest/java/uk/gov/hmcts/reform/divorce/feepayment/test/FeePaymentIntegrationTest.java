@@ -1,13 +1,14 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+//import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import org.junit.Before;
 import org.junit.Rule;
 //import org.junit.jupiter.api.Test;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+//import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -23,7 +24,7 @@ import static net.serenitybdd.rest.SerenityRest.when;
 import static org.hamcrest.core.Is.isA;
 
 @Lazy
-@RunWith(SerenityParameterizedRunner.class)
+@RunWith(SerenityRunner.class)
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.feepayment.test", "uk.gov.hmcts.auth.provider.service"})
 @ImportAutoConfiguration({RibbonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class,
         FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
@@ -43,11 +44,11 @@ public class FeePaymentIntegrationTest {
         baseURI = feesPaymentsServiceUrl;
     }
 
-    public FeePaymentIntegrationTest(String feeEndpoint) {
+    /*public FeePaymentIntegrationTest(String feeEndpoint) {
         this.feeEndpoint = feeEndpoint;
-    }
+    }*/
 
-    @Parameterized.Parameters
+   /* @Parameterized.Parameters
     public static String[]data() {
         return new String[] {
             "/petition-issue-fee",
@@ -58,12 +59,12 @@ public class FeePaymentIntegrationTest {
             "/amend-fee",
             "/defended-petition-fee"
         };
-    }
+    }*/
 
     @Test
     public void feeTest() {
         when()
-            .get(feeEndpoint)
+            .get("/petition-issue-fee")
             .then()
             .assertThat().statusCode(200)
             .and().body("feeCode", isA(String.class));
