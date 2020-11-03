@@ -49,7 +49,7 @@ public class FeePaymentIntegrationTest {
         this.feeEndpoint = feeEndpoint;
     }*/
 
-   /* @Parameterized.Parameters
+    /* @Parameterized.Parameters
     public static String[]data() {
         return new String[] {
             "/petition-issue-fee",
@@ -60,7 +60,7 @@ public class FeePaymentIntegrationTest {
             "/amend-fee",
             "/defended-petition-fee"
         };
-    }*/
+     }*/
 
     @Test
     @DisplayName("Running All fee based operations ")
