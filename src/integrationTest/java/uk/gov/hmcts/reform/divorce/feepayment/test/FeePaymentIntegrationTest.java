@@ -57,7 +57,8 @@ public class FeePaymentIntegrationTest {
                 {"/application-financial-order-fee"},
                 {"application-without-notice-fee"},
                 {"/amend-fee"},
-                {"/defended-petition-fee"}
+                {"/defended-petition-fee"},
+                {"/general-application-fee"}
         });
     }
 
