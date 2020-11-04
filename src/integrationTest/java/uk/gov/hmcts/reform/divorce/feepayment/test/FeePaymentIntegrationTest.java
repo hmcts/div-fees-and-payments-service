@@ -2,11 +2,11 @@ package uk.gov.hmcts.reform.divorce.feepayment.test;
 
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
+import net.thucydides.junit.annotations.TestData;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -16,6 +16,9 @@ import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfigura
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
@@ -46,25 +49,25 @@ public class FeePaymentIntegrationTest {
         this.feeEndpoint = feeEndpoint;
     }
 
-    @Parameterized.Parameters
-    public static String[]data() {
-        return new String[] {
-            "/petition-issue-fee",
-            "/general-application-fee",
-            "/enforcement-fee",
-            "/application-financial-order-fee",
-            "application-without-notice-fee",
-            "/amend-fee",
-            "/defended-petition-fee"
-        };
+    @TestData
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {"/petition-issue-fee"},
+                {"/enforcement-fee"},
+                {"/application-financial-order-fee"},
+                {"application-without-notice-fee"},
+                {"/amend-fee"},
+                {"/defended-petition-fee"},
+                {"/general-application-fee"}
+        });
     }
 
     @Test
     public void feeTest() {
         when()
-            .get(feeEndpoint)
-            .then()
-            .assertThat().statusCode(200)
-            .and().body("feeCode", isA(String.class));
+                .get(feeEndpoint)
+                .then()
+                .assertThat().statusCode(200)
+                .and().body("feeCode", isA(String.class));
     }
 }
