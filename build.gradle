@@ -273,10 +273,6 @@ dependencies {
     }
 }
 
-dependencies {
-    integrationTestImplementation(sourceSets.test.output)
-}
-
 test {
     exclude '**/HealthCheckFunctionalTest.class'
 }
