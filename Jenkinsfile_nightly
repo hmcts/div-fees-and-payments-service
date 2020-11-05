@@ -18,8 +18,17 @@ def component = "fps"
 
 withNightlyPipeline(type, product, component) {
     env.TEST_URL = params.URL_TO_TEST
-    
+    env.test_environment = 'aat'
+
+    before('fullFunctionalTest') {
+        env.ITEST_ENVIRONMENT = "aat"
+    }
+    after('fullFunctionalTest') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+
     env.Rules = params.SecurityRules
+    enableFullFunctionalTest()
     enableMutationTest()
     enableSecurityScan()
 }
