@@ -28,6 +28,20 @@
         </notes>
         <cve>CVE-2020-5421</cve>
     </suppress>
+    <suppress until="2020-11-30Z">
+        <notes>
+            <![CDATA[file name: tomcat-embed-core-9.0.37.jar]]>
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
+        <cve>CVE-2020-13943</cve>
+    </suppress>
+    <suppress until="2020-11-30Z">
+        <notes>
+            <![CDATA[file name: tomcat-embed-websocket-9.0.37.jar]]>
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-websocket@.*$</packageUrl>
+        <cve>CVE-2020-13943</cve>
+    </suppress>
     <suppress>
         <notes>
             <![CDATA[file name: netty-codec-http2-4.1.45.Final.jar ]]>
@@ -59,5 +73,15 @@
         <vulnerabilityName>A prototype pollution vulnerability in handlebars is exploitable if an attacker can control the template</vulnerabilityName>
         <vulnerabilityName>Disallow calling helperMissing and blockHelperMissing directly</vulnerabilityName>
         <vulnerabilityName>Prototype pollution</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: jetty-webapp-9.4.25.v20191220.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty\-webapp@.*$</packageUrl>
+        <cpe>cpe:/a:eclipse:jetty</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: jetty-webapp-9.4.25.v20191220.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty*.*$</packageUrl>
+        <cve>CVE-2020-27216</cve>
     </suppress>
 </suppressions>
