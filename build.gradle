@@ -188,7 +188,9 @@ def versions = [
         tomcat:                                         '9.0.37',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
-        pact_version:                                   '4.1.9',
+        pact_version:                                   '4.1.11',
+        jetty:                                          '9.4.35.v20201120',
+        httpComponents:                                 '4.5.13',
 ]
 
 dependencies {
@@ -278,17 +280,19 @@ dependencies {
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
+    compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: versions.httpComponents
 
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-client', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-continuation', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-util-ajax', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-http', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-security', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-util', version: '9.4.35.v20201120'
-    testCompile group: 'org.eclipse.jetty', name: 'jetty-xml', version: '9.4.35.v20201120'
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-client', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-continuation', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-util-ajax', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-http', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-security', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-servlets', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-util', version: versions.jetty
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-xml', version: versions.jetty
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
@@ -299,6 +303,8 @@ dependencies {
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
     contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.3.2')
 
+    contractTestCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
+    contractTestCompile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: versions.httpComponents
     contractTestCompile group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
     contractTestCompile group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
     contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
