@@ -300,7 +300,7 @@ dependencies {
      //pact contract testing
 
     contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
-    contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
+    contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.3.2')
 
     contractTestCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
