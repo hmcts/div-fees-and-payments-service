@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.4.RELEASE'
+        springBootVersion = '2.3.5.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -158,9 +158,6 @@ def versions = [
         gradlePitest:                                   '1.4.6',
         guava:                                          '28.2-jre',
         hibernate:                                      '6.0.5.Final',
-        jacksonAnnotations:                             '2.10.2',
-        jacksonCore:                                    '2.10.2',
-        jacksonDatabind:                                '2.10.2',
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
@@ -177,7 +174,7 @@ def versions = [
         serenityCucumber:                               '1.9.50',
         serviceAuthProviderClient:                      '0.6.0',
         sonarPitest:                                    '0.5',
-        springBoot:                                     '2.2.4.RELEASE',
+        springBoot:                                     '2.3.5.RELEASE',
         springfoxSwagger:                               '2.9.2',
         springHateoas:                                  '0.25.2.RELEASE',
         springOpenFeign:                                '2.2.1.RELEASE',
@@ -185,7 +182,7 @@ def versions = [
         springRetry:                                    '1.2.5.RELEASE',
         springSecurityCrypto:                           '5.2.4.RELEASE',
         springSecurityRsa:                              '1.0.8.RELEASE',
-        tomcat:                                         '9.0.37',
+        tomcat:                                         '9.0.40',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
         pact_version:                                   '4.1.11',
@@ -213,9 +210,6 @@ dependencies {
     integrationTestCompile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceAuthProviderClient
 
     compile (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils) {
-        force = true
-    }
-    compile(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonDatabind) {
         force = true
     }
     compile (group: 'org.springframework.security', name: 'spring-security-rsa', version: versions.springSecurityRsa) {
@@ -248,8 +242,6 @@ dependencies {
 
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbusJoseJwt
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonAnnotations
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jacksonCore
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
     compile group: 'com.google.guava', name: 'guava', version: versions.guava
     compile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: versions.jaywayJsonPath
