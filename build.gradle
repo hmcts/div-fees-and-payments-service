@@ -54,6 +54,9 @@ dependencyManagement {
 
         //CVE-2017-18640
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.26'
+
+        //CVE-2020-26939
+        dependency group: 'org.bouncycastle',name: 'bcprov-jdk15on', version: '1.61'
     }
 }
 
