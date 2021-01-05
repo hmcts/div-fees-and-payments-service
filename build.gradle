@@ -156,7 +156,7 @@ def versions = [
         commonsIo:                                      '2.6',
         commonsLang3:                                   '3.9',
         gradlePitest:                                   '1.4.6',
-        guava:                                          '28.2-jre',
+        guava:                                          '30.2-jre',
         hibernate:                                      '6.0.5.Final',
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.4.0',
