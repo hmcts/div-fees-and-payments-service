@@ -169,7 +169,6 @@ def versions = [
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
-        reformHealth:                                   '0.0.5',
         reformsJavaLogging:                             '5.1.7',
         restAssured:                                    '3.0.3',
         serviceTokenGenerator:                          '2.0.0',
@@ -270,7 +269,6 @@ dependencies {
     compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: versions.springPluginCore
     compile group: 'org.springframework.retry', name: 'spring-retry', version: versions.springRetry
 
-    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: versions.reformHealth
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging

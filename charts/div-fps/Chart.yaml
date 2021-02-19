@@ -2,8 +2,8 @@ apiVersion: v2
 appVersion: "1.0"
 description: Divorce - Fees and Payment Service
 name: div-fps
-version: 2.0.0
+version: 3.0.0
 dependencies:
   - name: java
-    version: ~2.6.0
+    version: ~3.4.4
     repository: "@hmctspublic"
