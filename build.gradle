@@ -53,7 +53,7 @@ dependencyManagement {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 
         //CVE-2017-18640
-        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.26'
+        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
 
         //CVE-2020-26939
         dependency group: 'org.bouncycastle',name: 'bcprov-jdk15on', version: '1.61'
