@@ -203,7 +203,7 @@ dependencies {
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonassert
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    integrationTestCompile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
+    integrationTestCompile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '3.0.0'
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
