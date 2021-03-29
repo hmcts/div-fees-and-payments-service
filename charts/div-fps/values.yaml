@@ -4,8 +4,8 @@ java:
     environment:
         FEE_API_URL: "http://fees-register-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+    aadIdentityName: divorce
     keyVaults:
         "div":
-            resourceGroup: div
             secrets:
                 - AppInsightsInstrumentationKey
