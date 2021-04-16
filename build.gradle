@@ -356,10 +356,10 @@ def getCheckedOutGitCommitHash() {
 
 pact {
     broker {
-        pactBrokerUrl = System.getenv("PACT_BROKER_FULL_URL") ?: 'http://localhost:80'
+        pactBrokerUrl = System.getProperty("pact.broker.url") ?: 'http://localhost:80'
     }
     publish {
-        pactDirectory = 'pacts'
+        pactDirectory = 'build/pacts'
         tags = [System.getenv("PACT_BRANCH_NAME") ?:'Dev']
         version = project.pacticipantVersion
     }
