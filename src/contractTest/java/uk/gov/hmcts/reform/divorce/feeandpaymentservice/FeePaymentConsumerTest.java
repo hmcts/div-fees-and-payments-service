@@ -204,7 +204,7 @@ public class FeePaymentConsumerTest {
         return new PactDslJsonBody()
                 .stringType("code", code)
                 .decimalType("fee_amount", amount)
-                .numberValue("version", version)
+                .numberType("version", version)
                 .stringType("description", description);
     }
 }
