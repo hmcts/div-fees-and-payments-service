@@ -170,7 +170,7 @@ def versions = [
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
         reformsJavaLogging:                             '5.1.7',
-        restAssured:                                    '3.0.3',
+        restAssured:                                    '3.3.0',
         serviceTokenGenerator:                          '2.0.0',
         serenity:                                       '2.3.13',
         serenityCucumber:                               '1.9.51',
@@ -197,7 +197,7 @@ dependencies {
     integrationTestCompile(sourceSets.test.output)
     integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbusJoseJwt
-    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured-all', version: versions.restAssured
     integrationTestCompile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     integrationTestCompile group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonassert
