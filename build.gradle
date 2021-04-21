@@ -156,7 +156,7 @@ tasks.withType(Checkstyle).each { checkstyleTask ->
 
 def versions = [
         commonsBeanUtils:                               '1.9.4',
-        commonsIo:                                      '2.6',
+        commonsIo:                                      '2.7',
         commonsLang3:                                   '3.9',
         gradlePitest:                                   '1.4.6',
         guava:                                          '30.1-jre',
