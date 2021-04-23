@@ -21,7 +21,7 @@ plugins {
     id 'org.owasp.dependencycheck' version '6.0.2'
     id 'org.sonarqube' version '3.0'
     id 'org.springframework.boot' version '2.2.4.RELEASE'
-    id 'au.com.dius.pact' version '4.2.1'
+    id 'au.com.dius.pact' version '4.2.3'
 }
 
 apply plugin: 'checkstyle'
@@ -172,7 +172,7 @@ def versions = [
         reformsJavaLogging:                             '5.1.7',
         restAssured:                                    '3.0.3',
         serviceTokenGenerator:                          '2.0.0',
-        serenity:                                       '2.2.13',
+        serenity:                                       '2.4.4',
         serenityCucumber:                               '1.9.51',
         serviceAuthProviderClient:                      '0.6.0',
         sonarPitest:                                    '0.5',
@@ -187,7 +187,7 @@ def versions = [
         tomcat:                                         '9.0.43',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
-        pact_version:                                   '4.1.11',
+        pact_version:                                   '4.1.7',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
 ]
@@ -346,7 +346,8 @@ runAndPublishConsumerPactTests.dependsOn contract
 runAndPublishConsumerPactTests.finalizedBy pactPublish
 
 project.ext {
-    pactVersion = getCheckedOutGitCommitHash()
+    pacticipant = 'divorce_feeAndPaymentService_feeRegister'
+    pacticipantVersion = getCheckedOutGitCommitHash()
 }
 
 def getCheckedOutGitCommitHash() {
@@ -354,15 +355,13 @@ def getCheckedOutGitCommitHash() {
 }
 
 pact {
+    broker {
+        pactBrokerUrl = System.getProperty("pact.broker.url") ?: 'http://localhost:80'
+    }
     publish {
         pactDirectory = 'build/pacts'
-        pactBrokerUrl = System.getProperty("pact.broker.url") ?: 'http://localhost:80'
-        tags = [System.getenv("PACT_BRANCH_NAME") ?: 'Dev']
-        version = project.pactVersion
-    }
-    reports {
-        defaultReports()
-        markdown
+        tags = [System.getenv("PACT_BRANCH_NAME") ?:'Dev']
+        version = project.pacticipantVersion
     }
 }
 
