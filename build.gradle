@@ -187,7 +187,7 @@ def versions = [
         tomcat:                                         '9.0.43',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
-        pact_version:                                   '4.1.7',
+        pact_version:                                   '4.1.8',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
 ]
