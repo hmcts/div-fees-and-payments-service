@@ -1,0 +1,57 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.springframework.boot:spring-boot-gradle-plugin
+    versions:
+    - 2.4.1
+    - 2.4.2
+    - 2.4.3
+    - 2.4.4
+  - dependency-name: org.springframework.boot
+    versions:
+    - 2.4.1
+    - 2.4.2
+    - 2.4.3
+    - 2.4.4
+  - dependency-name: org.owasp.dependencycheck
+    versions:
+    - 6.0.3
+    - 6.1.0
+    - 6.1.1
+    - 6.1.2
+  - dependency-name: au.com.dius.pact
+    versions:
+    - 4.2.0
+  - dependency-name: org.bouncycastle:bcprov-jdk15on
+    versions:
+    - "1.67"
+  - dependency-name: org.sonarqube
+    versions:
+    - "3.0"
+    - 3.1.1
+  - dependency-name: org.projectlombok:lombok
+    versions:
+    - 1.18.16
+    - 1.18.18
+  - dependency-name: net.serenity-bdd:serenity-gradle-plugin
+    versions:
+    - 2.3.10
+    - 2.3.12
+  - dependency-name: io.spring.dependency-management
+    versions:
+    - 1.0.10.RELEASE
+    - 1.0.11.RELEASE
+  - dependency-name: org.yaml:snakeyaml
+    versions:
+    - "1.27"
+  - dependency-name: org.junit.jupiter:junit-jupiter-engine
+    versions:
+    - 5.7.0
+  - dependency-name: info.solidsoft.pitest
+    versions:
+    - 1.5.2
