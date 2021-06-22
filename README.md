@@ -15,21 +15,19 @@ The project uses [Gradle](https://gradle.org) as a build tool but you don't have
 `./gradlew` wrapper script.
 
 To build project please execute the following command:
-
 ```bash
-    ./gradlew build
+./gradlew build
 ```
 
 **Running**
 
 First you need to create distribution by executing following command:
-
 ```bash
-    ./gradlew installDist
+./gradlew installDist
 ```
 
 ```bash
-    ./gradlew bootRun
+./gradlew bootRun
 ```
 
 Now the API application will be exposing port `4009`
@@ -39,34 +37,30 @@ Now the API application will be exposing port `4009`
 **Unit tests**
 
 To run all unit tests please execute following command:
-
 ```bash
-    ./gradlew test
+./gradlew test
 ```
 
 **Coding style tests**
 
 To run all checks (including unit tests) please execute following command:
-
 ```bash
-    ./gradlew check
+./gradlew check
 ```
 
 **Mutation tests**
 
 To run all mutation tests execute the following command:
-
-```
+```bash
 ./gradlew pitest
-
 ```
 
 ## Developing
+
 **API documentation**
 
 API documentation is provided with Swagger:
  - `http://localhost:4009/swagger-ui.html` - UI to interact with the API resources
-
 
 **Versioning**
 
