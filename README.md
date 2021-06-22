@@ -3,7 +3,7 @@
 This application is used for managing the fees for the Divorce application.
 
 ## Setup
-
+Dummy
 **Prerequisites**
 
 - [JDK 11](https://openjdk.java.net/)
