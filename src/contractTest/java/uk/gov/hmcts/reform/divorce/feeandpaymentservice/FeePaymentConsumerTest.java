@@ -27,16 +27,17 @@ public class FeePaymentConsumerTest {
 
     private static final String BASEURI = "/fees-register/fees/lookup";
     private static final String PETITION_ISSUE_FEE = "channel=default&event=issue&jurisdiction1=family&"
-            + "jurisdiction2=family%20court&service=divorce";
-    private static final String AMEND_FEE = "channel=default&event=issue&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=ABC";
+            + "jurisdiction2=family%20court&service=divorce&keyword=DivorceCivPart";
+    private static final String AMEND_FEE = "channel=default&event=issue&jurisdiction1=family&"
+            + "jurisdiction2=family%20court&service=other&keyword=DivorceAmendPetition";
     private static final String DEFENDENT_FEE = "channel=default&event=issue&jurisdiction1=family&"
-            + "jurisdiction2=family%20court&service=other&keyword=PQR";
+            + "jurisdiction2=family%20court&service=other&keyword=Private";
     private static final String GENRALAPPLICATION_FEE = "channel=default&event=general%20application&jurisdiction1=family&"
             + "jurisdiction2=family%20court&service=other";
     private static final String ENFORCEMENT_FEE = "channel=default&event=enforcement&jurisdiction1=family&"
-            + "jurisdiction2=family%20court&keyword=HIJ&service=other";
+            + "jurisdiction2=family%20court&keyword=BailiffServeDoc&service=other";
     private static final String FINANCIALORDER_FEE = "channel=default&event=miscellaneous&jurisdiction1=family&"
-            + "jurisdiction2=family%20court&keyword=financial-order&service=other";
+            + "jurisdiction2=family%20court&keyword=FinancialOrderOnNotice&service=other";
     private static final String APPLICATION_NO_NOTICE = "channel=default&event=general%20application&jurisdiction1=family&"
             + "jurisdiction2=family%20court&keyword=GeneralAppWithoutNotice&service=other";
 

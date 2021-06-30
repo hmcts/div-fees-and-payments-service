@@ -24,36 +24,44 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String VERSION = "version";
     private static final String CODE = "code";
     private static final String DESCRIPTION = "description";
-    private static final String OTHER = "other";
-    private static final String DIVORCE = "divorce";
-    private static final String FINANCIAL_ORDER = "financial-order";
-    private static final String HIJ = "HIJ";
-    private static final String ISSUE = "issue";
-    private static final String GENERAL_APPLICATION = "general application";
 
-    private String genAppWithoutNoticeFeeKeyword;
+    private static final String SERVICE_OTHER = "other";
+    private static final String SERVICE_DIVORCE = "divorce";
+
+    private static final String EVENT_ISSUE = "issue";
+    private static final String EVENT_GENERAL_APPLICATION = "general application";
+    private static final String EVENT_ENFORCEMENT = "enforcement";
+    private static final String EVENT_MISCELLANEOUS = "miscellaneous";
+
+    private static final String KEYWORD_DIVORCE_APPLICATION = "DivorceCivPart";
+    private static final String KEYWORD_AMEND_PETITION = "DivorceAmendPetition";
+    private static final String KEYWORD_ORIGINATE_PROCEEDINGS = "Private";
+    private static final String KEYWORD_DECREE_NISI = "GAContestedOrder";
+    private static final String KEYWORD_BAILIFF_SERVICE = "BailiffServeDoc";
+    private static final String KEYWORD_FINANCIAL_ORDER = "FinancialOrderOnNotice";
+    private static final String KEYWORD_WITHOUT_NOTICE = "GeneralAppWithoutNotice";
+
     private final String feesLookupEndpoint;
     private final RestTemplate restTemplate;
-    private String feeApiBaseUri;
+    private final String feeApiBaseUri;
+
     private final String[][] feesItems = {
-        {ISSUE, DIVORCE, null},
-        {ISSUE, OTHER, "ABC"},
-        {GENERAL_APPLICATION, OTHER, null},
-        {"enforcement", OTHER, HIJ},
-        {"miscellaneous", OTHER, FINANCIAL_ORDER},
-        {GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword},
-        {ISSUE, OTHER, "PQR"}
+        {EVENT_ISSUE, SERVICE_DIVORCE, KEYWORD_DIVORCE_APPLICATION},
+        {EVENT_ISSUE, SERVICE_OTHER, KEYWORD_AMEND_PETITION},
+        {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_DECREE_NISI},
+        {EVENT_ENFORCEMENT, SERVICE_OTHER, KEYWORD_BAILIFF_SERVICE},
+        {EVENT_MISCELLANEOUS, SERVICE_OTHER, KEYWORD_FINANCIAL_ORDER},
+        {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE},
+        {EVENT_ISSUE, SERVICE_OTHER, KEYWORD_ORIGINATE_PROCEEDINGS}
     };
 
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
         @Value("${fee.api.baseUri}") String feeApiBaseUri,
-        @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
-        @Value("${fee.api.genAppWithoutNoticeFeeKeyword}") String genAppWithoutNoticeFeeKeyword) {
+        @Value("${fee.api.feesLookup}") String feesLookupEndpoint) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
-        this.genAppWithoutNoticeFeeKeyword = genAppWithoutNoticeFeeKeyword;
     }
 
     @Override
@@ -64,37 +72,37 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getIssueFee() {
-        return getFee(ISSUE, DIVORCE, null );
+        return getFee(EVENT_ISSUE, SERVICE_DIVORCE, KEYWORD_DIVORCE_APPLICATION);
     }
 
     @Override
     public Fee getAmendPetitionFee() {
-        return getFee(ISSUE, OTHER, "ABC" );
+        return getFee(EVENT_ISSUE, SERVICE_OTHER, KEYWORD_AMEND_PETITION);
     }
 
     @Override
     public Fee getDefendPetitionFee() {
-        return getFee(ISSUE, OTHER, "PQR" );
+        return getFee(EVENT_ISSUE, SERVICE_OTHER, KEYWORD_ORIGINATE_PROCEEDINGS);
     }
 
     @Override
     public Fee getGeneralApplicationFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, null);
+        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_DECREE_NISI);
     }
 
     @Override
     public Fee getEnforcementFee() {
-        return getFee("enforcement", OTHER, HIJ);
+        return getFee(EVENT_ENFORCEMENT, SERVICE_OTHER, KEYWORD_BAILIFF_SERVICE);
     }
 
     @Override
     public Fee getApplicationFinancialOrderFee() {
-        return getFee("miscellaneous", OTHER, FINANCIAL_ORDER);
+        return getFee(EVENT_MISCELLANEOUS, SERVICE_OTHER, KEYWORD_FINANCIAL_ORDER);
     }
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword);
+        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE);
     }
 
     private Fee getFromRegister(URI uri) {
