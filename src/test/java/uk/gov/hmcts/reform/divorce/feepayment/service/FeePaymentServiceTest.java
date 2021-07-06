@@ -47,7 +47,7 @@ public class FeePaymentServiceTest {
         + "&jurisdiction2=family%20court&service=other&keyword=DivorceAmendPetition");
 
     private final URI defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-        + "&jurisdiction2=family%20court&service=other&keyword=Private");
+        + "&jurisdiction2=family%20court&service=other&keyword=AppnPrivateOther");
 
     private final URI generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
         + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=GAContestedOrder");

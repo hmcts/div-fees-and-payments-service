@@ -31,7 +31,7 @@ public class FeePaymentConsumerTest {
     private static final String AMEND_FEE = "channel=default&event=issue&jurisdiction1=family&"
             + "jurisdiction2=family%20court&service=other&keyword=DivorceAmendPetition";
     private static final String DEFENDENT_FEE = "channel=default&event=issue&jurisdiction1=family&"
-            + "jurisdiction2=family%20court&service=other&keyword=Private";
+            + "jurisdiction2=family%20court&service=other&keyword=AppnPrivateOther";
     private static final String GENRALAPPLICATION_FEE = "channel=default&event=general%20application&jurisdiction1=family&"
             + "jurisdiction2=family%20court&service=other";
     private static final String ENFORCEMENT_FEE = "channel=default&event=enforcement&jurisdiction1=family&"
