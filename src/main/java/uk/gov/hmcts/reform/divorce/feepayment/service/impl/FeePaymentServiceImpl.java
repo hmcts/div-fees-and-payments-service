@@ -35,7 +35,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     private static final String KEYWORD_DIVORCE_APPLICATION = "DivorceCivPart";
     private static final String KEYWORD_AMEND_PETITION = "DivorceAmendPetition";
-    private static final String KEYWORD_ORIGINATE_PROCEEDINGS = "Private";
+    private static final String KEYWORD_ORIGINATE_PROCEEDINGS = "AppnPrivateOther";
     private static final String KEYWORD_DECREE_NISI = "GAContestedOrder";
     private static final String KEYWORD_BAILIFF_SERVICE = "BailiffServeDoc";
     private static final String KEYWORD_FINANCIAL_ORDER = "FinancialOrderOnNotice";
