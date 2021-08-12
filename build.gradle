@@ -172,7 +172,7 @@ def versions = [
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
         reformsJavaLogging:                             '5.1.7',
-        restAssured:                                    '4.4.0',
+        restAssured:                                    '4.2.1',
         serviceTokenGenerator:                          '2.0.0',
         serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
