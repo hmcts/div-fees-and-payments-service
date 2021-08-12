@@ -292,7 +292,6 @@ dependencies {
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
-     //pact contract testing
 
     contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.2")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
