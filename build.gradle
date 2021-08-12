@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.24")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.5.7")
     }
 }
 
@@ -172,9 +172,9 @@ def versions = [
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
         reformsJavaLogging:                             '5.1.7',
-        restAssured:                                    '3.0.3',
+        restAssured:                                    '4.2.1',
         serviceTokenGenerator:                          '2.0.0',
-        serenity:                                       '2.2.13',
+        serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
         serviceAuthProviderClient:                      '0.6.0',
         sonarPitest:                                    '0.5',
@@ -186,7 +186,7 @@ def versions = [
         springRetry:                                    '1.2.5.RELEASE',
         springSecurityCrypto:                           '5.4.5',
         springSecurityRsa:                              '1.0.9.RELEASE',
-        tomcat:                                         '9.0.43',
+        tomcat:                                         '9.0.50',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
         pact_version:                                   '4.1.8',
@@ -200,6 +200,7 @@ dependencies {
     integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbusJoseJwt
     integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured-all', version: versions.restAssured
     integrationTestCompile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     integrationTestCompile group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonassert
@@ -292,7 +293,6 @@ dependencies {
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
-     //pact contract testing
 
     contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.2")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
