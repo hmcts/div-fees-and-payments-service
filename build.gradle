@@ -27,6 +27,10 @@ plugins {
 apply plugin: 'checkstyle'
 apply plugin: 'net.serenity-bdd.aggregator'
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'
 sourceCompatibility = 11
@@ -98,12 +102,11 @@ compileTestJava {
 }
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     jcenter()
-
-    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
-    maven { url "http://repo.maven.apache.org/maven2" }
     maven { url 'https://repo.spring.io/libs-milestone' }
+    maven { url "https://repo.maven.apache.org/maven2" }
+    maven { url "https://jitpack.io" }
 }
 
 distributions {
