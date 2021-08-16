@@ -13,6 +13,7 @@
     <suppress>
         <notes><![CDATA[
    file name: jakarta.el-3.0.3.jar
+   Suppressed for one month: until "2021-09-16Z"
    ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.glassfish/jakarta\.el@.*$</packageUrl>
         <cve>CVE-2021-28170</cve>
