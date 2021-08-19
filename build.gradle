@@ -101,7 +101,7 @@ repositories {
     mavenLocal()
     jcenter()
 
-    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
+    maven { url "https://jitpack.io" }
     maven { url "http://repo.maven.apache.org/maven2" }
     maven { url 'https://repo.spring.io/libs-milestone' }
 }
