@@ -101,7 +101,7 @@ repositories {
     mavenLocal()
     jcenter()
 
-    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
+    maven { url "https://jitpack.io" }
     maven { url "http://repo.maven.apache.org/maven2" }
     maven { url 'https://repo.spring.io/libs-milestone' }
 }
@@ -293,6 +293,7 @@ dependencies {
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
+    testCompile('com.github.hmcts:fortify-client:1.2.0:all')
 
     contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.2")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
@@ -410,5 +411,11 @@ run {
     if (debug == 'true') {
         jvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5010']
     }
+}
+
+task fortifyScan(type: JavaExec)  {
+    main = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
+    classpath += sourceSets.test.runtimeClasspath
+    jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
 
