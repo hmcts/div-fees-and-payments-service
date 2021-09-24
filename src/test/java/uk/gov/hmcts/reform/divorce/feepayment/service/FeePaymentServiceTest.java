@@ -34,37 +34,40 @@ public class FeePaymentServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    @Value("${fee.api.genAppWithoutNoticeFeeKeyword}")
-    private String genAppWithoutNoticeFeeKeyword;
+    @Value("${feature-toggle.toggle.fee-pay-keywords}")
+    private boolean featureToggleKeywords;
 
     @InjectMocks
     private FeePaymentServiceImpl feePaymentService;
 
-    private final URI issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-            + "&jurisdiction2=family%20court&service=divorce&keyword=DivorceCivPart");
-
-    private final URI amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-        + "&jurisdiction2=family%20court&service=other&keyword=DivorceAmendPetition");
-
-    private final URI defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-        + "&jurisdiction2=family%20court&service=other&keyword=AppnPrivateOther");
-
-    private final URI generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=GAContestedOrder");
-
-    private final URI enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=BailiffServeDoc");
-
-    private final URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=FinancialOrderOnNotice");
-
-    private final String applicationWithoutNoticePartialUrl = "http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=";
+    private URI issueUrl;
+    private URI amendUrl;
+    private URI defendUrl;
+    private URI generalApplicationUrl;
+    private URI enforcementUrl;
+    private URI applicationFinOrderUrl;
+    private final String applicationWithoutNoticeUrl = "http://feeApiUrl/fees?channel=default&event=general%20application&jurisdiction1=family"
+        + "&jurisdiction2=family%20court&service=other&keyword=GeneralAppWithoutNotice";
 
     @Before
     public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees");
+        issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=divorce" + (featureToggleKeywords ? "&keyword=DivorceCivPart" : ""));
+        amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=other" + (featureToggleKeywords ? "&keyword=DivorceAmendPetition" : "&keyword=ABC"));
+        defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=other" + (featureToggleKeywords ? "&keyword=AppnPrivateOther" : "&keyword=PQR"));
+        generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
+            + "&jurisdiction1=family&jurisdiction2=family%20court&service=other" + (featureToggleKeywords ? "&keyword=GAContestedOrder" : ""));
+        enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement&jurisdiction1=family&jurisdiction2=family%20court"
+            + "&service=other" + (featureToggleKeywords ? "&keyword=BailiffServeDoc" : "&keyword=HIJ"));
+        applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=other"
+            + (featureToggleKeywords ? "&keyword=FinancialOrderOnNotice" : "&keyword=financial-order"));
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", featureToggleKeywords);
+
         assertNotNull(feePaymentService);
+
     }
 
     private void mockRestTemplate(URI uri) throws IOException {
@@ -138,7 +141,7 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
-        URI applicationWithoutNoticeUrl = URI.create(applicationWithoutNoticePartialUrl + genAppWithoutNoticeFeeKeyword);
+        URI applicationWithoutNoticeUrl = URI.create(this.applicationWithoutNoticeUrl);
         mockRestTemplate(applicationWithoutNoticeUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
         verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithoutNoticeUrl),

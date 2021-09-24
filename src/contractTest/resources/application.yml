@@ -28,6 +28,10 @@ documentation:
   swagger:
     enabled: true
 
+feature-toggle:
+  toggle:
+    fee-pay-keywords: ${FEATURE_FEE_PAY_KEYWORDS:false}
+
 fee:
   api:
     baseUri: ${FEE_API_URL:http://fees-register-api-aat.service.core-compute-aat.internal}

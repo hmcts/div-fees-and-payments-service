@@ -40,28 +40,27 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String KEYWORD_BAILIFF_SERVICE = "BailiffServeDoc";
     private static final String KEYWORD_FINANCIAL_ORDER = "FinancialOrderOnNotice";
     private static final String KEYWORD_WITHOUT_NOTICE = "GeneralAppWithoutNotice";
+    protected static final String KEYWORD_ORIGINAL_AMEND = "ABC";
+    protected static final String KEYWORD_ORIGINAL_DEFEND = "PQR";
+    protected static final String KEYWORD_ORIGINAL_BAILIFF = "HIJ";
+    protected static final String KEYWORD_ORIGINAL_FO = "financial-order";
 
     private final String feesLookupEndpoint;
+    private Boolean feesPayKeywords;
     private final RestTemplate restTemplate;
     private final String feeApiBaseUri;
 
-    private final String[][] feesItems = {
-        {EVENT_ISSUE, SERVICE_DIVORCE, KEYWORD_DIVORCE_APPLICATION},
-        {EVENT_ISSUE, SERVICE_OTHER, KEYWORD_AMEND_PETITION},
-        {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_DECREE_NISI},
-        {EVENT_ENFORCEMENT, SERVICE_OTHER, KEYWORD_BAILIFF_SERVICE},
-        {EVENT_MISCELLANEOUS, SERVICE_OTHER, KEYWORD_FINANCIAL_ORDER},
-        {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE},
-        {EVENT_ISSUE, SERVICE_OTHER, KEYWORD_ORIGINATE_PROCEEDINGS}
-    };
+
 
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
         @Value("${fee.api.baseUri}") String feeApiBaseUri,
-        @Value("${fee.api.feesLookup}") String feesLookupEndpoint) {
+        @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
+        @Value("${feature-toggle.toggle.fee-pay-keywords}") Boolean feesPayKeywords) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
+        this.feesPayKeywords = feesPayKeywords;
     }
 
     @Override
@@ -72,32 +71,32 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getIssueFee() {
-        return getFee(EVENT_ISSUE, SERVICE_DIVORCE, KEYWORD_DIVORCE_APPLICATION);
+        return getFee(EVENT_ISSUE, SERVICE_DIVORCE, (feesPayKeywords ? KEYWORD_DIVORCE_APPLICATION : null));
     }
 
     @Override
     public Fee getAmendPetitionFee() {
-        return getFee(EVENT_ISSUE, SERVICE_OTHER, KEYWORD_AMEND_PETITION);
+        return getFee(EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_AMEND_PETITION : KEYWORD_ORIGINAL_AMEND));
     }
 
     @Override
     public Fee getDefendPetitionFee() {
-        return getFee(EVENT_ISSUE, SERVICE_OTHER, KEYWORD_ORIGINATE_PROCEEDINGS);
+        return getFee(EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_ORIGINATE_PROCEEDINGS : KEYWORD_ORIGINAL_DEFEND));
     }
 
     @Override
     public Fee getGeneralApplicationFee() {
-        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_DECREE_NISI);
+        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_DECREE_NISI : null));
     }
 
     @Override
     public Fee getEnforcementFee() {
-        return getFee(EVENT_ENFORCEMENT, SERVICE_OTHER, KEYWORD_BAILIFF_SERVICE);
+        return getFee(EVENT_ENFORCEMENT, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_BAILIFF_SERVICE : KEYWORD_ORIGINAL_BAILIFF));
     }
 
     @Override
     public Fee getApplicationFinancialOrderFee() {
-        return getFee(EVENT_MISCELLANEOUS, SERVICE_OTHER, KEYWORD_FINANCIAL_ORDER);
+        return getFee(EVENT_MISCELLANEOUS, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_FINANCIAL_ORDER : KEYWORD_ORIGINAL_FO));
     }
 
     @Override
@@ -149,7 +148,15 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public List<Fee> getAllFees() {
-
+        String[][] feesItems = {
+            {EVENT_ISSUE, SERVICE_DIVORCE, (feesPayKeywords ? KEYWORD_DIVORCE_APPLICATION : null)},
+            {EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_AMEND_PETITION : KEYWORD_ORIGINAL_AMEND)},
+            {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_DECREE_NISI : null)},
+            {EVENT_ENFORCEMENT, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_BAILIFF_SERVICE : KEYWORD_ORIGINAL_BAILIFF)},
+            {EVENT_MISCELLANEOUS, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_FINANCIAL_ORDER : KEYWORD_ORIGINAL_FO)},
+            {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE},
+            {EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_ORIGINATE_PROCEEDINGS : KEYWORD_ORIGINAL_DEFEND)}
+        };
         return Stream.of(feesItems).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
     }
 }
