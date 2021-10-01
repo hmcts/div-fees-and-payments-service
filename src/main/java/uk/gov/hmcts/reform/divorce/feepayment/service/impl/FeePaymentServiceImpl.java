@@ -60,7 +60,6 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
-        this.feesPayKeywords = feesPayKeywords;
     }
 
     @Override
