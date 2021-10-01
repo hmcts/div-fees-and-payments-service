@@ -28,10 +28,6 @@ documentation:
   swagger:
     enabled: true
 
-feature-toggle:
-  toggle:
-    fee-pay-keywords: ${FEATURE_FEE_PAY_KEYWORDS:false}
-
 fee:
   api:
     baseUri: ${FEE_API_URL:http://test-proxy.fees-register.reform.hmcts.net}
