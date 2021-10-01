@@ -20,36 +20,35 @@ import java.util.stream.Stream;
 @Slf4j
 public class FeePaymentServiceImpl implements FeePaymentService {
 
-    private String AMOUNT = "fee_amount";
-    private String VERSION = "version";
-    private String CODE = "code";
-    private String DESCRIPTION = "description";
+    private String feeAmount = "fee_amount";
+    private String version = "version";
+    private String code = "code";
+    private String description = "description";
 
-    private String SERVICE_OTHER = "other";
-    private String SERVICE_DIVORCE = "divorce";
+    private String serviceOther = "other";
+    private String serviceDivorce = "divorce";
 
-    private String EVENT_ISSUE = "issue";
-    private String EVENT_GENERAL_APPLICATION = "general application";
-    private String EVENT_ENFORCEMENT = "enforcement";
-    private String EVENT_MISCELLANEOUS = "miscellaneous";
+    private String eventIssue = "issue";
+    private String eventGeneralApplication = "general application";
+    private String eventEnforcement = "enforcement";
+    private String eventMiscellaneous = "miscellaneous";
 
-    private String KEYWORD_DIVORCE_APPLICATION = "DivorceCivPart";
-    private String KEYWORD_AMEND_PETITION = "DivorceAmendPetition";
-    private String KEYWORD_ORIGINATE_PROCEEDINGS = "AppnPrivateOther";
-    private String KEYWORD_DECREE_NISI = "GAContestedOrder";
-    private String KEYWORD_BAILIFF_SERVICE = "BailiffServeDoc";
-    private String KEYWORD_FINANCIAL_ORDER = "FinancialOrderOnNotice";
-    private String KEYWORD_WITHOUT_NOTICE = "GeneralAppWithoutNotice";
-    protected String KEYWORD_ORIGINAL_AMEND = "ABC";
-    protected String KEYWORD_ORIGINAL_DEFEND = "PQR";
-    protected String KEYWORD_ORIGINAL_BAILIFF = "HIJ";
-    protected String KEYWORD_ORIGINAL_FO = "financial-order";
+    private String keywordDivorceApplication = "DivorceCivPart";
+    private String keywordAmendPetition = "DivorceAmendPetition";
+    private String keywordOriginateProceedings = "AppnPrivateOther";
+    private String keywordDecreeNisi = "GAContestedOrder";
+    private String keywordBailiffService = "BailiffServeDoc";
+    private String keywordFinancialOrder = "FinancialOrderOnNotice";
+    private String keywordWithoutNotice = "GeneralAppWithoutNotice";
+    protected String keywordOriginalAmend = "ABC";
+    protected String keywordOriginalDefend = "PQR";
+    protected String keywordOriginalBailiff = "HIJ";
+    protected String keywordOriginalFo = "financial-order";
 
     private final String feesLookupEndpoint;
     private Boolean feesPayKeywords;
     private final RestTemplate restTemplate;
     private final String feeApiBaseUri;
-
 
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
@@ -70,37 +69,37 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getIssueFee() {
-        return getFee(EVENT_ISSUE, SERVICE_DIVORCE, (feesPayKeywords ? KEYWORD_DIVORCE_APPLICATION : null));
+        return getFee(eventIssue, serviceDivorce, (feesPayKeywords ? keywordDivorceApplication : null));
     }
 
     @Override
     public Fee getAmendPetitionFee() {
-        return getFee(EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_AMEND_PETITION : KEYWORD_ORIGINAL_AMEND));
+        return getFee(eventIssue, serviceOther, (feesPayKeywords ? keywordAmendPetition : keywordOriginalAmend));
     }
 
     @Override
     public Fee getDefendPetitionFee() {
-        return getFee(EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_ORIGINATE_PROCEEDINGS : KEYWORD_ORIGINAL_DEFEND));
+        return getFee(eventIssue, serviceOther, (feesPayKeywords ? keywordOriginateProceedings : keywordOriginalDefend));
     }
 
     @Override
     public Fee getGeneralApplicationFee() {
-        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_DECREE_NISI : null));
+        return getFee(eventGeneralApplication, serviceOther, (feesPayKeywords ? keywordDecreeNisi : null));
     }
 
     @Override
     public Fee getEnforcementFee() {
-        return getFee(EVENT_ENFORCEMENT, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_BAILIFF_SERVICE : KEYWORD_ORIGINAL_BAILIFF));
+        return getFee(eventEnforcement, serviceOther, (feesPayKeywords ? keywordBailiffService : keywordOriginalBailiff));
     }
 
     @Override
     public Fee getApplicationFinancialOrderFee() {
-        return getFee(EVENT_MISCELLANEOUS, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_FINANCIAL_ORDER : KEYWORD_ORIGINAL_FO));
+        return getFee(eventMiscellaneous, serviceOther, (feesPayKeywords ? keywordFinancialOrder : keywordOriginalFo));
     }
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE);
+        return getFee(eventGeneralApplication, serviceOther, keywordWithoutNotice);
     }
 
     private Fee getFromRegister(URI uri) {
@@ -132,10 +131,10 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     }
 
     private Fee extractValue(ObjectNode objectNode) {
-        double amount = objectNode.path(AMOUNT).asDouble();
-        int version = objectNode.path(VERSION).asInt();
-        String feeCode = objectNode.path(CODE).asText();
-        String description = objectNode.path(DESCRIPTION).asText();
+        double amount = objectNode.path(feeAmount).asDouble();
+        int version = objectNode.path(this.version).asInt();
+        String feeCode = objectNode.path(code).asText();
+        String description = objectNode.path(this.description).asText();
 
         return Fee.builder()
             .amount(amount)
@@ -148,13 +147,13 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     @Override
     public List<Fee> getAllFees() {
         String[][] feesItems = {
-            {EVENT_ISSUE, SERVICE_DIVORCE, (feesPayKeywords ? KEYWORD_DIVORCE_APPLICATION : null)},
-            {EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_AMEND_PETITION : KEYWORD_ORIGINAL_AMEND)},
-            {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_DECREE_NISI : null)},
-            {EVENT_ENFORCEMENT, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_BAILIFF_SERVICE : KEYWORD_ORIGINAL_BAILIFF)},
-            {EVENT_MISCELLANEOUS, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_FINANCIAL_ORDER : KEYWORD_ORIGINAL_FO)},
-            {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE},
-            {EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_ORIGINATE_PROCEEDINGS : KEYWORD_ORIGINAL_DEFEND)}
+            {eventIssue, serviceDivorce, (feesPayKeywords ? keywordDivorceApplication : null)},
+            {eventIssue, serviceOther, (feesPayKeywords ? keywordAmendPetition : keywordOriginalAmend)},
+            {eventGeneralApplication, serviceOther, (feesPayKeywords ? keywordDecreeNisi : null)},
+            {eventEnforcement, serviceOther, (feesPayKeywords ? keywordBailiffService : keywordOriginalBailiff)},
+            {eventMiscellaneous, serviceOther, (feesPayKeywords ? keywordFinancialOrder : keywordOriginalFo)},
+            {eventGeneralApplication, serviceOther, keywordWithoutNotice},
+            {eventIssue, serviceOther, (feesPayKeywords ? keywordOriginateProceedings : keywordOriginalDefend)}
         };
         return Stream.of(feesItems).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
     }
