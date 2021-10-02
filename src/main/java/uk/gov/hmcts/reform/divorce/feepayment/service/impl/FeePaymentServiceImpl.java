@@ -46,7 +46,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     protected static final String KEYWORD_ORIGINAL_FO = "financial-order";
 
     private final String feesLookupEndpoint;
-    private Boolean feesPayKeywords;
+    private boolean feesPayKeywords;
     private final RestTemplate restTemplate;
     private final String feeApiBaseUri;
 
@@ -59,7 +59,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
-        this.feesPayKeywords = feesPayKeywords;
+        this.feesPayKeywords = feesPayKeywords != null ? feesPayKeywords : false;
     }
 
     @Override
