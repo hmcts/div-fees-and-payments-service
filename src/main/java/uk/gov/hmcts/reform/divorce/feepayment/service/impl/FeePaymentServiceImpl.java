@@ -51,7 +51,6 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private final String feeApiBaseUri;
 
 
-
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
         @Value("${fee.api.baseUri}") String feeApiBaseUri,

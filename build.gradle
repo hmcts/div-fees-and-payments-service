@@ -397,7 +397,6 @@ jacocoTestCoverageVerification {
 
 def sonarExclusions = [
         '**uk/gov/hmcts/reform/divorce/feepayment/model/*',
-        '**uk/gov/hmcts/reform/divorce/feepayment/service/impl/FeePaymentServiceImpl.java',
         '**uk/gov/hmcts/reform/divorce/feepayment/FeesPaymentServiceApplication.java'
 ]
 

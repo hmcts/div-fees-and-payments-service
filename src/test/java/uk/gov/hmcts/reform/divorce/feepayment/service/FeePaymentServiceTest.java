@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.ResourceUtils;
@@ -33,13 +31,7 @@ public class FeePaymentServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
-
-    @Value("${feature-toggle.toggle.fee-pay-keywords}")
-    private boolean featureToggleKeywords;
-
-    @InjectMocks
-    private FeePaymentServiceImpl feePaymentService;
-
+    protected FeePaymentServiceImpl feePaymentService;
     private URI issueUrl;
     private URI amendUrl;
     private URI defendUrl;
@@ -49,8 +41,14 @@ public class FeePaymentServiceTest {
     private final String applicationWithoutNoticeUrl = "http://feeApiUrl/fees?channel=default&event=general%20application&jurisdiction1=family"
         + "&jurisdiction2=family%20court&service=other&keyword=GeneralAppWithoutNotice";
 
+
     @Before
-    public void setup() {
+    public void setUpFeePaymentService() {
+        setUpUrls(Boolean.TRUE);
+        assertNotNull(feePaymentService);
+    }
+
+    protected void setUpUrls(boolean featureToggleKeywords) {
         issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
             + "&jurisdiction2=family%20court&service=divorce" + (featureToggleKeywords ? "&keyword=DivorceCivPart" : ""));
         amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
@@ -65,38 +63,24 @@ public class FeePaymentServiceTest {
             + "&jurisdiction2=family%20court&service=other"
             + (featureToggleKeywords ? "&keyword=FinancialOrderOnNotice" : "&keyword=financial-order"));
         feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", featureToggleKeywords);
-
-        assertNotNull(feePaymentService);
-
-    }
-
-    private void mockRestTemplate(URI uri) throws IOException {
-        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
-        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
-        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode.class)))
-                .thenReturn(objectNode);
-    }
-
-    public FeePaymentService getFeePaymentService() {
-        return feePaymentService;
     }
 
     @Test
     public void testGetFeeOnIssueEvent() throws IOException {
-        mockRestTemplate( issueUrl);
+        mockRestTemplate(issueUrl);
         Fee expected = Fee.builder()
-                .amount(550.0)
-                .feeCode("FEE0002")
-                .version(4)
-                .description("Filing an application for a divorce, "
+            .amount(550.0)
+            .feeCode("FEE0002")
+            .version(4)
+            .description("Filing an application for a divorce, "
                 + "nullity or civil partnership dissolution – fees order 1.2.")
-                .build();
+            .build();
 
         Fee actual = feePaymentService.getIssueFee();
         assertNotNull(actual);
         assertEquals(expected, actual);
         verify(restTemplate, times(1)).getForObject(Mockito.eq(issueUrl),
-                Mockito.eq(ObjectNode.class));
+            Mockito.eq(ObjectNode.class));
     }
 
     @Test
@@ -157,5 +141,12 @@ public class FeePaymentServiceTest {
         feePaymentService.getAllFees();
         verify(restTemplate, times(7)).getForObject(Mockito.any(),
             Mockito.eq(ObjectNode.class));
+    }
+
+    private void mockRestTemplate(URI uri) throws IOException {
+        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
+        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
+        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode.class)))
+            .thenReturn(objectNode);
     }
 }
