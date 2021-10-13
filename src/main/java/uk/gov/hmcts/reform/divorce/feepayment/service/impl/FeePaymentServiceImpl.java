@@ -107,16 +107,16 @@ public class FeePaymentServiceImpl implements FeePaymentService {
         return extractValue(Objects.requireNonNull(restTemplate.getForObject(uri, ObjectNode.class)));
     }
 
-    private URI buildURI(String event, String divorce, String keyword) {
+    private URI buildURI(String event, String service, String keyword) {
         URI uri;
-
+        log.info("Inside buildURI with service : {} and keyword {} ", service, keyword );
         if (keyword == null) {
             uri = UriComponentsBuilder.fromHttpUrl(feeApiBaseUri + feesLookupEndpoint)
                 .queryParam("channel", "default")
                 .queryParam("event", event)
                 .queryParam("jurisdiction1", "family")
                 .queryParam("jurisdiction2", "family court")
-                .queryParam("service", divorce)
+                .queryParam("service", service)
                 .build().toUri();
         } else {
             uri = UriComponentsBuilder.fromHttpUrl(feeApiBaseUri + feesLookupEndpoint)
@@ -124,10 +124,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
                 .queryParam("event", event)
                 .queryParam("jurisdiction1", "family")
                 .queryParam("jurisdiction2", "family court")
-                .queryParam("service", divorce)
+                .queryParam("service", service)
                 .queryParam("keyword", keyword)
                 .build().toUri();
         }
+        log.info("Inside buildURI returning uri {} ", uri.toString() );
         return uri;
     }
 
