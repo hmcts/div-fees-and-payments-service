@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.ResourceUtils;
@@ -33,67 +31,56 @@ public class FeePaymentServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
+    protected FeePaymentServiceImpl feePaymentService;
+    protected URI issueUrl;
+    protected URI amendUrl;
+    protected URI defendUrl;
+    protected URI generalApplicationUrl;
+    protected URI enforcementUrl;
+    protected URI applicationFinOrderUrl;
+    protected final String applicationWithoutNoticeUrl = "http://feeApiUrl/fees?channel=default&event=general%20application&jurisdiction1=family"
+        + "&jurisdiction2=family%20court&service=other&keyword=GeneralAppWithoutNotice";
 
-    @Value("${fee.api.genAppWithoutNoticeFeeKeyword}")
-    private String genAppWithoutNoticeFeeKeyword;
-
-    @InjectMocks
-    private FeePaymentServiceImpl feePaymentService;
-
-    private URI issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-            + "&jurisdiction2=family%20court&service=divorce");
-
-    private URI amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-        + "&jurisdiction2=family%20court&service=other&keyword=ABC");
-
-    private URI defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
-        + "&jurisdiction2=family%20court&service=other&keyword=PQR");
-
-    private URI generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other");
-
-    private URI enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=HIJ");
-
-    private URI applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=financial-order");
-
-    private String applicationWithoutNoticePartialUrl = "http://feeApiUrl/fees?channel=default&event=general%20application"
-        + "&jurisdiction1=family" + "&jurisdiction2=family%20court&service=other&keyword=";
 
     @Before
-    public void setup() {
-        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", genAppWithoutNoticeFeeKeyword);
+    public void setUpFeePaymentService() {
+        setUpUrls(Boolean.TRUE);
         assertNotNull(feePaymentService);
     }
 
-    private void mockRestTemplate(URI uri) throws IOException {
-        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
-        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
-        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode.class)))
-                .thenReturn(objectNode);
-    }
-
-    public FeePaymentService getFeePaymentService() {
-        return feePaymentService;
+    protected void setUpUrls(boolean featureToggleKeywords) {
+        issueUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=divorce" + (featureToggleKeywords ? "&keyword=DivorceCivPart" : ""));
+        amendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=other" + (featureToggleKeywords ? "&keyword=DivorceAmendPetition" : "&keyword=ABC"));
+        defendUrl = URI.create("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=other" + (featureToggleKeywords ? "&keyword=AppnPrivateOther" : "&keyword=PQR"));
+        generalApplicationUrl = URI.create("http://feeApiUrl/fees?channel=default&event=general%20application"
+            + "&jurisdiction1=family&jurisdiction2=family%20court&service=other" + (featureToggleKeywords ? "&keyword=GAContestedOrder" : ""));
+        enforcementUrl = URI.create("http://feeApiUrl/fees?channel=default&event=enforcement&jurisdiction1=family&jurisdiction2=family%20court"
+            + "&service=other" + (featureToggleKeywords ? "&keyword=BailiffServeDoc" : "&keyword=HIJ"));
+        applicationFinOrderUrl = URI.create("http://feeApiUrl/fees?channel=default&event=miscellaneous&jurisdiction1=family"
+            + "&jurisdiction2=family%20court&service=other"
+            + (featureToggleKeywords ? "&keyword=FinancialOrderOnNotice" : "&keyword=financial-order"));
+        feePaymentService = new FeePaymentServiceImpl(restTemplate, "http://feeApiUrl", "/fees", featureToggleKeywords);
     }
 
     @Test
     public void testGetFeeOnIssueEvent() throws IOException {
-        mockRestTemplate( issueUrl);
+        mockRestTemplate(issueUrl);
         Fee expected = Fee.builder()
-                .amount(550.0)
-                .feeCode("FEE0002")
-                .version(4)
-                .description("Filing an application for a divorce, "
+            .amount(550.0)
+            .feeCode("FEE0002")
+            .version(4)
+            .description("Filing an application for a divorce, "
                 + "nullity or civil partnership dissolution – fees order 1.2.")
-                .build();
+            .build();
 
         Fee actual = feePaymentService.getIssueFee();
         assertNotNull(actual);
         assertEquals(expected, actual);
         verify(restTemplate, times(1)).getForObject(Mockito.eq(issueUrl),
-                Mockito.eq(ObjectNode.class));
+            Mockito.eq(ObjectNode.class));
     }
 
     @Test
@@ -138,7 +125,7 @@ public class FeePaymentServiceTest {
 
     @Test
     public void testApplicationWithoutNoticeFeeEvent() throws IOException {
-        URI applicationWithoutNoticeUrl = URI.create(applicationWithoutNoticePartialUrl + genAppWithoutNoticeFeeKeyword);
+        URI applicationWithoutNoticeUrl = URI.create(this.applicationWithoutNoticeUrl);
         mockRestTemplate(applicationWithoutNoticeUrl);
         feePaymentService.getApplicationWithoutNoticeFee();
         verify(restTemplate, times(1)).getForObject(Mockito.eq(applicationWithoutNoticeUrl),
@@ -154,5 +141,23 @@ public class FeePaymentServiceTest {
         feePaymentService.getAllFees();
         verify(restTemplate, times(7)).getForObject(Mockito.any(),
             Mockito.eq(ObjectNode.class));
+    }
+
+    private void mockRestTemplate(URI uri) throws IOException {
+        File file = ResourceUtils.getFile(CLASSPATH_URL_PREFIX + "fee.json");
+        ObjectNode objectNode = new ObjectMapper().readValue(file, ObjectNode.class);
+        Mockito.when(restTemplate.getForObject(Mockito.eq(uri), Mockito.eq(ObjectNode.class)))
+            .thenReturn(objectNode);
+    }
+
+    @Test
+    public void testUrls() {
+        assertEquals("http://feeApiUrl/fees?channel=default&event=general%20application&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=GAContestedOrder", generalApplicationUrl.toString());
+        assertEquals("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family&jurisdiction2=family%20court&service=divorce&keyword=DivorceCivPart", issueUrl.toString());
+        assertEquals("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=DivorceAmendPetition",  amendUrl.toString());
+        assertEquals("http://feeApiUrl/fees?channel=default&event=issue&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=AppnPrivateOther",  defendUrl.toString());
+        assertEquals("http://feeApiUrl/fees?channel=default&event=enforcement&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=BailiffServeDoc",  enforcementUrl.toString());
+        assertEquals("http://feeApiUrl/fees?channel=default&event=miscellaneous&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=FinancialOrderOnNotice",  applicationFinOrderUrl.toString());
+        assertEquals("http://feeApiUrl/fees?channel=default&event=general%20application&jurisdiction1=family&jurisdiction2=family%20court&service=other&keyword=GeneralAppWithoutNotice",  applicationWithoutNoticeUrl.toString());
     }
 }

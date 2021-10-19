@@ -24,36 +24,42 @@ public class FeePaymentServiceImpl implements FeePaymentService {
     private static final String VERSION = "version";
     private static final String CODE = "code";
     private static final String DESCRIPTION = "description";
-    private static final String OTHER = "other";
-    private static final String DIVORCE = "divorce";
-    private static final String FINANCIAL_ORDER = "financial-order";
-    private static final String HIJ = "HIJ";
-    private static final String ISSUE = "issue";
-    private static final String GENERAL_APPLICATION = "general application";
 
-    private String genAppWithoutNoticeFeeKeyword;
+    private static final String SERVICE_OTHER = "other";
+    private static final String SERVICE_DIVORCE = "divorce";
+
+    private static final String EVENT_ISSUE = "issue";
+    private static final String EVENT_GENERAL_APPLICATION = "general application";
+    private static final String EVENT_ENFORCEMENT = "enforcement";
+    private static final String EVENT_MISCELLANEOUS = "miscellaneous";
+
+    private static final String KEYWORD_DIVORCE_APPLICATION = "DivorceCivPart";
+    private static final String KEYWORD_AMEND_PETITION = "DivorceAmendPetition";
+    private static final String KEYWORD_ORIGINATE_PROCEEDINGS = "AppnPrivateOther";
+    private static final String KEYWORD_DECREE_NISI = "GAContestedOrder";
+    private static final String KEYWORD_BAILIFF_SERVICE = "BailiffServeDoc";
+    private static final String KEYWORD_FINANCIAL_ORDER = "FinancialOrderOnNotice";
+    private static final String KEYWORD_WITHOUT_NOTICE = "GeneralAppWithoutNotice";
+    protected static final String KEYWORD_ORIGINAL_AMEND = "ABC";
+    protected static final String KEYWORD_ORIGINAL_DEFEND = "PQR";
+    protected static final String KEYWORD_ORIGINAL_BAILIFF = "HIJ";
+    protected static final String KEYWORD_ORIGINAL_FO = "financial-order";
+
     private final String feesLookupEndpoint;
+    private boolean feesPayKeywords;
     private final RestTemplate restTemplate;
-    private String feeApiBaseUri;
-    private final String[][] feesItems = {
-        {ISSUE, DIVORCE, null},
-        {ISSUE, OTHER, "ABC"},
-        {GENERAL_APPLICATION, OTHER, null},
-        {"enforcement", OTHER, HIJ},
-        {"miscellaneous", OTHER, FINANCIAL_ORDER},
-        {GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword},
-        {ISSUE, OTHER, "PQR"}
-    };
+    private final String feeApiBaseUri;
+
 
     @Autowired
     public FeePaymentServiceImpl(RestTemplate restTemplate,
         @Value("${fee.api.baseUri}") String feeApiBaseUri,
         @Value("${fee.api.feesLookup}") String feesLookupEndpoint,
-        @Value("${fee.api.genAppWithoutNoticeFeeKeyword}") String genAppWithoutNoticeFeeKeyword) {
+        @Value("${feature-toggle.toggle.fee-pay-keywords}") Boolean feesPayKeywords) {
         this.restTemplate = restTemplate;
         this.feeApiBaseUri = feeApiBaseUri;
         this.feesLookupEndpoint = feesLookupEndpoint;
-        this.genAppWithoutNoticeFeeKeyword = genAppWithoutNoticeFeeKeyword;
+        this.feesPayKeywords = feesPayKeywords != null ? feesPayKeywords : false;
     }
 
     @Override
@@ -64,53 +70,53 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public Fee getIssueFee() {
-        return getFee(ISSUE, DIVORCE, null );
+        return getFee(EVENT_ISSUE, SERVICE_DIVORCE, (feesPayKeywords ? KEYWORD_DIVORCE_APPLICATION : null));
     }
 
     @Override
     public Fee getAmendPetitionFee() {
-        return getFee(ISSUE, OTHER, "ABC" );
+        return getFee(EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_AMEND_PETITION : KEYWORD_ORIGINAL_AMEND));
     }
 
     @Override
     public Fee getDefendPetitionFee() {
-        return getFee(ISSUE, OTHER, "PQR" );
+        return getFee(EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_ORIGINATE_PROCEEDINGS : KEYWORD_ORIGINAL_DEFEND));
     }
 
     @Override
     public Fee getGeneralApplicationFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, null);
+        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_DECREE_NISI : null));
     }
 
     @Override
     public Fee getEnforcementFee() {
-        return getFee("enforcement", OTHER, HIJ);
+        return getFee(EVENT_ENFORCEMENT, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_BAILIFF_SERVICE : KEYWORD_ORIGINAL_BAILIFF));
     }
 
     @Override
     public Fee getApplicationFinancialOrderFee() {
-        return getFee("miscellaneous", OTHER, FINANCIAL_ORDER);
+        return getFee(EVENT_MISCELLANEOUS, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_FINANCIAL_ORDER : KEYWORD_ORIGINAL_FO));
     }
 
     @Override
     public Fee getApplicationWithoutNoticeFee() {
-        return getFee(GENERAL_APPLICATION, OTHER, genAppWithoutNoticeFeeKeyword);
+        return getFee(EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE);
     }
 
     private Fee getFromRegister(URI uri) {
         return extractValue(Objects.requireNonNull(restTemplate.getForObject(uri, ObjectNode.class)));
     }
 
-    private URI buildURI(String event, String divorce, String keyword) {
+    private URI buildURI(String event, String service, String keyword) {
         URI uri;
-
+        log.info("Inside buildURI with service : {} and keyword {} ", service, keyword );
         if (keyword == null) {
             uri = UriComponentsBuilder.fromHttpUrl(feeApiBaseUri + feesLookupEndpoint)
                 .queryParam("channel", "default")
                 .queryParam("event", event)
                 .queryParam("jurisdiction1", "family")
                 .queryParam("jurisdiction2", "family court")
-                .queryParam("service", divorce)
+                .queryParam("service", service)
                 .build().toUri();
         } else {
             uri = UriComponentsBuilder.fromHttpUrl(feeApiBaseUri + feesLookupEndpoint)
@@ -118,10 +124,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
                 .queryParam("event", event)
                 .queryParam("jurisdiction1", "family")
                 .queryParam("jurisdiction2", "family court")
-                .queryParam("service", divorce)
+                .queryParam("service", service)
                 .queryParam("keyword", keyword)
                 .build().toUri();
         }
+        log.info("Inside buildURI returning uri {} ", uri.toString() );
         return uri;
     }
 
@@ -141,7 +148,15 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
     @Override
     public List<Fee> getAllFees() {
-
+        String[][] feesItems = {
+            {EVENT_ISSUE, SERVICE_DIVORCE, (feesPayKeywords ? KEYWORD_DIVORCE_APPLICATION : null)},
+            {EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_AMEND_PETITION : KEYWORD_ORIGINAL_AMEND)},
+            {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_DECREE_NISI : null)},
+            {EVENT_ENFORCEMENT, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_BAILIFF_SERVICE : KEYWORD_ORIGINAL_BAILIFF)},
+            {EVENT_MISCELLANEOUS, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_FINANCIAL_ORDER : KEYWORD_ORIGINAL_FO)},
+            {EVENT_GENERAL_APPLICATION, SERVICE_OTHER, KEYWORD_WITHOUT_NOTICE},
+            {EVENT_ISSUE, SERVICE_OTHER, (feesPayKeywords ? KEYWORD_ORIGINATE_PROCEEDINGS : KEYWORD_ORIGINAL_DEFEND)}
+        };
         return Stream.of(feesItems).map(i -> getFee(i[0], i[1], i[2])).collect(Collectors.toList());
     }
 }
