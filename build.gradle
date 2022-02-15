@@ -61,6 +61,24 @@ dependencyManagement {
         dependency group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.68'
 
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
+
+        //CVE-2021-44228, CVE-2021-44832, CVE-2021-45046, CVE-2021-45105
+        dependencySet(group: 'org.apache.logging.log4j', version: '2.17.1') {
+            entry 'log4j-api'
+            entry 'log4j-to-slf4j'
+        }
+
+        dependencySet(group: 'org.springframework', version: '5.2.19.RELEASE') {
+            entry 'spring-aop'
+            entry 'spring-beans'
+            entry 'spring-context'
+            entry 'spring-context-support'
+            entry 'spring-core'
+            entry 'spring-expression'
+            entry 'spring-jcl'
+            entry 'spring-web'
+            entry 'spring-webmvc'
+        }
     }
 }
 
@@ -191,12 +209,13 @@ def versions = [
         springRetry:                                    '1.2.5.RELEASE',
         springSecurityCrypto:                           '5.4.5',
         springSecurityRsa:                              '1.0.9.RELEASE',
-        tomcat:                                         '9.0.50',
+        tomcat:                                         '9.0.58',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
         pact_version:                                   '4.1.11',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
+        logbackVersion:                                 '1.2.10'
 ]
 
 dependencies {
@@ -265,6 +284,9 @@ dependencies {
     compile group: 'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
     compile group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
     compile group: 'org.pitest', name: 'pitest', version: versions.pitest
+
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
+    compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
 
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: versions.springBoot
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
