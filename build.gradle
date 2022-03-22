@@ -80,7 +80,7 @@ dependencyManagement {
             entry 'spring-webmvc'
         }
 
-        dependencySet(group: 'com.fasterxml.jackson.core', version: versions.jackson) {
+        dependencySet(group: 'com.fasterxml.jackson.core', version: '2.13.2') {
             entry 'jackson-core'
             entry 'jackson-databind'
             entry 'jackson-annotations'
