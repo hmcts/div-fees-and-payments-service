@@ -79,6 +79,12 @@ dependencyManagement {
             entry 'spring-web'
             entry 'spring-webmvc'
         }
+
+        dependencySet(group: 'com.fasterxml.jackson.core', version: '2.13.2') {
+            entry 'jackson-core'
+            entry 'jackson-databind'
+            entry 'jackson-annotations'
+        }
     }
 }
 
@@ -186,6 +192,7 @@ def versions = [
         gradlePitest:                                   '1.4.6',
         guava:                                          '30.1-jre',
         hibernate:                                      '6.0.5.Final',
+        jackson:                                        '2.13.2',
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
