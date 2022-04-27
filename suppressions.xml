@@ -7,4 +7,9 @@
 <suppressions>
     <!--<suppress checks="JavadocMethod" files=".*Test.java"/>-->
     <suppress checks=".*" files=".*Connections.java"/>
+    <suppress>
+        <notes><![CDATA[file name: spring-core-5.2.20.RELEASE.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <vulnerabilityName>CVE-2016-1000027</vulnerabilityName>
+    </suppress>
 </suppressions>
