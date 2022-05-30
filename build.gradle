@@ -87,6 +87,7 @@ dependencyManagement {
             entry 'jackson-annotations'
         }
 
+        //CVE-2020-36518
         dependency group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.1'
     }
 }
