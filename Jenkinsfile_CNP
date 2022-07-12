@@ -13,7 +13,8 @@ properties([
         ])
 ])
 
-@Library("Infrastructure")
+// @Library("Infrastructure")
+@Library('Infrastructure@Add-Tests-To-Master-Pipeline')
 
 def type = "java"
 def product = "div"
