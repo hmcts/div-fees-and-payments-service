@@ -62,6 +62,7 @@ public class FeePaymentIntegrationTest {
 
     @Test
     public void feeTest() {
+        System.out.println("temp");
 //        when()
 //                .get(feeEndpoint)
 //                .then()
