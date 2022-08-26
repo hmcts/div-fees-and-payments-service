@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import static io.restassured.RestAssured.baseURI;
 import static net.serenitybdd.rest.SerenityRest.when;
-import static org.hamcrest.core.Is.isA;
 
 @Lazy
 @RunWith(SerenityParameterizedRunner.class)
