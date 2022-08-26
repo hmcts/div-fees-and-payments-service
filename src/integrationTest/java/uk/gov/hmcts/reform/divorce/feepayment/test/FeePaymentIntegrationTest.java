@@ -64,10 +64,9 @@ public class FeePaymentIntegrationTest {
 
     @Test
     public void feeTest() {
-        when()
-                .get(feeEndpoint);
-                //.then()
-                //.assertThat().statusCode(200)
-                //.and().body("feeCode", isA(String.class));
+        when().get(feeEndpoint);
+        //.then()
+        //.assertThat().statusCode(200)
+        //.and().body("feeCode", isA(String.class));
     }
 }
