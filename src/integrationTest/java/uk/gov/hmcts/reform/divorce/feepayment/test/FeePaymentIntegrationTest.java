@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static io.restassured.RestAssured.baseURI;
+import static net.serenitybdd.rest.SerenityRest.when;
+import static org.hamcrest.core.Is.isA;
 
 @Lazy
 @RunWith(SerenityParameterizedRunner.class)
@@ -62,11 +64,10 @@ public class FeePaymentIntegrationTest {
 
     @Test
     public void feeTest() {
-        System.out.println("temp");
-//        when()
-//                .get(feeEndpoint)
-//                .then()
-//                .assertThat().statusCode(200)
-//                .and().body("feeCode", isA(String.class));
+        when()
+                .get(feeEndpoint);
+                //.then()
+                //.assertThat().statusCode(200)
+                //.and().body("feeCode", isA(String.class));
     }
 }
