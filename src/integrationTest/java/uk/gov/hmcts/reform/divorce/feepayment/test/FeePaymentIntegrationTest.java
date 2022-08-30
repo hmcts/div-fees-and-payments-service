@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.feepayment.test;
 
+import io.restassured.RestAssured;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import net.thucydides.junit.annotations.TestData;
@@ -64,6 +65,7 @@ public class FeePaymentIntegrationTest {
 
     @Test
     public void feeTest() {
+        RestAssured.useRelaxedHTTPSValidation();
         when()
                 .get(feeEndpoint)
                 .then()
