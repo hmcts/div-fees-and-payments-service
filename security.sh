@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export TEST_URL = ${TEST_URL//http/https}
+export TEST_URL = ${URL_TO_TEST//http/https}
 echo ${TEST_URL}
 zap-api-scan.py -t ${TEST_URL}/v2/api-docs -f openapi -S -d -u ${SecurityRules} -P 1001 -l FAIL
 curl --fail http://0.0.0.0:1001/OTHER/core/other/jsonreport/?formMethod=GET --output report.json
