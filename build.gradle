@@ -86,6 +86,10 @@ dependencyManagement {
             entry 'jackson-databind'
             entry 'jackson-annotations'
         }
+
+        dependencySet(group: 'org.yaml', version: '1.31') {
+            entry 'snakeyaml'
+        }
     }
 }
 
