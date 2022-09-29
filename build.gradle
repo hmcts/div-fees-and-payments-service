@@ -87,7 +87,7 @@ dependencyManagement {
             entry 'jackson-annotations'
         }
 
-        dependencySet(group: 'org.yaml', version: '1.31') {
+        dependencySet(group: 'org.yaml', version: '1.33') {
             entry 'snakeyaml'
         }
     }
