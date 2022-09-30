@@ -56,8 +56,6 @@ dependencyManagement {
     dependencies {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 
-        dependency group: 'org.yaml', name: 'snakeyaml', version: '1.28'
-
         dependency group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.68'
 
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
@@ -87,7 +85,7 @@ dependencyManagement {
             entry 'jackson-annotations'
         }
 
-        dependencySet(group: 'org.yaml', version: '1.31') {
+        dependencySet(group: 'org.yaml', version: '1.33') {
             entry 'snakeyaml'
         }
     }
