@@ -35,16 +35,16 @@ withPipeline(type , product, component) {
         env.ITEST_ENVIRONMENT = "preview"
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
-    after('functionalTest:preview') {
+    afterSuccess('functionalTest:preview') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
 
 
-    after('checkout') {
+    afterSuccess('checkout') {
         echo '${product}-${component} checked out'
     }
 
-    after('functionalTest:aat') {
+    afterSuccess('functionalTest:aat') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
     onMaster {
