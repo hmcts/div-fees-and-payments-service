@@ -396,7 +396,7 @@ def getCheckedOutGitCommitHash() {
 
 pact {
     broker {
-        pactBrokerUrl = System.getProperty("pact.broker.url") ?: 'http://localhost:80'
+        pactBrokerUrl = System.getEnv("pact.broker.url") ?: 'http://localhost:80'
     }
     publish {
         pactDirectory = 'build/pacts'
