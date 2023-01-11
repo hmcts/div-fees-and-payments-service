@@ -18,8 +18,8 @@ plugins {
     id 'jacoco'
     id 'info.solidsoft.pitest' version '1.6.0'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    id 'org.owasp.dependencycheck' version '6.2.0'
-    id 'org.sonarqube' version '3.2.0'
+    id 'org.owasp.dependencycheck' version '7.1.1'
+    id 'org.sonarqube' version '3.4.0.2513'
     id 'org.springframework.boot' version '2.3.11.RELEASE'
     id 'au.com.dius.pact' version '4.1.8'
 }
@@ -240,7 +240,7 @@ dependencies {
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonassert
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    integrationTestCompile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '3.0.1'
+    integrationTestCompile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '4.0.0'
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
