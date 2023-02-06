@@ -332,7 +332,7 @@ dependencies {
     }
     testCompile('com.github.hmcts:fortify-client:1.2.0:all')
 
-    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.9.2")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
     contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.7.2')
 
