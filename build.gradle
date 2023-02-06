@@ -200,7 +200,7 @@ def versions = [
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
         junit:                                          '4.13.1',
-        lombok:                                         '1.18.20',
+        lombok:                                         '1.18.26',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
