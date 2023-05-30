@@ -50,8 +50,6 @@ variable "location" {
     default = "UK South"
 }
 
-variable "ilbIp" {}
-
 variable "vault_env" {}
 
 variable "common_tags" {
