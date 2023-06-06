@@ -60,7 +60,7 @@ public class FeePaymentConsumerTest {
             + (featureToggleKeywords ? "&keyword=GAContestedOrder" : "");
 
         enforcementFee = "channel=default&event=enforcement&jurisdiction1=family&"
-            + "jurisdiction2=family%20court&keyword=BailiffServeDoc&service=other"
+            + "jurisdiction2=family%20court&service=other"
             + (featureToggleKeywords ? "&keyword=BailiffServeDoc" : "&keyword=HIJ");
 
         financialOrderFee = "channel=default&event=miscellaneous&jurisdiction1=family&"
