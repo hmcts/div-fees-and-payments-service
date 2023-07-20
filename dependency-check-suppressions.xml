@@ -5,11 +5,13 @@
         <notes><![CDATA[file name: jackson-databind-2.13.3.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
         <cve>CVE-2022-42003</cve>
+        <cve>CVE-2022-42004</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[file name: jackson-databind-2.13.3.jar]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
-        <cve>CVE-2022-42004</cve>
+        <notes><![CDATA[file name: jackson-core-2.13.3.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$</packageUrl>
+        <cve>CVE-2022-45688</cve>
+        <cve>CVE-2023-35116</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-core-5.2.22.RELEASE.jar]]></notes>
@@ -176,12 +178,6 @@
         <notes><![CDATA[file name: accessors-smart-2.3.1.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/net\.minidev/accessors\-smart@.*$</packageUrl>
         <cve>CVE-2022-45688</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[file name: jackson-core-2.13.3.jar]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$</packageUrl>
-        <cve>CVE-2022-45688</cve>
-        <cve>CVE-2023-35116</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: guava-30.1-jre.jar]]></notes>
