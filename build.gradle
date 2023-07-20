@@ -61,7 +61,7 @@ dependencyManagement {
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
 
         //CVE-2021-44228, CVE-2021-44832, CVE-2021-45046, CVE-2021-45105
-        dependencySet(group: 'org.apache.logging.log4j', version: '2.17.1') {
+        dependencySet(group: 'org.apache.logging.log4j', version: '2.19.0') {
             entry 'log4j-api'
             entry 'log4j-to-slf4j'
         }
@@ -200,7 +200,7 @@ def versions = [
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
         junit:                                          '4.13.1',
-        lombok:                                         '1.18.20',
+        lombok:                                         '1.18.28',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
@@ -332,9 +332,9 @@ dependencies {
     }
     testCompile('com.github.hmcts:fortify-client:1.2.0:all')
 
-    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.9.3")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
-    contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.7.2')
+    contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.9.3')
 
     contractTestCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
     contractTestCompile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: versions.httpComponents
