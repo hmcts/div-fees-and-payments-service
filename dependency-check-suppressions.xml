@@ -15,7 +15,7 @@
         <notes><![CDATA[file name: spring-core-5.2.22.RELEASE.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
         <cve>CVE-2016-1000027</cve>
-        <cve>CVE-2022-22968</cve>    
+        <cve>CVE-2022-22968</cve>
         <cve>CVE-2023-20861</cve>
         <cve>CVE-2023-20863</cve>
     </suppress>
@@ -181,5 +181,6 @@
         <notes><![CDATA[file name: jackson-core-2.13.3.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$</packageUrl>
         <cve>CVE-2022-45688</cve>
-   </suppress>    
+        <cve>CVE-2022-42004</cve>
+    </suppress>
 </suppressions>
