@@ -40,6 +40,8 @@ fee:
     genAppWithoutNoticeFeeKeyword: ${GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD:GeneralAppWithoutNotice}
 
 spring:
+  config:
+    import: optional:configtree:/mnt/secrets/div/
   resources:
     static-locations:
   application:

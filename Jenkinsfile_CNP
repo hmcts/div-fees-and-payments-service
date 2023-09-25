@@ -21,8 +21,15 @@ def component = "fps"
 
 def channel = '#div-dev'
 
+def secrets = [
+        'div-${env}': [
+                secret("AppInsightsInstrumentationKey", "azure.application-insights.instrumentation-key")
+        ]
+]
+
 withPipeline(type , product, component) {
     env.PACT_BROKER_URL = 'https://pact-broker.platform.hmcts.net'
+    loadVaultSecrets(secrets)
     enableAksStagingDeployment()
     disableLegacyDeployment()
     enablePactAs([AppPipelineDsl.PactRoles.CONSUMER])
