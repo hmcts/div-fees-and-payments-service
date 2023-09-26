@@ -4,7 +4,7 @@ import uk.gov.hmcts.contino.AppPipelineDsl
 properties([
         [$class: 'GithubProjectProperty',
          displayName: 'Divorce fees and payments Service',
-         projectUrlStr: 'https://github.com/hmcts/div-fees-and-payments-service.git'],
+         projectUrlStr: 'https://github.com/HMCTS/div-fees-and-payments-service.git'],
         pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
 
