@@ -29,7 +29,6 @@ def secrets = [
 
 withPipeline(type , product, component) {
     env.PACT_BROKER_URL = 'https://pact-broker.platform.hmcts.net'
-    loadVaultSecrets(secrets)
     enableAksStagingDeployment()
     disableLegacyDeployment()
     enablePactAs([AppPipelineDsl.PactRoles.CONSUMER])
