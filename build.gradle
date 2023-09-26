@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
 buildscript {
     ext {
         springBootVersion = '2.7.14'
@@ -16,12 +18,14 @@ buildscript {
 plugins {
     id 'application'
     id 'checkstyle'
-    id 'jacoco'
-    id 'info.solidsoft.pitest' version '1.6.0'
+    id 'com.github.ben-manes.versions' version '0.47.0'
+    id 'info.solidsoft.pitest' version '1.9.11'
     id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'jacoco'
+    id 'org.flywaydb.flyway' version '9.19.4'
     id 'org.owasp.dependencycheck' version '8.0.2'
     id 'org.sonarqube' version '3.2.0'
-    id 'org.springframework.boot' version '2.7.14'
+    id 'org.springframework.boot' version "2.7.14"
     id 'au.com.dius.pact' version '4.1.8'
     id 'uk.gov.hmcts.java' version '0.12.27'
 }
@@ -223,10 +227,10 @@ def versions = [
         puppyCrawl:                                     '8.35',
         reformsJavaLogging:                             '5.1.7',
         restAssured:                                    '4.2.1',
-        serviceTokenGenerator:                          '2.0.0',
+        serviceTokenGenerator:                          '3.1.1',
         serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
-        serviceAuthProviderClient:                      '0.6.0',
+        serviceAuthProviderClient:                      '3.1.1',
         sonarPitest:                                    '0.5',
         springBoot:                                     '2.7.14',
         springDoc:                                      '1.6.9',
@@ -239,7 +243,8 @@ def versions = [
         pact_version:                                   '4.1.11',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
-        logbackVersion:                                 '1.2.10'
+        logbackVersion:                                 '1.2.10',
+        reformLogging:                                  '6.0.1'
 ]
 
 tasks.withType(JavaExec).configureEach {
@@ -255,10 +260,19 @@ tasks.withType(Test) {
 }
 
 test {
+    useJUnit()
     failFast = true
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:${versions.lombok}")
+    testCompileOnly("org.projectlombok:lombok:${versions.lombok}")
+    testImplementation('com.github.hmcts:fortify-client:1.2.0:all')
+    annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
+    testAnnotationProcessor("org.projectlombok:lombok:${versions.lombok}")
+    testImplementation("junit:junit:${versions.junit}")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
     //integration test
     integrationTestImplementation(sourceSets.test.output)
     integrationTestImplementation group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
@@ -278,24 +292,12 @@ dependencies {
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
     integrationTestImplementation group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceAuthProviderClient
 
-    implementation (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils) {
-        force = true
-    }
-    implementation (group: 'org.springframework.security', name: 'spring-security-rsa', version: versions.springSecurityRsa) {
-        force = true
-    }
-    implementation (group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto) {
-        force = true
-    }
-    implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcat) {
-        force = true
-    }
-    implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcat) {
-        force = true
-    }
-    implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcat) {
-        force = true
-    }
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils
+    implementation group: 'org.springframework.security', name: 'spring-security-rsa', version: versions.springSecurityRsa
+    implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
+    implementation group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcat
+    implementation group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcat
+    implementation group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcat
 
     implementation (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
         exclude group: 'io.reactivex', module: 'io.reactivex'
@@ -320,7 +322,7 @@ dependencies {
     implementation group: 'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
     implementation group: 'javax.validation', name: 'validation-api', version: versions.javaxValidation
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
-    implementation group: 'junit', name: 'junit', version: versions.junit
+    testImplementation group: 'junit', name: 'junit', version: versions.junit
     implementation group: 'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
     implementation group: 'org.pitest', name: 'pitest', version: versions.pitest
@@ -339,6 +341,7 @@ dependencies {
     implementation group: 'org.springframework.retry', name: 'spring-retry'
 
     implementation group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     implementation group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
     implementation group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
@@ -348,16 +351,6 @@ dependencies {
         exclude group: "org.yaml", module: "snakeyaml"
     }
 
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-client', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-continuation', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-util-ajax', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-http', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-security', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-servlets', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-util', version: versions.jetty
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-xml', version: versions.jetty
     testImplementation group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
@@ -379,12 +372,22 @@ dependencies {
     contractTestImplementation sourceSets.test.runtimeClasspath
 }
 
-test {
-    exclude '**/HealthCheckFunctionalTest.class'
+dependencies {
+    integrationTestImplementation(sourceSets.test.output)
 }
 
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
-    include "uk/gov/hmcts/**/smoketest/**"
+    useJUnit {
+        includeCategories 'uk/gov/hmcts/**/smoketest/**'
+    }
+}
+
+task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dependsOn: 'classes', group: 'Application') {
+    doFirst() {
+        classpath = sourceSets.main.runtimeClasspath
+        systemProperties = System.properties
+        systemProperty 'spring.profiles.active', 'aat'
+    }
 }
 
 
@@ -474,6 +477,10 @@ sonarqube {
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 def debug = System.getProperty("debug")
