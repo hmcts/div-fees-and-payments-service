@@ -62,6 +62,11 @@ tasks.withType(Checkstyle).each { checkstyleTask ->
     }
 }
 
+tasks.withType(Test).configureEach {
+    // Using JUnitPlatform for running tests
+    useJUnitPlatform()
+}
+
 bootJar {
     manifest {
         attributes 'Implementation-Title': project.name,
@@ -114,16 +119,6 @@ dependencyManagement {
 }
 
 sourceSets {
-    integrationTest {
-        java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDirs = ['src/integrationTest/java']
-        }
-        resources {
-            srcDirs = ['src/integrationTest/resources']
-        }
-    }
     contractTest {
         java {
             compileClasspath += main.output
@@ -195,9 +190,6 @@ processContractTestResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-processIntegrationTestResources {
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
 dependencyCheck {
@@ -269,6 +261,7 @@ test {
 
 
 dependencies {
+
     compileOnly("org.projectlombok:lombok:${versions.lombok}")
     testCompileOnly("org.projectlombok:lombok:${versions.lombok}")
     testImplementation('com.github.hmcts:fortify-client:1.2.0:all')
@@ -277,6 +270,14 @@ dependencies {
     testImplementation("junit:junit:${versions.junit}")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    testImplementation 'org.spockframework:spock-core'
+
+    integrationTestImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    integrationTestImplementation 'org.spockframework:spock-core'
+
+    functionalTestImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    functionalTestImplementation 'org.spockframework:spock-core'
 
     //integration test
     integrationTestImplementation(sourceSets.test.output)
@@ -384,16 +385,34 @@ dependencies {
     contractTestImplementation sourceSets.test.runtimeClasspath
 }
 
+def integrationTest = sourceSets.create("integrationTest")
+
 dependencies {
-    integrationTestImplementation(sourceSets.test.output)
-    functionalTestImplementation(sourceSets.test.output)
+    integrationTestImplementation(project)
 }
 
-task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
-    useJUnit {
-        includeCategories 'uk.gov.hmcts.reform.divorce.feepayment.smoketest.SmokeTest'
-    }
+def integrationTestTask = tasks.register("integrationTest", Test) {
+    description = 'Runs the integration tests.'
+    group = "verification"
+    testClassesDirs = integrationTest.output.classesDirs
+    classpath = integrationTest.runtimeClasspath
+    mustRunAfter(tasks.named('test'))
 }
+
+
+def functionalTestTask = tasks.register("functionalTest", Test) {
+    description = 'Runs the functionalTest tests.'
+    group = "verification"
+    testClassesDirs = integrationTest.output.classesDirs
+    classpath = integrationTest.runtimeClasspath
+    mustRunAfter(tasks.named('test'))
+}
+
+tasks.named('check') {
+    dependsOn(integrationTestTask)
+    dependsOn(functionalTestTask)
+}
+
 
 task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dependsOn: 'classes', group: 'Application') {
     doFirst() {
@@ -403,25 +422,6 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
     }
 }
 
-
-
-task functional(type: Test, description: 'Runs the functional tests.', group: 'Functional Tests') {
-    doFirst(){
-        printf("Available processors:::::::::: " + Runtime.runtime.availableProcessors().intdiv(2).toString())
-    }
-
-    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
-    forkEvery = 10
-
-    exclude "uk/gov/hmcts/reform/divorce/feepayment/callback/nightly/pipeline/**"
-
-    setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
-    setClasspath(sourceSets.integrationTest.runtimeClasspath)
-
-    useJUnit()
-
-    finalizedBy aggregate
-}
 task contract(type: Test) {
     group = 'Delivery pipeline'
     description = 'Pact consumer tests for Fee Register'
