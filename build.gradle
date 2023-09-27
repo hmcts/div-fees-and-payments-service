@@ -342,6 +342,7 @@ dependencies {
 
     implementation group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     implementation group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
     implementation group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
@@ -391,20 +392,11 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
 
 
 task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
-    doFirst(){
-        printf("Available processors:::::::::: " + Runtime.runtime.availableProcessors().intdiv(2).toString())
-    }
-
-    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
-    forkEvery = 10
-
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
 
     finalizedBy aggregate
-
 }
-
 task contract(type: Test) {
     group = 'Delivery pipeline'
     description = 'Pact consumer tests for Fee Register'
