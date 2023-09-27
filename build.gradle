@@ -114,6 +114,16 @@ dependencyManagement {
 }
 
 sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDirs = ['src/integrationTest/java']
+        }
+        resources {
+            srcDirs = ['src/integrationTest/resources']
+        }
+    }
     contractTest {
         java {
             compileClasspath += main.output
@@ -125,10 +135,12 @@ sourceSets {
 }
 
 configurations {
-    integrationTestImplementation.extendsFrom testImplementation
-    integrationTestRuntime.extendsFrom testRuntime
-    contractTestImplementation.extendsFrom testImplementation
-    contractTestRuntimeOnly.extendsFrom testRuntime
+    integrationTestImplementation.extendsFrom(testImplementation)
+    integrationTestRuntimeOnly.extendsFrom(testRuntimeOnly)
+    functionalTestImplementation.extendsFrom(testImplementation)
+    functionalTestRuntimeOnly.extendsFrom(testRuntimeOnly)
+    contractTestImplementation.extendsFrom(testImplementation)
+    contractTestRuntimeOnly.extendsFrom(testRuntimeOnly)
 }
 
 mainClassName = 'uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication'
@@ -183,6 +195,9 @@ processContractTestResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+processIntegrationTestResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
 dependencyCheck {
@@ -251,25 +266,7 @@ test {
     failFast = true
 }
 
-def integrationTest = sourceSets.create('integrationTest')
 
-configurations[integrationTest.implementationConfigurationName].extendsFrom(configurations.testImplementation)
-configurations[integrationTest.runtimeOnlyConfigurationName].extendsFrom(configurations.testRuntimeOnly)
-
-def integrationTestTask = tasks.register('integrationTest', Test) {
-    description = 'Runs integration tests.'
-    group = 'verification'
-    useJUnitPlatform()
-
-    testClassesDirs = integrationTest.output.classesDirs
-    classpath = configurations[integrationTest.runtimeClasspathConfigurationName] + integrationTest.output
-
-    shouldRunAfter(tasks.named('test'))
-}
-
-tasks.named('check') {
-    dependsOn(integrationTestTask)
-}
 
 dependencies {
     compileOnly("org.projectlombok:lombok:${versions.lombok}")
@@ -299,6 +296,7 @@ dependencies {
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
     integrationTestImplementation group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceAuthProviderClient
+    functionalTestImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
 
     implementation group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils
     implementation group: 'org.springframework.security', name: 'spring-security-rsa', version: versions.springSecurityRsa
@@ -386,6 +384,11 @@ dependencies {
     contractTestImplementation sourceSets.test.runtimeClasspath
 }
 
+dependencies {
+    integrationTestImplementation(sourceSets.test.output)
+    functionalTestImplementation(sourceSets.test.output)
+}
+
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
     useJUnit {
         includeCategories 'uk.gov.hmcts.reform.divorce.feepayment.smoketest.SmokeTest'
@@ -399,6 +402,7 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
         systemProperty 'spring.profiles.active', 'aat'
     }
 }
+
 
 
 task functional(type: Test, description: 'Runs the functional tests.', group: 'Verification') {
