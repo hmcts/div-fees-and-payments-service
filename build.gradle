@@ -234,7 +234,7 @@ def versions = [
         sonarPitest:                                    '0.5',
         springBoot:                                     '2.7.14',
         springDoc:                                      '1.6.9',
-        springPluginCore:                               '1.2.0.RELEASE',
+        springPluginCore:                               '3.0.0',
         springSecurityCrypto:                           '5.4.5',
         springSecurityRsa:                              '1.0.9.RELEASE',
         tomcat:                                         '9.0.80',
