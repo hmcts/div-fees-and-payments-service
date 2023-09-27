@@ -334,7 +334,13 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: versions.springBoot
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+    integrationTestImplementation(group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign')
+            {
+                exclude group: 'io.reactivex', module: 'io.reactivex'
+                exclude group: 'io.reactivex', module: 'rxnetty'
+                exclude group: 'io.reactivex', module: 'rxnetty-contexts'
+                exclude group: 'io.reactivex', module: 'rxnetty-servo'
+            }
     // DO NOT UPDATE spring-plugin-core - 2.0.0.RELEASE is available but not compatible with springfox 2.9 and above
     // see here https://github.com/springfox/springfox/issues/2932
     implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: versions.springPluginCore
