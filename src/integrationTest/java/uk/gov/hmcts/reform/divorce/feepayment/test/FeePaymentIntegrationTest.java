@@ -4,9 +4,9 @@ import io.restassured.RestAssured;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
 import net.thucydides.junit.annotations.TestData;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -38,7 +38,7 @@ public class FeePaymentIntegrationTest {
     @Rule
     public SpringIntegrationMethodRule springMethodIntegration = new SpringIntegrationMethodRule();
 
-    @Before
+    @BeforeEach
     public void setup() {
         baseURI = feesPaymentsServiceUrl;
     }

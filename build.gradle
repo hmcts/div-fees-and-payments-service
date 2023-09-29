@@ -123,6 +123,16 @@ dependencyManagement {
 }
 
 sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDirs = ['src/integrationTest/java']
+        }
+        resources {
+            srcDirs = ['src/integrationTest/resources']
+        }
+    }
     contractTest {
         java {
             compileClasspath += main.output
@@ -134,12 +144,10 @@ sourceSets {
 }
 
 configurations {
-    integrationTestImplementation.extendsFrom(testImplementation)
-    integrationTestRuntimeOnly.extendsFrom(testRuntimeOnly)
-    functionalTestImplementation.extendsFrom(testImplementation)
-    functionalTestRuntimeOnly.extendsFrom(testRuntimeOnly)
-    contractTestImplementation.extendsFrom(testImplementation)
-    contractTestRuntimeOnly.extendsFrom(testRuntimeOnly)
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
+    contractTestImplementation.extendsFrom testImplementation
+    contractTestRuntimeOnly.extendsFrom testRuntime
 }
 
 mainClassName = 'uk.gov.hmcts.reform.divorce.feepayment.FeesPaymentServiceApplication'
@@ -194,6 +202,9 @@ processContractTestResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+processIntegrationTestResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
 dependencyCheck {
@@ -218,7 +229,7 @@ def versions = [
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
-        junit:                                          '4.13.2',
+        junit:                                          '5.9.3',
         lombok:                                         '1.18.28',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
@@ -249,7 +260,7 @@ tasks.withType(JavaExec).configureEach {
     javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
 }
 
-tasks.named('test', Test) {
+tasks.withType(Test) {
     useJUnitPlatform()
 
     testLogging {
@@ -262,26 +273,23 @@ test {
     failFast = true
 }
 
-
-
 dependencies {
-
     compileOnly("org.projectlombok:lombok:${versions.lombok}")
     testCompileOnly("org.projectlombok:lombok:${versions.lombok}")
     testImplementation('com.github.hmcts:fortify-client:1.2.0:all')
     annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
     testAnnotationProcessor("org.projectlombok:lombok:${versions.lombok}")
-    testImplementation("junit:junit:${versions.junit}")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
     testImplementation 'org.spockframework:spock-core'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
+    testCompileOnly "junit:junit:4.12"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${versions.junit}"
 
     integrationTestImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
     integrationTestImplementation 'org.spockframework:spock-core'
-
-    functionalTestImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
-    functionalTestImplementation 'org.spockframework:spock-core'
 
     //integration test
     integrationTestImplementation(sourceSets.test.output)
@@ -301,7 +309,6 @@ dependencies {
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
     integrationTestImplementation group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceAuthProviderClient
-    functionalTestImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
 
     implementation group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils
     implementation group: 'org.springframework.security', name: 'spring-security-rsa', version: versions.springSecurityRsa
@@ -333,7 +340,7 @@ dependencies {
     implementation group: 'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
     implementation group: 'javax.validation', name: 'validation-api', version: versions.javaxValidation
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
-    testImplementation group: 'junit', name: 'junit', version: versions.junit
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: versions.junit
     implementation group: 'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
     implementation group: 'org.pitest', name: 'pitest', version: versions.pitest
@@ -389,34 +396,15 @@ dependencies {
     contractTestImplementation sourceSets.test.runtimeClasspath
 }
 
-def integrationTest = sourceSets.create("integrationTest")
-
 dependencies {
-    integrationTestImplementation(project)
+    integrationTestImplementation(sourceSets.test.output)
 }
 
-def integrationTestTask = tasks.register("integrationTest", Test) {
-    description = 'Runs the integration tests.'
-    group = "verification"
-    testClassesDirs = integrationTest.output.classesDirs
-    classpath = integrationTest.runtimeClasspath
-    mustRunAfter(tasks.named('test'))
+task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
+    useJUnit {
+        includeCategories 'uk.gov.hmcts.reform.divorce.feepayment.smoketest.SmokeTest'
+    }
 }
-
-
-def functionalTestTask = tasks.register("functionalTest", Test) {
-    description = 'Runs the functionalTest tests.'
-    group = "verification"
-    testClassesDirs = integrationTest.output.classesDirs
-    classpath = integrationTest.runtimeClasspath
-    mustRunAfter(tasks.named('test'))
-}
-
-tasks.named('check') {
-    dependsOn(integrationTestTask)
-    dependsOn(functionalTestTask)
-}
-
 
 task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dependsOn: 'classes', group: 'Application') {
     doFirst() {
@@ -424,6 +412,21 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
         systemProperties = System.properties
         systemProperty 'spring.profiles.active', 'aat'
     }
+}
+
+
+task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
+    doFirst(){
+        printf("Available processors:::::::::: " + Runtime.runtime.availableProcessors().intdiv(2).toString())
+    }
+
+    /*maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    forkEvery = 10*/
+
+    setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
+    setClasspath(sourceSets.integrationTest.runtimeClasspath)
+
+
 }
 
 task contract(type: Test) {
