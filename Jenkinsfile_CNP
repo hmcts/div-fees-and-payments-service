@@ -1,16 +1,11 @@
 #!groovy
 import uk.gov.hmcts.contino.AppPipelineDsl
 
-
 properties([
-        [
-                $class: 'GithubProjectProperty',
-                displayName: 'Divorce fees and payments Service',
-                projectUrlStr: 'https://github.com/hmcts/div-fees-and-payments-service'
-        ],
-        pipelineTriggers([
-                [$class: 'GitHubPushTrigger']
-        ])
+        [$class: 'GithubProjectProperty',
+         displayName: 'Divorce fees and payments Service',
+         projectUrlStr: 'https://github.com/HMCTS/div-fees-and-payments-service.git'],
+        pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
 
 @Library("Infrastructure")
@@ -18,11 +13,26 @@ properties([
 def type = "java"
 def product = "div"
 def component = "fps"
-
 def channel = '#div-dev'
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [$class     : 'AzureKeyVaultSecret',
+     secretType : 'Secret',
+     name       : secretName,
+     version    : '',
+     envVariable: envVar
+    ]
+}
+
+def secrets = [
+        'div-${env}': [
+                secret("AppInsightsInstrumentationKey", "azure.application-insights.instrumentation-key")
+        ]
+]
 
 withPipeline(type , product, component) {
     env.PACT_BROKER_URL = 'https://pact-broker.platform.hmcts.net'
+    loadVaultSecrets(secrets)
     enableAksStagingDeployment()
     disableLegacyDeployment()
     enablePactAs([AppPipelineDsl.PactRoles.CONSUMER])

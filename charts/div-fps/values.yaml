@@ -11,6 +11,7 @@ java:
         FEATURE_FEE_PAY_KEYWORDS: "true"
     aadIdentityName: divorce
     keyVaults:
-        "div":
-            secrets:
-                - AppInsightsInstrumentationKey
+      div:
+        secrets:
+          - name: AppInsightsInstrumentationKey
+            alias: azure.application-insights.instrumentation-key
