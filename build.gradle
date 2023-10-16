@@ -302,7 +302,7 @@ dependencies {
     integrationTestImplementation group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonassert
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    integrationTestImplementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '3.0.1'
+    integrationTestImplementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '3.0.2'
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
