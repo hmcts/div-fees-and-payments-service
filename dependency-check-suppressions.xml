@@ -388,4 +388,38 @@ file name: org.springframework.boot.spring-boot-starter-web@2.3.11.RELEASE
         <packageUrl regex="true">^pkg:maven/net.minidev/accessors-smart@.*$</packageUrl>
         <cve>CVE-2023-5072</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: jackson-core-2.13.3.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com.fasterxml.jackson.core/jackson-core@.*$</packageUrl>
+        <cve>CVE-2023-5072</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: json-path-assert-2.4.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com.jayway.jsonpath/json-path-assert@.*$</packageUrl>
+        <cve>CVE-2023-5072</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-core-9.0.80.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@.*$</packageUrl>
+        <cve>CVE-2023-44487</cve>
+        <cve>CVE-2023-42794</cve>
+        <cve>CVE-2023-42795</cve>
+        <cve>CVE-2023-45648</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-websocket-9.0.80.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org.apache.tomcat.embed/tomcat-embed-websocket@.*$</packageUrl>
+        <cve>CVE-2023-44487</cve>
+        <cve>CVE-2023-42794</cve>
+        <cve>CVE-2023-42795</cve>
+        <cve>CVE-2023-45648</cve>
+    </suppress>
 </suppressions>
