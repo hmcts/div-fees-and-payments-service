@@ -381,4 +381,11 @@ file name: org.springframework.boot.spring-boot-starter-web@2.3.11.RELEASE
         <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-websocket@.*$</packageUrl>
         <cve>CVE-2023-46589</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: accessors-smart-2.4.11.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/net.minidev/accessors-smart@.*$</packageUrl>
+        <cve>CVE-2023-5072</cve>
+    </suppress>
 </suppressions>
