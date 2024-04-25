@@ -239,7 +239,7 @@ def versions = [
         serviceTokenGenerator:                          '3.1.1',
         serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
-        serviceAuthProviderClient:                      '3.1.1',
+        serviceAuthProviderClient:                      '3.1.4',
         sonarPitest:                                    '0.5',
         springBoot:                                     '2.7.14',
         springDoc:                                      '1.6.9',
