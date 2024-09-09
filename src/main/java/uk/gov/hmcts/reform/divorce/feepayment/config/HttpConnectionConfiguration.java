@@ -3,28 +3,18 @@ package uk.gov.hmcts.reform.divorce.feepayment.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.common.collect.ImmutableList;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.ResourceHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import uk.gov.hmcts.reform.logging.httpcomponents.OutboundRequestIdSettingInterceptor;
 
 import java.nio.charset.StandardCharsets;
-
-import static java.util.Arrays.asList;
+import java.util.List;
 
 @Configuration
 public class HttpConnectionConfiguration {
@@ -57,50 +47,26 @@ public class HttpConnectionConfiguration {
         MappingJackson2HttpMessageConverter jackson2HttpConverter
                 = new MappingJackson2HttpMessageConverter(objectMapper);
         jackson2HttpConverter.setObjectMapper(objectMapper);
-        jackson2HttpConverter.setSupportedMediaTypes(ImmutableList.of(MEDIA_TYPE_HAL_JSON, MediaType.APPLICATION_JSON));
+        jackson2HttpConverter.setSupportedMediaTypes(List.of(MEDIA_TYPE_HAL_JSON, MediaType.APPLICATION_JSON));
 
         return jackson2HttpConverter;
     }
 
     @Bean
-    public RestTemplate restTemplate(@Autowired MappingJackson2HttpMessageConverter jackson2HttpConverter) {
-        return getRestTemplate(jackson2HttpConverter, httpConnectTimeout, httpConnectRequestTimeout);
+    public RestTemplate restTemplate() {
+        return getRestTemplate(httpConnectTimeout, httpConnectRequestTimeout);
     }
 
     @Bean
-    public RestTemplate healthCheckRestTemplate(@Autowired MappingJackson2HttpMessageConverter jackson2HttpConverter) {
-        return getRestTemplate(
-                jackson2HttpConverter,
-                healthCheckHttpConnectTimeout,
-                healthCheckHttpConnectRequestTimeout
-        );
+    public RestTemplate healthCheckRestTemplate() {
+        return getRestTemplate(healthCheckHttpConnectTimeout, healthCheckHttpConnectRequestTimeout);
     }
 
-    private RestTemplate getRestTemplate(
-            @Autowired MappingJackson2HttpMessageConverter jackson2HttpConverter,
-            int connectTimeout,
-            int connectRequestTimeout) {
-        RestTemplate restTemplate = new RestTemplate(asList(jackson2HttpConverter,
-                new FormHttpMessageConverter(),
-                new ResourceHttpMessageConverter(),
-                new ByteArrayHttpMessageConverter(),
-                new StringHttpMessageConverter()));
+    private RestTemplate getRestTemplate(int connectTimeout, int connectRequestTimeout) {
+        SimpleClientHttpRequestFactory clientHttpRequestFactory  = new SimpleClientHttpRequestFactory();
+        clientHttpRequestFactory.setConnectTimeout(connectTimeout);
+        clientHttpRequestFactory.setReadTimeout(connectRequestTimeout);
 
-        RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(connectTimeout)
-                .setConnectionRequestTimeout(connectRequestTimeout)
-                .setSocketTimeout(connectRequestTimeout)
-                .build();
-
-        CloseableHttpClient client = HttpClientBuilder
-                .create()
-                .useSystemProperties()
-                .addInterceptorFirst(new OutboundRequestIdSettingInterceptor())
-                .setDefaultRequestConfig(config)
-                .build();
-
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(client));
-
-        return restTemplate;
+        return new RestTemplate(clientHttpRequestFactory);
     }
 }

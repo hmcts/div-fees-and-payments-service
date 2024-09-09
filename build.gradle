@@ -236,7 +236,7 @@ def versions = [
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
         logbackVersion:                                 '1.2.10',
-        reformLogging:                                  '5.1.9'
+        reformLogging:                                  '6.1.6'
 ]
 
 tasks.withType(JavaExec).configureEach {
@@ -340,8 +340,6 @@ dependencies {
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.reformLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-httpcomponents', version: versions.reformLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-spring', version: versions.reformLogging
 
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
     implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: versions.httpComponents
