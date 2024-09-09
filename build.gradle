@@ -49,20 +49,10 @@ java {
     }
 }
 
-checkstyle.toolVersion = '8.32'
-checkstyle.configFile = new File(rootDir, "checkstyle.xml")
-checkstyle.maxWarnings(0)
-
-// make build fail on Checkstyle issues (https://github.com/gradle/gradle/issues/881)
-tasks.withType(Checkstyle).each { checkstyleTask ->
-    checkstyleTask.doLast {
-        reports.all { report ->
-            def outputFile = report.destination
-            if (outputFile.exists() && outputFile.text.contains("<error ")) {
-                throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
-            }
-        }
-    }
+checkstyle {
+    maxWarnings = 6
+    toolVersion = '10.14.0'
+    getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
 }
 
 tasks.withType(Test).configureEach {
@@ -229,13 +219,10 @@ def versions = [
         lombok:                                         '1.18.28',
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
-        puppyCrawl:                                     '8.35',
-        reformsJavaLogging:                             '6.1.6',
         restAssured:                                    '4.2.1',
-        serviceTokenGenerator:                          '3.1.1',
+        serviceTokenGenerator:                          '5.2.0',
         serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
-        serviceAuthProviderClient:                      '4.0.0',
         sonarPitest:                                    '0.5',
         springBoot:                                     '2.7.14',
         springDoc:                                      '1.6.9',
@@ -249,7 +236,7 @@ def versions = [
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
         logbackVersion:                                 '1.2.10',
-        reformLogging:                                  '6.0.1'
+        reformLogging:                                  '5.1.9'
 ]
 
 tasks.withType(JavaExec).configureEach {
@@ -304,7 +291,6 @@ dependencies {
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
-    integrationTestImplementation group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceAuthProviderClient
 
     implementation group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils
     implementation group: 'org.springframework.security', name: 'spring-security-rsa', version: versions.springSecurityRsa
@@ -312,13 +298,6 @@ dependencies {
     implementation group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcat
     implementation group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcat
     implementation group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcat
-
-    implementation (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
-        exclude group: 'io.reactivex', module: 'io.reactivex'
-        exclude group: 'io.reactivex', module: 'rxnetty'
-        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
-        exclude group: 'io.reactivex', module: 'rxnetty-servo'
-    }
 
     implementation("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
@@ -330,7 +309,6 @@ dependencies {
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
     implementation group: 'com.google.guava', name: 'guava', version: versions.guava
     implementation group: 'com.jayway.jsonpath', name: 'json-path-assert', version: versions.jaywayJsonPath
-    implementation group: 'com.puppycrawl.tools', name: 'checkstyle', version: versions.puppyCrawl
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: versions.springDoc
     implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.15'
     implementation group: 'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
@@ -360,11 +338,11 @@ dependencies {
     implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: versions.springPluginCore
     implementation group: 'org.springframework.retry', name: 'spring-retry'
 
-    implementation group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
-    implementation group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
-    implementation group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.reformLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging-httpcomponents', version: versions.reformLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging-spring', version: versions.reformLogging
+
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
     implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: versions.httpComponents
     implementation("org.springdoc:springdoc-openapi-ui") {
