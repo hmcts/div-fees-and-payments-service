@@ -235,7 +235,6 @@ def versions = [
         pact_version:                                   '4.1.11',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
-        logbackVersion:                                 '1.2.10',
         reformLogging:                                  '6.1.6'
 ]
 
@@ -319,9 +318,6 @@ dependencies {
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: versions.hibernate
     implementation group: 'org.pitest', name: 'pitest', version: versions.pitest
 
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
-    implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
-
     implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: versions.springBoot
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: versions.springBoot
@@ -339,7 +335,6 @@ dependencies {
     implementation group: 'org.springframework.retry', name: 'spring-retry'
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.reformLogging
 
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
     implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: versions.httpComponents
