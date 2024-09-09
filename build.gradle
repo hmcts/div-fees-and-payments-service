@@ -477,7 +477,7 @@ sonarqube {
         property "sonar.projectKey", "DivorceFeesAndPaymentsService"
         property "sonar.projectName", "Divorce :: Fees and Payments Service"
         property "sonar.exclusions", sonarExclusions.join(", ")
-        property "sonar.coverage.jacoco.xmlReportPaths", "${jacocoTestReport.reports.xml.outputLocation.get()}"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${jacocoTestReport.reports.xml.destination.path}"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }
@@ -499,4 +499,3 @@ task fortifyScan(type: JavaExec)  {
     classpath += sourceSets.test.runtimeClasspath
     jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
-
