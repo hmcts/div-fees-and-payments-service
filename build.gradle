@@ -7,7 +7,6 @@ buildscript {
     }
     repositories {
         mavenLocal()
-        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -27,7 +26,7 @@ plugins {
     id 'org.sonarqube' version '3.2.0'
     id 'org.springframework.boot' version "2.7.14"
     id 'au.com.dius.pact' version '4.1.8'
-    id 'uk.gov.hmcts.java' version '0.12.27'
+    id 'uk.gov.hmcts.java' version '0.12.63'
 }
 
 apply plugin: 'checkstyle'
@@ -162,9 +161,6 @@ compileTestJava {
 
 repositories {
     mavenCentral()
-    jcenter()
-    maven { url 'https://repo.spring.io/libs-milestone' }
-    maven { url "https://repo.maven.apache.org/maven2" }
     maven { url "https://jitpack.io" }
 }
 
@@ -234,12 +230,12 @@ def versions = [
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
         puppyCrawl:                                     '8.35',
-        reformsJavaLogging:                             '5.1.7',
+        reformsJavaLogging:                             '6.1.6',
         restAssured:                                    '4.2.1',
         serviceTokenGenerator:                          '3.1.1',
         serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
-        serviceAuthProviderClient:                      '3.1.1',
+        serviceAuthProviderClient:                      '4.0.0',
         sonarPitest:                                    '0.5',
         springBoot:                                     '2.7.14',
         springDoc:                                      '1.6.9',
