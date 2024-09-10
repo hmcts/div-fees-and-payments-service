@@ -220,7 +220,6 @@ def versions = [
         nimbusJoseJwt:                                  '8.5',
         pitest:                                         '1.4.10',
         restAssured:                                    '4.2.1',
-        serviceTokenGenerator:                          '5.2.0',
         serenity:                                       '2.5.8',
         serenityCucumber:                               '1.9.51',
         sonarPitest:                                    '0.5',
