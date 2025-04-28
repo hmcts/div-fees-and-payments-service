@@ -217,7 +217,7 @@ def versions = [
         jsonassert:                                     '1.2.3',
         junit:                                          '5.9.3',
         lombok:                                         '1.18.28',
-        nimbusJoseJwt:                                  '8.5',
+        nimbusJoseJwt:                                  '10.2',
         pitest:                                         '1.4.10',
         restAssured:                                    '4.2.1',
         serenity:                                       '2.5.8',
