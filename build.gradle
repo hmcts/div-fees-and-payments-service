@@ -74,20 +74,20 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudBomVersion}"
     }
     dependencies {
-        dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+        dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.10.1'
 
         dependency group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.68'
 
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
 
         //CVE-2021-44228, CVE-2021-44832, CVE-2021-45046, CVE-2021-45105
-        dependencySet(group: 'org.apache.logging.log4j', version: '2.19.0') {
+        dependencySet(group: 'org.apache.logging.log4j', version: '2.24.3') {
             entry 'log4j-api'
             entry 'log4j-to-slf4j'
         }
 
         //CVE-2022-22965
-        dependencySet(group: 'org.springframework', version: '5.3.29') {
+        dependencySet(group: 'org.springframework', version: '5.3.39') {
             entry 'spring-aop'
             entry 'spring-beans'
             entry 'spring-context'
@@ -99,7 +99,7 @@ dependencyManagement {
             entry 'spring-webmvc'
         }
 
-        dependencySet(group: 'com.fasterxml.jackson.core', version: '2.13.3') {
+        dependencySet(group: 'com.fasterxml.jackson.core', version: '2.18.3') {
             entry 'jackson-core'
             entry 'jackson-databind'
             entry 'jackson-annotations'
@@ -209,9 +209,9 @@ def versions = [
         commonsIo:                                      '2.7',
         commonsLang3:                                   '3.9',
         gradlePitest:                                   '1.4.6',
-        guava:                                          '32.1.2-jre',
+        guava:                                          '33.4.8-jre',
         hibernate:                                      '6.0.5.Final',
-        jackson:                                        '2.13.2',
+        jackson:                                        '2.18.3',
         javaxValidation:                                '2.0.0.Final',
         jaywayJsonPath:                                 '2.4.0',
         jsonassert:                                     '1.2.3',
@@ -228,13 +228,13 @@ def versions = [
         springPluginCore:                               '3.0.0',
         springSecurityCrypto:                           '5.4.5',
         springSecurityRsa:                              '1.0.9.RELEASE',
-        tomcat:                                         '9.0.80',
+        tomcat:                                         '9.0.104',
         wiremockVersion:                                '2.27.2',
         unirest:                                        '1.4.9',
         pact_version:                                   '4.1.11',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
-        reformLogging:                                  '6.1.6'
+        reformLogging:                                  '6.1.8'
 ]
 
 tasks.withType(JavaExec).configureEach {
