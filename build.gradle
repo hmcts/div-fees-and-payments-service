@@ -344,7 +344,7 @@ dependencies {
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
-    testImplementation('com.github.hmcts:fortify-client:1.4.8:all')
+    testImplementation('com.github.hmcts:fortify-client:1.4.9:all')
 
     contractTestImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     contractTestImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
