@@ -80,12 +80,6 @@ dependencyManagement {
 
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
 
-        //CVE-2021-44228, CVE-2021-44832, CVE-2021-45046, CVE-2021-45105
-        dependencySet(group: 'org.apache.logging.log4j', version: '2.24.3') {
-            entry 'log4j-api'
-            entry 'log4j-to-slf4j'
-        }
-
         //CVE-2022-22965
         dependencySet(group: 'org.springframework', version: '5.3.39') {
             entry 'spring-aop'
@@ -154,15 +148,6 @@ repositories {
     maven { url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
 }
 
-distributions {
-    main {
-        contents {
-            from(file("$projectDir/lib/AI-Agent.xml")) {
-                into "lib"
-            }
-        }
-    }
-}
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -234,7 +219,8 @@ def versions = [
         pact_version:                                   '4.1.11',
         jetty:                                          '9.4.35.v20201120',
         httpComponents:                                 '4.5.13',
-        reformLogging:                                  '6.1.8'
+        reformLogging:                                  '6.1.9',
+        apacheLogging:                                  '2.17.1'
 ]
 
 tasks.withType(JavaExec).configureEach {
@@ -332,6 +318,8 @@ dependencies {
     implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: versions.springPluginCore
     implementation group: 'org.springframework.retry', name: 'spring-retry'
 
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
 
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
